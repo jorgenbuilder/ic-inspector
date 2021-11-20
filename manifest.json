@@ -1,0 +1,10 @@
+{
+    "name": "Dfinity Network Devtools",
+    "description": "Readable responses from Dfinity blockchain canisters.",
+    "version": "1.0",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "entry-background.js"
+    },
+    "devtools_page": "entry-devtools.html"
+}
