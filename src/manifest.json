@@ -1,11 +1,8 @@
 {
-    "name": "Dfinity Network Devtools",
-    "description": "Readable responses from Dfinity blockchain canisters.",
-    "version": "1.0",
-    "manifest_version": 2,
-    "background": {
-        "service_worker": "entry-background.js"
-    },
-    "devtools_page": "entry-devtools.html",
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+  "name": "dfinity-devtools",
+  "devtools_page": "devtools/index.html",
+  "web_accessible_resources": [
+    "devtools/panel/candid.ts",
+    "devtools/panel/index.html"
+  ]
 }
