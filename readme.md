@@ -22,6 +22,8 @@ npm run start
 
 Open the [Extensions Dashboard](chrome://extensions), enable "Developer mode", click "Load unpacked", and choose the `dist` folder.
 
+You will see the "Dfinity" tab in your devtools window.
+
 When you make changes in `src` the background script and any content script will reload automatically.
 
 ### Production
