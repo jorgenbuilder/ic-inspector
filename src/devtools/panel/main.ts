@@ -87,7 +87,6 @@ function capture(request : chrome.devtools.network.Request) {
                     } else if (typeof value === 'bigint') {
                         response[key] = Number(value);
                     } else if (value?._isBuffer) {
-                        console.log('buffer', key, value)
                         response[key] = value;
                     } else if (typeof value === 'object') {
                         response[key] = decodeDfinityObject(value);
@@ -139,17 +138,17 @@ function _base64ToBytes(base64 : string) {
     return bytes;
 }
 
-function toHexString(byteArray : Uint8Array) {
-    return Array.from(byteArray).map(x => {
-        return byteToHex(x);
-    }).join(' ');
-}
+// function toHexString(byteArray : Uint8Array) {
+//     return Array.from(byteArray).map(x => {
+//         return byteToHex(x);
+//     }).join(' ');
+// }
 
-const hexChar = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
+// const hexChar = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
 
-function byteToHex(b : number) {
-    return hexChar[(b >> 4) & 0x0f] + hexChar[b & 0x0f];
-}
+// function byteToHex(b : number) {
+//     return hexChar[(b >> 4) & 0x0f] + hexChar[b & 0x0f];
+// }
 
 /**
  * Simple object check.
