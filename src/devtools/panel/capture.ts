@@ -1,17 +1,18 @@
 import CBOR from 'cbor';
 import { decode } from './candid';
 
-interface LogEvent {
+export interface LogEvent {
     url         : string;
     request     : any;
     response    : any;
 }
 
-const log : LogEvent[] = [];
-chrome.devtools.network.onRequestFinished.addListener((request) => capture(request));
-
 // Decode and log Dfinity CBOR/Candid network events.
-function capture(request : chrome.devtools.network.Request) {
+export default function capture(
+    request     : chrome.devtools.network.Request,
+    log         : LogEvent[],
+    callback?   : (event : LogEvent) => void,
+) : void {
 
     // Look for a cbor content type header.
     const isCBOR = request.response.headers
@@ -105,27 +106,21 @@ function capture(request : chrome.devtools.network.Request) {
             const decodedRequest = mergeDeep({}, requestCBOR, requestCandid);
             const decodedResponse = mergeDeep({}, responseCBOR, responseCandid);
 
-            if (decodedRequest.value.content.request_type !== 'read_state') {
-                log.push({
-                    url: request.request.url,
-                    request: decodeDfinityObject(decodedRequest),
-                    response: decodeDfinityObject(decodedResponse),
-                });
-            }
+            const event = {
+                url: request.request.url,
+                request: decodeDfinityObject(decodedRequest),
+                response: decodeDfinityObject(decodedResponse),
+            };
 
-            (document.getElementById('log') as HTMLElement).innerHTML = renderLog(log);
+            log.push(event);
+
+            if (callback) {
+                callback(event);
+            }
 
         });
     }
 }
-
-// Render decoded logs
-const renderLog = (log : LogEvent[]) => `${log.map(entry => `
-    <div>
-        <pre>${entry.request.value.content.request_type.toUpperCase()} ${(entry.url.match(/\/canister\/(.+)\//) as string[])[1]} ${entry.request.value.content.method_name}</pre>
-        <pre>${entry.response.value.status.toUpperCase()}: ${JSON.stringify(entry.response.value.reply.arg[0], undefined, 2)}</pre>
-    </div>
-`).join('<hr />')}`;
 
 // Converting things...
 function _base64ToBytes(base64 : string) {
