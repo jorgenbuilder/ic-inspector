@@ -1,8 +1,9 @@
 {
-  "name": "dfinity-devtools",
+  "name": "dfinity-decoder",
   "devtools_page": "devtools/index.html",
   "web_accessible_resources": [
     "devtools/panel/candid.ts",
+    "devtools/panel/capture.ts",
     "devtools/panel/index.html"
   ]
 }

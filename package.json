@@ -1,5 +1,5 @@
 {
-  "name": "dfinity-devtools",
+  "name": "dfinity-decoder",
   "version": "0.0.0",
   "private": true,
   "description": "Decode network responses from the Dfinity blockchain.",
@@ -32,6 +32,7 @@
     "@rollup/plugin-node-resolve": "^11.0.1",
     "@rollup/plugin-typescript": "^8.1.0",
     "@types/jest": "^26.0.19",
+    "@types/react-table": "^7.7.9",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
     "cross-env": "^7.0.3",
