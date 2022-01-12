@@ -1,9 +1,14 @@
 {
-  "name": "dfinity-decoder",
+  "name": "Dfinity Decoder",
   "devtools_page": "devtools/index.html",
   "web_accessible_resources": [
     "devtools/panel/candid.ts",
     "devtools/panel/capture.ts",
     "devtools/panel/index.html"
-  ]
+  ],
+  "icons": {
+    "16": "assets/16.png",
+    "48": "assets/48.png",
+    "128": "assets/128.png"
+  }
 }
