@@ -1,2 +1,35 @@
 <div id="root"></div>
 <script src="main.tsx"></script>
+<style>
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: rgb(41 42 45);
+      color: white;
+    }
+  }
+
+  html, body {
+      padding: 0;
+      margin: 0;
+  }
+
+  * {
+      font-size: 12px;
+      text-align: left;
+  }
+  
+  table {
+      width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+
+  td {
+      padding: 5px;
+  }
+
+  tr:nth-child(odd) {
+      background: rgba(0, 0, 0, 0.2);
+  }
+</style>

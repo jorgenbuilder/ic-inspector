@@ -5,6 +5,7 @@ export interface LogEvent {
     url         : string;
     request     : any;
     response    : any;
+    time        : Date;
 }
 
 // Decode and log Dfinity CBOR/Candid network events.
@@ -110,6 +111,7 @@ export default function capture(
                 url: request.request.url,
                 request: decodeDfinityObject(decodedRequest),
                 response: decodeDfinityObject(decodedResponse),
+                time : new Date(),
             };
 
             log.push(event);

@@ -1,7 +1,9 @@
+/* eslint-disable react/display-name */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable react/jsx-key */
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { useTable } from 'react-table';
+import { useTable, useExpanded } from 'react-table';
 import capture, { LogEvent } from './capture';
 
 (window as any).global = window;
@@ -27,42 +29,84 @@ function App() {
         canister: string;
         method: string;
         type: string;
-        payload: { [key: string]: any };
+        subRows: any[];
     }
 
     // Transform log into a react-table compatible structure
     const data = React.useMemo<Row[]>(
         () => log.map(event => ({
+            timestamp: event.time,
             canister: (event.url.match(/\/canister\/(.+)\//) as string[])[1],
             method: event.request.value.content.method_name,
             type: event.request.value.content.request_type.toUpperCase(),
-            payload: event.response,
+            subRows: [
+                {
+                    payload: event.response
+                }
+            ],
         })),
         [log]
     );
 
-    const columns = React.useMemo<{ Header: string; accessor: string; }[]>(
+    const columns = React.useMemo(
         () => [
             {
-                Header: 'Canister',
-                accessor: 'canister',
+                // Build our expander column
+                id: 'expander', // Make sure it has an ID
+                // @ts-ignore
+                // eslint-disable-next-line react/prop-types
+                Header: ({ getToggleAllRowsExpandedProps, isAllRowsExpanded }) => (
+                    <span {...getToggleAllRowsExpandedProps()}>
+                        {/* {isAllRowsExpanded ? '▼' : '▶'} */}
+                    </span>
+                ),
+                // @ts-ignore
+                // eslint-disable-next-line react/prop-types
+                Cell: ({ row }) =>
+                    // Use the row.canExpand and row.getToggleRowExpandedProps prop getter
+                    // to build the toggle for expanding a row
+                    // eslint-disable-next-line react/prop-types
+                    row.canExpand ? (
+                        <span
+                            // eslint-disable-next-line react/prop-types
+                            {...row.getToggleRowExpandedProps()}
+                        >
+                            {/* eslint-disable-next-line react/prop-types */}
+                            {row.isExpanded ? '▼' : '▶'}
+                        </span>
+                    ) : null,
             },
             {
-                Header: 'Method',
-                accessor: 'method',
-            },
-            {
-                Header: 'Type',
-                accessor: 'type',
-            },
-            {
-                Header: 'Payload',
-                accessor: 'payload',
-                Cell: function PayloadCell (x : { value : { [key: string]: any }}) {
-                    return <>
-                        <pre>{JSON.stringify(x.value, undefined, 2)}</pre>
-                    </>
-                }
+                id: 'main',
+                Header: () => <></>,
+                columns: [
+                    {
+                        Header: 'Timestamp',
+                        accessor: 'timestamp',
+                        Cell: (x: {value: Date}) => <>{x.value ? x.value.toLocaleTimeString() : ''}</>
+                    },
+                    {
+                        Header: 'Canister',
+                        accessor: 'canister',
+                    },
+                    {
+                        Header: 'Method',
+                        accessor: 'method',
+                    },
+                    {
+                        Header: 'Type',
+                        accessor: 'type',
+                    },
+                    {
+                        Header: 'Payload',
+                        accessor: 'payload',
+                        Cell: function PayloadCell(x: { value: { [key: string]: any } }) {
+                            return <>
+                                <pre>{JSON.stringify(x.value, undefined, 2)}</pre>
+                            </>
+                        }
+                    },
+                ],
             },
         ],
         []
@@ -74,52 +118,37 @@ function App() {
         headerGroups,
         rows,
         prepareRow,
+        // @ts-ignore
+        state: { expanded },
     } = useTable(
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        { columns, data }
+        { columns, data },
+        useExpanded
     )
 
     return <>
         <table {...getTableProps()}>
             <thead>
-                {// Loop over the header rows
-                    headerGroups.map(headerGroup => (
-                        // Apply the header row props
-                        <tr {...headerGroup.getHeaderGroupProps()}>
-                            {// Loop over the headers in each row
-                                headerGroup.headers.map(column => (
-                                    // Apply the header cell props
-                                    <th {...column.getHeaderProps()}>
-                                        {// Render the header
-                                            column.render('Header')}
-                                    </th>
-                                ))}
-                        </tr>
-                    ))}
+                {headerGroups.map(headerGroup => (
+                    <tr {...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map(column => (
+                            <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                        ))}
+                    </tr>
+                ))}
             </thead>
-            {/* Apply the table body props */}
             <tbody {...getTableBodyProps()}>
-                {// Loop over the table rows
-                    rows.map(row => {
-                        // Prepare the row for display
-                        prepareRow(row)
-                        return (
-                            // Apply the row props
-                            <tr {...row.getRowProps()}>
-                                {// Loop over the rows cells
-                                    row.cells.map(cell => {
-                                        // Apply the cell props
-                                        return (
-                                            <td {...cell.getCellProps()}>
-                                                {// Render the cell contents
-                                                    cell.render('Cell')}
-                                            </td>
-                                        )
-                                    })}
-                            </tr>
-                        )
-                    })}
+                {rows.map((row, i) => {
+                    prepareRow(row)
+                    return (
+                        <tr {...row.getRowProps()}>
+                            {row.cells.map(cell => {
+                                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                            })}
+                        </tr>
+                    )
+                })}
             </tbody>
         </table>
     </>
