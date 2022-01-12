@@ -1,6 +1,10 @@
-# Dfinity Devtools
+![logo](src/assets/48.png)
 
-Warning: work in progress. A little chrome extension to decode CBOR/Candid responses from the Dfinity blockchain in Chrome devtools.
+# Dfinity Decoder
+
+A little chrome extension to decode CBOR/Candid responses from the Dfinity blockchain in Chrome devtools.
+
+_Alpha release pending review in chrome webstore now._
 
 ## Why?
 
@@ -10,7 +14,7 @@ Developing on the Dfinity Blockchain, you will see ugly responses in the chrome 
 
 This extension decodes responses from canisters into something more readable:
 
-![good](good.png)
+![good](src/assets/screenshot.png)
 
 ### Development
 
