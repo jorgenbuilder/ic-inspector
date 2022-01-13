@@ -6,7 +6,7 @@ A little chrome extension to decode CBOR/Candid responses from the Dfinity block
 
 _Alpha release pending review in chrome webstore now._
 
-Tips: 799d9974ec7604d031c34ea487015ef7efc92f283da4ce0b84a3aaadbeae0934
+ICP Tips: 799d9974ec7604d031c34ea487015ef7efc92f283da4ce0b84a3aaadbeae0934
 
 ## Why?
 
