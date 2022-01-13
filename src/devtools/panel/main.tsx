@@ -10,11 +10,10 @@ import capture, { LogEvent } from './capture';
 
 function App() {
     const [log, setLog] = React.useState<LogEvent[]>([]);
+    const [capturing, setCapturing] = React.useState<boolean>(true);
 
-    React.useEffect(() => {
-        // Start capturing network events.
-        // TODO: Would be great to start capture earlier.
-        chrome.devtools.network.onRequestFinished.addListener((request) => {
+    const captureRequest = React.useMemo(() => {
+        return (request: chrome.devtools.network.Request) => {
             capture(
                 request,
                 [],
@@ -22,8 +21,16 @@ function App() {
                     setLog(prev => [...prev, event]);
                 }
             );
-        });
+        }
     }, []);
+
+    React.useEffect(() => {
+        if (capturing) {
+            chrome.devtools.network.onRequestFinished.addListener(captureRequest);
+        } else {
+            chrome.devtools.network.onRequestFinished.removeListener(captureRequest);
+        }
+    }, [capturing]);
 
     interface Row {
         canister: string;
@@ -127,9 +134,16 @@ function App() {
         useExpanded
     )
 
-    return <>
+    return <div className="panel">
         <table {...getTableProps()}>
             <thead>
+                <tr>
+                    <th></th>
+                    <th colSpan={5} className="controls">
+                        <span onClick={() => setCapturing(!capturing)} className={['record', capturing ? 'active' : ''].join(' ')}></span>
+                        <span>{log.length} Events</span>
+                    </th>
+                </tr>
                 {headerGroups.map(headerGroup => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map(column => (
@@ -151,7 +165,7 @@ function App() {
                 })}
             </tbody>
         </table>
-    </>
+    </div>
 }
 
 ReactDOM.render(

@@ -2,34 +2,90 @@
 <script src="main.tsx"></script>
 <style>
 
-  @media (prefers-color-scheme: dark) {
-    body {
-      background-color: rgb(41 42 45);
-      color: white;
+    @media (prefers-color-scheme: dark) {
+        body {
+            background-color: rgb(41 42 45);
+            color: white;
+        }
     }
-  }
 
-  html, body {
-      padding: 0;
-      margin: 0;
-  }
+    html, body {
+        padding: 0;
+        margin: 0;
+    }
 
-  * {
-      font-size: 12px;
-      text-align: left;
-  }
-  
-  table {
-      width: 100%;
-    border-spacing: 0;
-    border-collapse: collapse;
-  }
+    * {
+        font-size: 12px;
+        text-align: left;
+    }
 
-  td {
-      padding: 5px;
-  }
+    .panel {
+        position: relative;
+    }
+    
+    table {
+        position: relative;
+        width: 100%;
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
 
-  tr:nth-child(odd) {
-      background: rgba(0, 0, 0, 0.2);
-  }
+    thead {
+        position: sticky;
+        top: 0;
+        box-shadow: 0 1px 0 rgb(75, 75, 75);
+        background: rgb(41 42 45);
+    }
+
+    thead > tr {
+        background: transparent !important;
+    }
+
+    thead > tr:nth-child(2) { display: none; }
+
+    td:not(:last-child), th:not(:last-child) {
+        border-right: 1px solid rgb(75, 75, 75);
+    }
+
+    tr {
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    tr:nth-child(odd) {
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    td, th {
+        padding: 5px;
+    }
+
+    td:first-child, th:first-child {
+        width: 20px;
+    }
+
+    .controls {
+        width: 100%;
+        box-shadow: 0 -1px 0 inset rgb(75, 75, 75);
+    }
+
+    .controls > span {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+
+    .record {
+        width: 14px; height: 14px;
+        border-radius: 50%;
+        background-color: rgb(75, 75, 75);
+    }
+
+    .record:hover {
+        background-color: white;
+    }
+
+    .record.active {
+        background-color: rgb(242, 139, 130);
+        box-shadow: 0 0 5px rgb(242, 139, 130);
+    }
 </style>
