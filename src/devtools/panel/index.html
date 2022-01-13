@@ -4,7 +4,7 @@
 
     @media (prefers-color-scheme: dark) {
         body {
-            background-color: rgb(41 42 45);
+            background-color: rgb(36 36 36);
             color: white;
         }
     }
@@ -26,48 +26,61 @@
     table {
         position: relative;
         width: 100%;
+
         border-spacing: 0;
         border-collapse: collapse;
     }
 
     thead {
         position: sticky;
-        top: 0;
+        top: 0px;
         background: rgb(41 42 45);
-    }
-
-    thead > tr {
-        background: transparent !important;
         box-shadow: 0 1px 0 rgb(75, 75, 75);
     }
 
-    thead > tr:nth-child(2) { display: none; }
+    tfoot {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: rgb(41 42 45);
+        border-top: 1px solid rgb(75, 75, 75);
+    }
 
     td:not(:last-child), th:not(:last-child) {
         border-right: 1px solid rgb(75, 75, 75);
     }
 
-    tr {
-        background: rgba(0, 0, 0, 0.2);
+    tbody tr {
+        background: rgb(36 36 36);
+        min-height: 25px;
     }
 
-    tr:nth-child(odd) {
-        background: rgba(0, 0, 0, 0.1);
+    tbody tr:nth-child(odd) {
+        background: rgb(41 41 41);
+    }
+
+    tbody td:first-child:hover {
+        color: white;
+        text-decoration: underline;
+        cursor: pointer;
     }
 
     td, th {
         padding: 5px;
     }
 
-    td:first-child, th:first-child {
-        width: 20px;
-    }
-
     .controls {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+
         display: flex;
         gap: 5px;
         align-items: center;
         width: 100%;
+
+        background: rgb(41 42 45);
+        box-shadow: 0 1px 0 rgb(75, 75, 75);
     }
 
     .icon {
@@ -89,9 +102,19 @@
     }
 
     .record {
-        margin-left: 10px;
+        margin: 0 0 0 5px;
         width: 14px; height: 14px;
         border-radius: 50%;
+    }
+
+    .close {
+        display: block;
+        width: 28px;
+        height: 24px;
+        -webkit-mask-image: url(/assets/icons.svg);
+        -webkit-mask-position-x: -84px;
+        -webkit-mask-position-y: 0px;
+        --override-icon-mask-background-color: rgb(145 145 145);
     }
 
     .record.active {
@@ -101,5 +124,47 @@
 
     .p0 {
         padding: 0;
+    }
+
+    .table-container {
+        height: calc(100vh - 50px);
+        overflow-y: scroll;
+    }
+
+    .side-by-side {
+        display: flex;
+    }
+
+    .side-by-side th:not(:first-child), .side-by-side td:not(:first-child) {
+        display: none;
+    }
+
+    .side-by-side .table-container {
+        width: 30%;
+    }
+    
+    .side-by-side .details-pane {
+        display: block;
+        height: calc(100vh - 50px);
+        overflow-y: scroll;
+        width: 70%;
+    }
+
+    .details-pane {
+        display: none;
+        position: relative;
+    }
+
+    .details-pane__head {
+        height: 25px;
+        box-sizing: border-box;
+        background: rgb(41 42 45);
+        box-shadow: 0 1px 0 rgb(75, 75, 75);
+        position: sticky;
+        top: 0;
+    }
+
+    .details-pane__body {
+        padding: 5px;
     }
 </style>

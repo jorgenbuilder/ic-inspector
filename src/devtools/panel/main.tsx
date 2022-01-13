@@ -3,14 +3,25 @@
 /* eslint-disable react/jsx-key */
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { useTable, useExpanded } from 'react-table';
+import { Column, useTable } from 'react-table';
 import capture, { LogEvent } from './capture';
 
 (window as any).global = window;
 
+interface Row {
+    i: number;
+    timestamp: Date;
+    canister: string;
+    method: string;
+    type: string;
+    request: chrome.devtools.network.Request;
+    url: string;
+}
+
 function App() {
     const [log, setLog] = React.useState<LogEvent[]>([]);
     const [capturing, setCapturing] = React.useState<boolean>(true);
+    const [focusLog, setFocusLog] = React.useState<LogEvent>();
 
     const captureRequest = React.useMemo(() => {
         return (request: chrome.devtools.network.Request) => {
@@ -32,88 +43,42 @@ function App() {
         }
     }, [capturing]);
 
-    interface Row {
-        canister: string;
-        method: string;
-        type: string;
-        subRows: any[];
-    }
-
     // Transform log into a react-table compatible structure
     const data = React.useMemo<Row[]>(
-        () => log.map(event => ({
+        () => log.map((event, i) => ({
+            i,
             timestamp: event.time,
             canister: (event.url.match(/\/canister\/(.+)\//) as string[])[1],
             method: event.request.value.content.method_name,
             type: event.request.value.content.request_type.toUpperCase(),
-            subRows: [
-                {
-                    payload: event.response
-                }
-            ],
+            request: event.request,
+            response: event.response,
+            url: event.url
         })),
         [log]
     );
 
-    const columns = React.useMemo(
+    const columns = React.useMemo<Column<Row>[]>(
         () => [
             {
-                // Build our expander column
-                id: 'expander', // Make sure it has an ID
-                // @ts-ignore
-                // eslint-disable-next-line react/prop-types
-                Header: ({ getToggleAllRowsExpandedProps, isAllRowsExpanded }) => (
-                    <span {...getToggleAllRowsExpandedProps()}>
-                        {/* {isAllRowsExpanded ? '▼' : '▶'} */}
-                    </span>
-                ),
-                // @ts-ignore
-                // eslint-disable-next-line react/prop-types
-                Cell: ({ row }) =>
-                    // Use the row.canExpand and row.getToggleRowExpandedProps prop getter
-                    // to build the toggle for expanding a row
-                    // eslint-disable-next-line react/prop-types
-                    row.canExpand ? (
-                        <span
-                            // eslint-disable-next-line react/prop-types
-                            {...row.getToggleRowExpandedProps()}
-                        >
-                            {/* eslint-disable-next-line react/prop-types */}
-                            {row.isExpanded ? '▼' : '▶'}
-                        </span>
-                    ) : null,
+                Header: 'Name',
+                accessor: 'method',
+                Cell: (x: {value: string}) => <>{x.value || '-'}</>
             },
             {
-                id: 'main',
-                Header: () => <></>,
-                columns: [
-                    {
-                        Header: 'Timestamp',
-                        accessor: 'timestamp',
-                        Cell: (x: {value: Date}) => <>{x.value ? x.value.toLocaleTimeString() : ''}</>
-                    },
-                    {
-                        Header: 'Canister',
-                        accessor: 'canister',
-                    },
-                    {
-                        Header: 'Method',
-                        accessor: 'method',
-                    },
-                    {
-                        Header: 'Type',
-                        accessor: 'type',
-                    },
-                    {
-                        Header: 'Response',
-                        accessor: 'payload',
-                        Cell: function PayloadCell(x: { value: { [key: string]: any } }) {
-                            return <>
-                                <pre>{JSON.stringify(x.value, undefined, 2)}</pre>
-                            </>
-                        }
-                    },
-                ],
+                Header: 'Canister',
+                accessor: 'canister',
+            },
+            {
+                Header: 'Type',
+                accessor: 'type',
+            },
+            {
+                Header: 'Timestamp',
+                accessor: 'timestamp',
+                Cell: (x: {value: Date}) => <>
+                    {String(x.value.getHours() + 1).padStart(2, '0')}:{String(x.value.getMinutes()).padStart(2, '0')}:{String(x.value.getSeconds()).padStart(2, '0')}:{String(x.value.getMilliseconds()).padStart(3, '0')}
+                </>
             },
         ],
         []
@@ -125,49 +90,70 @@ function App() {
         headerGroups,
         rows,
         prepareRow,
-        // @ts-ignore
-        state: { expanded },
-    } = useTable(
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        { columns, data },
-        useExpanded
-    )
+    } = useTable({ columns, data })
 
     return <div className="panel">
-        <table {...getTableProps()}>
-            <thead>
-                <tr>
-                    <th></th>
-                    <th colSpan={5} className="p0">
-                        <div className="controls">
-                            <span onClick={() => setCapturing(!capturing)} className={['record icon', capturing ? 'active' : ''].join(' ')}></span>
-                            <span onClick={() => setLog([])} className="clear icon"></span>
-                            <span>{log.length} Events</span>
-                        </div>
-                    </th>
-                </tr>
-                {headerGroups.map(headerGroup => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map(column => (
-                            <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+        <div className="controls">
+            <span onClick={() => setCapturing(!capturing)} className={['record icon', capturing ? 'active' : ''].join(' ')}></span>
+            <span onClick={() => setLog([])} className="clear icon"></span>
+        </div>
+        <div className={["panel-body", focusLog ? 'side-by-side' : ''].join(' ')}>
+            <div className="table-container">
+                <table {...getTableProps()}>
+                    <thead>
+                        {headerGroups.map(headerGroup => (
+                            <tr {...headerGroup.getHeaderGroupProps()}>
+                                {headerGroup.headers.map(column => (
+                                    <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                                ))}
+                            </tr>
                         ))}
-                    </tr>
-                ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-                {rows.map((row, i) => {
-                    prepareRow(row)
-                    return (
-                        <tr {...row.getRowProps()}>
-                            {row.cells.map(cell => {
-                                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                            })}
+                    </thead>
+                    <tbody {...getTableBodyProps()}>
+                        {rows.map((row, j) => {
+                            prepareRow(row)
+                            return (
+                                <tr {...row.getRowProps()}>
+                                    {row.cells.map((cell, i) => {
+                                        return <td onClick={i === 0 ? () => setFocusLog(log[j]) : undefined} {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                    })}
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colSpan={6}>
+                                {log.length} Events
+                            </td>
                         </tr>
-                    )
-                })}
-            </tbody>
-        </table>
+                    </tfoot>
+                </table>
+            </div>
+            {focusLog && <DetailsPane event={focusLog} clear={() => setFocusLog(undefined)} />}
+        </div>
+    </div>
+}
+
+function DetailsPane (props : { event : LogEvent, clear : () => void}) {
+    return <div className="details-pane">
+        <div className="details-pane__head">
+            <div onClick={props.clear} className="close icon"></div>
+        </div>
+        <div className="details-pane__body">
+            <strong>Canister</strong>
+            <pre>{(props.event.url.match(/\/canister\/(.+)\//) as string[])[1]}</pre>
+            <strong>Method</strong>
+            <pre>{props.event.request.value.content.method_name}</pre>
+            <strong>Request</strong>
+            <pre>
+                {JSON.stringify(props.event.request, undefined, 4)}
+            </pre>
+            <strong>Response</strong>
+            <pre>
+                {JSON.stringify(props.event.response, undefined, 4)}
+            </pre>
+        </div>
     </div>
 }
 
