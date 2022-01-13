@@ -33,12 +33,12 @@
     thead {
         position: sticky;
         top: 0;
-        box-shadow: 0 1px 0 rgb(75, 75, 75);
         background: rgb(41 42 45);
     }
 
     thead > tr {
         background: transparent !important;
+        box-shadow: 0 1px 0 rgb(75, 75, 75);
     }
 
     thead > tr:nth-child(2) { display: none; }
@@ -64,28 +64,42 @@
     }
 
     .controls {
+        display: flex;
+        gap: 5px;
+        align-items: center;
         width: 100%;
-        box-shadow: 0 -1px 0 inset rgb(75, 75, 75);
     }
 
-    .controls > span {
-        display: inline-block;
-        vertical-align: middle;
-        margin-right: 10px;
+    .icon {
+        background-color: rgb(154, 160, 166);
+    }
+
+    .icon:hover {
+        background-color: white;
+    }
+
+    .clear {
+        display: block;
+        width: 28px;
+        height: 24px;
+        -webkit-mask-image: url(/assets/icons.svg);
+        -webkit-mask-position-x: 0px;
+        -webkit-mask-position-y: 144px;
+        --override-icon-mask-background-color: rgb(145 145 145);
     }
 
     .record {
+        margin-left: 10px;
         width: 14px; height: 14px;
         border-radius: 50%;
-        background-color: rgb(75, 75, 75);
-    }
-
-    .record:hover {
-        background-color: white;
     }
 
     .record.active {
         background-color: rgb(242, 139, 130);
         box-shadow: 0 0 5px rgb(242, 139, 130);
+    }
+
+    .p0 {
+        padding: 0;
     }
 </style>

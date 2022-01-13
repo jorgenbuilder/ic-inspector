@@ -105,7 +105,7 @@ function App() {
                         accessor: 'type',
                     },
                     {
-                        Header: 'Payload',
+                        Header: 'Response',
                         accessor: 'payload',
                         Cell: function PayloadCell(x: { value: { [key: string]: any } }) {
                             return <>
@@ -139,9 +139,12 @@ function App() {
             <thead>
                 <tr>
                     <th></th>
-                    <th colSpan={5} className="controls">
-                        <span onClick={() => setCapturing(!capturing)} className={['record', capturing ? 'active' : ''].join(' ')}></span>
-                        <span>{log.length} Events</span>
+                    <th colSpan={5} className="p0">
+                        <div className="controls">
+                            <span onClick={() => setCapturing(!capturing)} className={['record icon', capturing ? 'active' : ''].join(' ')}></span>
+                            <span onClick={() => setLog([])} className="clear icon"></span>
+                            <span>{log.length} Events</span>
+                        </div>
                     </th>
                 </tr>
                 {headerGroups.map(headerGroup => (
