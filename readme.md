@@ -46,3 +46,5 @@ npm run build
 
 This will create a ZIP file with your package name and version in the `releases`
 folder.
+
+This library was incentivized by [ICDevs](https://ICDevs.org). You can view more about the bounty on the [forum](https://forum.dfinity.org/t/cbor-plug-in-or-tools/4556/27?u=skilesare) or [website](https://icdevs.org/bounties/2021/11/23/CBOR-plug-in.html). The bounty was funded by The ICDevs.org commuity and the award paid to @jorgenbuilder. If you use this library and gain value from it, please consider a [donation](https://icdevs.org/donations.html) to ICDevs.
