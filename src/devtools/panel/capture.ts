@@ -1,149 +1,251 @@
+// NOTE: Comments and code represent my best understanding. They are not authoritative and will be wrong in some places. I don't understand everthing about the Internet Computer.
+
+import { JsonValue } from '@dfinity/candid';
+import { Principal } from '@dfinity/principal';
 import CBOR from 'cbor';
 import { decode } from './candid';
 
+type CallType = 'query' | 'call' | 'read_state';
+
 export interface LogEvent {
-    url         : string;
-    request     : unknown;
-    response    : unknown;
     time        : Date;
+    decoded: {
+        request : DecodedQueryRequest | DecodedCallRequest | DecodedReadStateRequest;
+        response: DecodedQueryResponse | DecodedCallResponse | DecodedReadStateResponse;
+    };
+    raw: {
+        url     : string;
+        request : unknown;
+        response: unknown;
+    };
+};
+
+// Abstract raw request.
+interface RawICRequest {
+    sender          : Uint8Array;
+    ingress_expiry  : BigInt;
+};
+
+// A query call to the IC.
+interface RawQueryRequest extends RawICRequest {
+    arg         : Uint8Array;
+    canister_id : Uint8Array;
+    method_name : string;
+    request_type: 'query'
+};
+
+// The initial ingress message of an update call to the IC.
+interface RawCallRequest extends RawICRequest {
+    arg         : Uint8Array;
+    canister_id : Uint8Array;
+    method_name : string;
+    request_type: 'call';
+};
+
+// Reading the result of an update call from the output queue of the IC.
+interface RawReadStateRequest extends RawICRequest {
+    paths       : Uint8Array[][];
+    request_type: 'read_state';
+};
+
+// Abstract decoded request.
+interface DecodedICRequest {
+    host    : string;
+    canister: string;
+    type    : CallType;
+};
+
+// A decoded query request.
+interface DecodedQueryRequest extends DecodedICRequest {
+    type    : 'query';
+    method  : string;
+    // TODO: These come from the response
+    // subnet  : string;
+    // node    : string;
+    payload : {};
 }
 
-// Decode and log Dfinity CBOR/Candid network events.
+// A decoded call request.
+interface DecodedCallRequest extends DecodedICRequest {
+    type    : 'call';
+    method  : string;
+    // TODO: These come from the response
+    // subnet  : string;
+    // node    : string;
+    payload : {};
+}
+
+// A decoded read_state request.
+interface DecodedReadStateRequest extends DecodedICRequest {
+    type    : 'read_state';
+    x       : any;
+};
+
+// Raw query response.
+interface RawQueryResponse {
+    status  : 'replied';
+    reply: {
+        arg : Uint8Array;
+    };
+};
+
+// Raw read_state response.
+interface RawReadStateResponse {
+    certificate : Uint8Array;
+};
+
+// A decoded query response.
+interface DecodedQueryResponse {
+    data: { [key : string] : any };
+};
+
+// A decoded call response.
+type DecodedCallResponse = null;
+
+// A decoded read_state response.
+interface DecodedReadStateResponse {
+    certificate : Uint8Array;
+};
+
+const utfDecoder = new TextDecoder();
+
+// Capture, decode and log a Dfinity CBOR/Candid network event from a chrome network event.
 export default function capture(
-    request     : chrome.devtools.network.Request,
-    log         : LogEvent[],
-    callback?   : (event : LogEvent) => void,
-) : void {
+    event: chrome.devtools.network.Request,
+    log: LogEvent[],
+    callback?: (event: LogEvent) => void,
+): void {
 
-    // Look for a cbor content type header.
-    const isCBOR = request.response.headers
-        .find(x => x.name === 'content-type')
-        ?.value === 'application/cbor';
+    const time = new Date();
 
-    if (isCBOR) {
-        request.getContent((content, encoding) => {
+    // Not interested in pre flight requests for the moment.
+    if (event.request.method === 'OPTIONS') return;
 
-            if (encoding !== 'base64') {
-                // AFAIK all IC responses are b64 encoded.
-                return
-            }
+    // For now we focus on ingress messages bound for the IC and their responses. It might be interesting to look at HTTP requests more broadly in the future, to examine assets canisters and so on.
+    let host: string, canister: string, type: CallType;
+    try {
+        const [, x, y, z] = event.request.url.match(/https?:\/\/(raw\.ic0\.app|localhost:[0-9]+)\/api\/v2\/canister\/(.+)\/(query|call|read_state)/) as [any, string, string, CallType];
+        host = x, canister = y, type = z;
+    } catch (e) {
+        return;
+    };
 
-            // Assumption from here is that this is an IC request.
+    const mime = event.response.content.mimeType;
 
-            // Chrome gives us the request body decoded into utf8?
-            // It's busted, so we reencode it.
-            const requestB64 = btoa(request?.request?.postData?.text as string);
+    // Chrome treats erroneously parses our cbor into a string, so we need to back that out, then we can properly decode it as CBOR. (String -> B64 -> Bytes -> CBOR = Javascript Object)
+    const bytes = _base64ToBytes(btoa(event?.request?.postData?.text as string));
+    const { value : { content : data } } = CBOR.decode(bytes) as { value : { content : RawQueryRequest | RawCallRequest | RawReadStateRequest }};
 
-            // Decode request.
-            const requestBytes = _base64ToBytes(requestB64);
-            const requestCBOR = CBOR.decode(requestBytes.buffer);
-            // const requestHex = toHexString(requestBytes);
-
-            // Decode response.
-            const responseBytes = _base64ToBytes(content);
-            const responseCBOR = CBOR.decode(responseBytes.buffer);
-            // const responseHex = toHexString(responseBytes);
-
-            // Find byte fields.
-            function findByteFields (object : any) {
-                const byteFields : any = {};
-                for (const [key, value] of Object.entries(object)) {
-                    if (value instanceof Uint8Array) {
-                        // Capture Uint8Arrays.
-                        byteFields[key] = value;
-                    } else if (typeof value === 'object') {
-                        // Recurse downward.
-                        byteFields[key] = findByteFields(value);
-                    }
-                }
-                return byteFields;
-            }
-
-            // Find candid values.
-            const decoder = new TextDecoder();
-            function findCandid(object : any) {
-                const magic = 'DIDL';
-                const candidFields : any = {};
-                for (const [key, value] of Object.entries(object)) {
-                    if (value instanceof Uint8Array) {
-                        // Capture and Candid values.
-                        const magicBuffer = value.subarray(0, 4);
-                        if (decoder.decode(magicBuffer) === magic) {
-                            candidFields[key] = (decode(value));
-                        } else {
-                            candidFields[key] = value;
-                        }
-                    } else if (typeof value === 'object') {
-                        // Recurse downward.
-                        candidFields[key] = findCandid(value);
-                    }
-                }
-                return candidFields;
-            }
-
-            function decodeDfinityObject (
-                obj : {[key : string]: any}
-            ) {
-                const response : { [key : string] : any} = {};
-                for (const [key, value] of Object.entries(obj)) {
-                    if (key === 'paths') {
-                        response[key] = decodePaths(value);
-                    } else if (value?._isPrincipal) {
-                        response[key] = value?.toText();
-                    } else if (typeof value === 'bigint') {
-                        response[key] = Number(value);
-                    } else if (value?._isBuffer) {
-                        response[key] = 'This is a buffer';
-                    } else if (Array.isArray(value)) {
-                        response[key] = value.map(decodeDfinityObject);
-                    } else if (typeof value === 'object') {
-                        response[key] = decodeDfinityObject(value);
-                    } else {
-                        response[key] = value;
-                    }
-                }
-                return response;
-            }
-
-            // I suspect that this is important data that needs to be handle particularly
-            function decodePaths (value : { [key : number] : {
-                type : 'buffer',
-                data : number[],
-            }}) {
-                const resp : { [key : number] : number[]} = {};
-                Object.entries(value).forEach(([k, v]) => {
-                    resp[k as unknown as number] = v.data;
-                })
-                return value;
-            }
-
-            const requestByteFields = findByteFields(requestCBOR);
-            const requestCandid = findCandid(requestByteFields);
-            const responseByteFields = findByteFields(responseCBOR);
-            const responseCandid = findCandid(responseByteFields);
-
-            const decodedRequest = mergeDeep({}, requestCBOR, requestCandid);
-            const decodedResponse = mergeDeep({}, responseCBOR, responseCandid);
-
-            const event = {
-                url: request.request.url,
-                request: decodeDfinityObject(decodedRequest),
-                response: decodeDfinityObject(decodedResponse),
-                time : new Date(),
+    // Further decode the request.
+    let request : DecodedQueryRequest | DecodedCallRequest | DecodedReadStateRequest;
+    switch (type) {
+        case 'query':
+            const d1 = data as RawQueryRequest;
+            const r1 : DecodedQueryRequest = {
+                type, host, canister,
+                method  : d1.method_name,
+                payload : decodeDfinityObject(decode(d1.arg)),
             };
+            request = r1;
+            break;
+        case 'call':
+            const d2 = data as RawCallRequest;
+            const r2 : DecodedCallRequest = {
+                type, host, canister,
+                method  : (data as RawCallRequest).method_name,
+                payload : decodeDfinityObject((decode(d2.arg))),
+            };
+            request = r2;
+            break;
+        case 'read_state':
+            // TODO: Decoding path values is a total mystery...
+            // Perhaps I need access to the signing agent.
+            const d3 = data as RawReadStateRequest;
+            const r3 : DecodedReadStateRequest = {
+                type, host, canister,
+                x : d3.paths.map(([k, v]) => [utfDecoder.decode(k), v])
+            };
+            request = r3;
+            break;
+    };
 
-            log.push(event);
+    // @ts-ignore
+    console.info(host, canister, type, request?.method);
 
-            if (callback) {
-                callback(event);
+
+    // Capture / decode the response
+    // NOTE: Apparently manifest v3 allows a promise based architecture for everything, but I can't find any docs on it for this method.
+    event.getContent((content, encoding) => {
+
+        let response : DecodedQueryResponse | DecodedCallResponse | DecodedReadStateResponse = null;
+        if (content) {
+            const bytes = _base64ToBytes(content);
+            const { value : data } = CBOR.decode(bytes) as { value : RawQueryResponse | RawReadStateResponse };
+            // const responseByteFields = findByteFields(responseCBOR);
+            // const responseCandid = findCandid(responseByteFields);
+            // Further decode response.
+            switch (type) {
+                case 'query':
+                    const d1 = data as RawQueryResponse;
+                    const r1 : DecodedQueryResponse = {
+                        data : decodeDfinityObject(decode(d1.reply.arg)),
+                    };
+                    response = r1;
+                    break;
+                case 'read_state':
+                    // TODO: Not sure how to decode this certificate yet. Perhaps I need access to the signing agent.
+                    const d2 = data as RawReadStateResponse;
+                    const r2 : DecodedReadStateResponse = {
+                        certificate : d2.certificate,
+                    };
+                    response = r2;
+                    break;
+            };
+        };
+
+        const entry : LogEvent = {
+            time,
+            decoded: { request, response },
+            raw: {
+                url     : event.request.url,
+                request : event.request,
+                response: event.response,
             }
+        };
+        console.log(entry);
 
-        });
+        log.push(entry);
+
+        if (callback) {
+            callback(entry);
+        }
+
+    });
+}
+
+function decodeDfinityObject (
+    obj : {[key : string]: any}
+) {
+    const response : { [key : string] : unknown} = {};
+    for (const [key, value] of Object.entries<unknown>(obj)) {
+        if ((value as Principal)?._isPrincipal) {
+            response[key] = (value as Principal)?.toText();
+        } else if (typeof value === 'bigint') {
+            response[key] = Number(value);
+        } else if ((value as any)?._isBuffer) {
+            response[key] = value;
+        }
+        else if (typeof value === 'object') {
+            response[key] = decodeDfinityObject(value as object);
+        } else {
+            response[key] = value;
+        }
     }
+    return response;
 }
 
 // Converting things...
-function _base64ToBytes(base64 : string) {
+function _base64ToBytes(base64: string) {
     const binary_string = window.atob(base64);
     const len = binary_string.length;
     const bytes = new Uint8Array(len);
@@ -153,7 +255,7 @@ function _base64ToBytes(base64 : string) {
     return bytes;
 }
 
-// function toHexString(byteArray : Uint8Array) {
+// function toHexString(byteArray: Uint8Array) {
 //     return Array.from(byteArray).map(x => {
 //         return byteToHex(x);
 //     }).join(' ');
@@ -161,38 +263,6 @@ function _base64ToBytes(base64 : string) {
 
 // const hexChar = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
 
-// function byteToHex(b : number) {
+// function byteToHex(b: number) {
 //     return hexChar[(b >> 4) & 0x0f] + hexChar[b & 0x0f];
 // }
-
-/**
- * Simple object check.
- * @param item
- * @returns {boolean}
- */
-function isObject(item : any) {
-    return (item && !Array.isArray(item) && typeof item === 'object');
-}
-
-/**
- * Deep merge two objects.
- * @param target
- * @param ...sources
- */
-function mergeDeep(target : any, ...sources : any[]) : any {
-    if (!sources.length) return target;
-    const source = sources.shift();
-
-    if (isObject(target) && isObject(source)) {
-        for (const key in source) {
-            if (isObject(source[key])) {
-                if (!target[key]) Object.assign(target, { [key]: {} });
-                mergeDeep(target[key], source[key]);
-            } else {
-                Object.assign(target, { [key]: source[key] });
-            }
-        }
-    }
-
-    return mergeDeep(target, ...sources);
-}

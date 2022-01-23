@@ -14,7 +14,7 @@ interface Row {
     canister: string;
     method: string;
     type: string;
-    request: chrome.devtools.network.Request;
+    request: {};
     url: string;
 }
 
@@ -48,12 +48,13 @@ function App() {
         () => log.map((event, i) => ({
             i,
             timestamp: event.time,
-            canister: (event.url.match(/\/canister\/(.+)\//) as string[])[1],
-            method: event.request.value.content.method_name,
-            type: event.request.value.content.request_type.toUpperCase(),
-            request: event.request,
-            response: event.response,
-            url: event.url
+            canister: event.decoded.request.canister,
+            // @ts-ignore
+            method: event.decoded.request?.method,
+            type: event.decoded.request.type,
+            request: event.decoded.request,
+            response: event.decoded.response,
+            url: event.raw.url
         })),
         [log]
     );
@@ -142,16 +143,19 @@ function DetailsPane (props : { event : LogEvent, clear : () => void}) {
         </div>
         <div className="details-pane__body">
             <strong>Canister</strong>
-            <pre>{(props.event.url.match(/\/canister\/(.+)\//) as string[])[1]}</pre>
+            <pre>{props.event.decoded.request.canister}</pre>
             <strong>Method</strong>
-            <pre>{props.event.request.value.content.method_name}</pre>
+            <pre>{
+                // @ts-ignore
+                props.event.decoded.request?.method
+            }</pre>
             <strong>Request</strong>
             <pre>
-                {JSON.stringify(props.event.request, undefined, 4)}
+                {JSON.stringify(props.event.decoded.request, undefined, 4)}
             </pre>
             <strong>Response</strong>
             <pre>
-                {JSON.stringify(props.event.response, undefined, 4)}
+                {JSON.stringify(props.event.decoded.response, undefined, 4)}
             </pre>
         </div>
     </div>
