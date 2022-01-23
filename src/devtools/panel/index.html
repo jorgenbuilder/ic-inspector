@@ -139,10 +139,16 @@
         display: none;
     }
 
+    .side-by-side td, .side-by-side th {
+        border-right: none;
+    }
+
     .side-by-side .table-container {
         width: 30%;
+        min-height: 100%;
+        border-right: 1px solid rgb(75, 75, 75);
     }
-    
+
     .side-by-side .details-pane {
         display: block;
         height: calc(100vh - 50px);

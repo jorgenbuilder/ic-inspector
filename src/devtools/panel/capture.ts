@@ -3,8 +3,8 @@ import { decode } from './candid';
 
 export interface LogEvent {
     url         : string;
-    request     : any;
-    response    : any;
+    request     : unknown;
+    response    : unknown;
     time        : Date;
 }
 
@@ -81,15 +81,21 @@ export default function capture(
                 return candidFields;
             }
 
-            function decodeDfinityObject (obj : {[key : string]: any}) {
+            function decodeDfinityObject (
+                obj : {[key : string]: any}
+            ) {
                 const response : { [key : string] : any} = {};
                 for (const [key, value] of Object.entries(obj)) {
-                    if (value?._isPrincipal) {
+                    if (key === 'paths') {
+                        response[key] = decodePaths(value);
+                    } else if (value?._isPrincipal) {
                         response[key] = value?.toText();
                     } else if (typeof value === 'bigint') {
                         response[key] = Number(value);
                     } else if (value?._isBuffer) {
-                        response[key] = value;
+                        response[key] = 'This is a buffer';
+                    } else if (Array.isArray(value)) {
+                        response[key] = value.map(decodeDfinityObject);
                     } else if (typeof value === 'object') {
                         response[key] = decodeDfinityObject(value);
                     } else {
@@ -97,6 +103,18 @@ export default function capture(
                     }
                 }
                 return response;
+            }
+
+            // I suspect that this is important data that needs to be handle particularly
+            function decodePaths (value : { [key : number] : {
+                type : 'buffer',
+                data : number[],
+            }}) {
+                const resp : { [key : number] : number[]} = {};
+                Object.entries(value).forEach(([k, v]) => {
+                    resp[k as unknown as number] = v.data;
+                })
+                return value;
             }
 
             const requestByteFields = findByteFields(requestCBOR);
