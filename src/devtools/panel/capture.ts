@@ -1,4 +1,4 @@
-// NOTE: Comments and code represent my best understanding. They are not authoritative and will be wrong in some places.
+// NOTE: Comments and code represent my best understanding. They are not authoritative and they are error prone.
 import * as Agent from '@dfinity/agent';
 import { Principal } from '@dfinity/principal';
 import CBOR from 'cbor';
@@ -83,7 +83,7 @@ export default function capture(
         return;
     };
 
-    // Chrome treats erroneously parses our cbor into a string, so we need to back that out, then we can properly decode it as CBOR. (String -> B64 -> Bytes -> CBOR = Javascript Object)
+    // Chrome erroneously parses our cbor into a string, so we need to back that out, then we can properly decode it as CBOR. (String -> B64 -> Bytes -> CBOR = Javascript Object)
     const bytes = _base64ToBytes(btoa(event?.request?.postData?.text as string));
     const { value : { content : data } } = CBOR.decode(bytes) as { value : { content : Agent.QueryRequest | Agent.CallRequest | Agent.ReadStateRequest }};
 
@@ -109,12 +109,10 @@ export default function capture(
             request = r2;
             break;
         case 'read_state':
-            // TODO: Decoding path values is a total mystery...
-            // Perhaps I need access to the signing agent?
             const d3 = data as Agent.ReadStateRequest;
             const r3 : DecodedReadStateRequest = {
                 type, host, canister,
-                x : d3.paths.map(([k, v]) => [utfDecoder.decode(k), v])
+                x : d3.paths.map(([k, v]) => [utfDecoder.decode(k), '*Hashed address to retrieve response from IC output queue.*'])
             };
             request = r3;
             break;
@@ -143,7 +141,7 @@ export default function capture(
                     response = r1;
                     break;
                 case 'read_state':
-                    // TODO: Decoding the certificate certainly requires the signing agent. Is it at all possible to acquire the agent? If not, can I simply ask the user to authorize a new agent specifically for the decoder?
+                    // Would be really nice to use Agent.Certificate here.
                     const d2 = data as Agent.ReadStateResponse;
                     // const cert = new Agent.Certificate(d2);
                     // console.log(cert)
@@ -151,7 +149,6 @@ export default function capture(
                         certificate : d2.certificate,
                     };
                     response = r2;
-                    console.log()
                     break;
             };
         };
