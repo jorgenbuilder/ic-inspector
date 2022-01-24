@@ -74,6 +74,7 @@ function App() {
             {
                 Header: 'Type',
                 accessor: 'type',
+                Cell: (x: {value: string}) => <>{x.value === 'call' ? 'update' : x.value}</>
             },
             {
                 Header: 'Timestamp',
@@ -156,8 +157,13 @@ function DetailsPane (props : { event : LogEvent, clear : () => void}) {
             <div onClick={props.clear} className="close icon"></div>
         </div>
         <div className="details-pane__body">
+            {props.event.decoded.request.type === 'call' && <div>
+                <em>This request represents the start of an update call (i.e. an ingress message to the IC.) Unforunately, I can't decode update message responses for you just yet 🥺 (the read_state part.) <br /><br /><br /></em>
+            </div>}
             <strong>Canister</strong>
             <pre>{props.event.decoded.request.canister}</pre>
+            <strong>Caller</strong>
+            <pre>{props.event.decoded.request.caller}</pre>
             <strong>Method</strong>
             <pre>{
                 // @ts-ignore
