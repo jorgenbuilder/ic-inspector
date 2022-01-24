@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-key */
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Column, useTable } from 'react-table';
+import { Column, useGlobalFilter, useTable } from 'react-table';
 import capture, { LogEvent } from './capture';
 
 (window as any).global = window;
@@ -22,6 +22,7 @@ function App() {
     const [log, setLog] = React.useState<LogEvent[]>([]);
     const [capturing, setCapturing] = React.useState<boolean>(true);
     const [focusLog, setFocusLog] = React.useState<LogEvent>();
+    const [filter, setfilter] = React.useState<string>('');
 
     const captureRequest = React.useMemo(() => {
         return (request: chrome.devtools.network.Request) => {
@@ -91,12 +92,25 @@ function App() {
         headerGroups,
         rows,
         prepareRow,
-    } = useTable({ columns, data })
+        // @ts-ignore
+        setGlobalFilter,
+    } = useTable({
+        columns,
+        data,
+        initialState: {
+            // @ts-ignore
+            globalFilter: filter
+        }
+    }, useGlobalFilter)
 
     return <div className="panel">
         <div className="controls">
             <span onClick={() => setCapturing(!capturing)} className={['record icon', capturing ? 'active' : ''].join(' ')}></span>
             <span onClick={() => setLog([])} className="clear icon"></span>
+            <input type="text" className="filter" placeholder="Filter" onChange={(e) => {
+                setfilter(e.currentTarget.value)
+                setGlobalFilter(e.currentTarget.value)
+            }} value={filter} />
         </div>
         <div className={["panel-body", focusLog ? 'side-by-side' : ''].join(' ')}>
             <div className="table-container">
