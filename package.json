@@ -11,6 +11,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@dfinity/agent": "^0.10.2",
     "@dfinity/candid": "^0.10.1",
     "@extend-chrome/messages": "^1.2.2",
     "@rollup/plugin-replace": "^3.0.0",

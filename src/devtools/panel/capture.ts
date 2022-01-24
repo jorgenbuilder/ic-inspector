@@ -1,6 +1,5 @@
-// NOTE: Comments and code represent my best understanding. They are not authoritative and will be wrong in some places. I don't understand everthing about the Internet Computer.
-
-import { JsonValue } from '@dfinity/candid';
+// NOTE: Comments and code represent my best understanding. They are not authoritative and will be wrong in some places.
+import * as Agent from '@dfinity/agent';
 import { Principal } from '@dfinity/principal';
 import CBOR from 'cbor';
 import { decode } from './candid';
@@ -20,34 +19,6 @@ export interface LogEvent {
     };
 };
 
-// Abstract raw request.
-interface RawICRequest {
-    sender          : Uint8Array;
-    ingress_expiry  : BigInt;
-};
-
-// A query call to the IC.
-interface RawQueryRequest extends RawICRequest {
-    arg         : Uint8Array;
-    canister_id : Uint8Array;
-    method_name : string;
-    request_type: 'query'
-};
-
-// The initial ingress message of an update call to the IC.
-interface RawCallRequest extends RawICRequest {
-    arg         : Uint8Array;
-    canister_id : Uint8Array;
-    method_name : string;
-    request_type: 'call';
-};
-
-// Reading the result of an update call from the output queue of the IC.
-interface RawReadStateRequest extends RawICRequest {
-    paths       : Uint8Array[][];
-    request_type: 'read_state';
-};
-
 // Abstract decoded request.
 interface DecodedICRequest {
     host    : string;
@@ -59,9 +30,6 @@ interface DecodedICRequest {
 interface DecodedQueryRequest extends DecodedICRequest {
     type    : 'query';
     method  : string;
-    // TODO: These come from the response
-    // subnet  : string;
-    // node    : string;
     payload : {};
 }
 
@@ -69,9 +37,6 @@ interface DecodedQueryRequest extends DecodedICRequest {
 interface DecodedCallRequest extends DecodedICRequest {
     type    : 'call';
     method  : string;
-    // TODO: These come from the response
-    // subnet  : string;
-    // node    : string;
     payload : {};
 }
 
@@ -81,22 +46,10 @@ interface DecodedReadStateRequest extends DecodedICRequest {
     x       : any;
 };
 
-// Raw query response.
-interface RawQueryResponse {
-    status  : 'replied';
-    reply: {
-        arg : Uint8Array;
-    };
-};
-
-// Raw read_state response.
-interface RawReadStateResponse {
-    certificate : Uint8Array;
-};
-
 // A decoded query response.
 interface DecodedQueryResponse {
-    data: { [key : string] : any };
+    status  : 'replied' | 'rejected';
+    data?   : { [key : string] : any };
 };
 
 // A decoded call response.
@@ -104,7 +57,7 @@ type DecodedCallResponse = null;
 
 // A decoded read_state response.
 interface DecodedReadStateResponse {
-    certificate : Uint8Array;
+    certificate : ArrayBuffer;
 };
 
 const utfDecoder = new TextDecoder();
@@ -130,17 +83,15 @@ export default function capture(
         return;
     };
 
-    const mime = event.response.content.mimeType;
-
     // Chrome treats erroneously parses our cbor into a string, so we need to back that out, then we can properly decode it as CBOR. (String -> B64 -> Bytes -> CBOR = Javascript Object)
     const bytes = _base64ToBytes(btoa(event?.request?.postData?.text as string));
-    const { value : { content : data } } = CBOR.decode(bytes) as { value : { content : RawQueryRequest | RawCallRequest | RawReadStateRequest }};
+    const { value : { content : data } } = CBOR.decode(bytes) as { value : { content : Agent.QueryRequest | Agent.CallRequest | Agent.ReadStateRequest }};
 
     // Further decode the request.
     let request : DecodedQueryRequest | DecodedCallRequest | DecodedReadStateRequest;
     switch (type) {
         case 'query':
-            const d1 = data as RawQueryRequest;
+            const d1 = data as Agent.QueryRequest;
             const r1 : DecodedQueryRequest = {
                 type, host, canister,
                 method  : d1.method_name,
@@ -149,18 +100,18 @@ export default function capture(
             request = r1;
             break;
         case 'call':
-            const d2 = data as RawCallRequest;
+            const d2 = data as Agent.CallRequest;
             const r2 : DecodedCallRequest = {
                 type, host, canister,
-                method  : (data as RawCallRequest).method_name,
+                method  : (data as Agent.CallRequest).method_name,
                 payload : decodeDfinityObject((decode(d2.arg))),
             };
             request = r2;
             break;
         case 'read_state':
             // TODO: Decoding path values is a total mystery...
-            // Perhaps I need access to the signing agent.
-            const d3 = data as RawReadStateRequest;
+            // Perhaps I need access to the signing agent?
+            const d3 = data as Agent.ReadStateRequest;
             const r3 : DecodedReadStateRequest = {
                 type, host, canister,
                 x : d3.paths.map(([k, v]) => [utfDecoder.decode(k), v])
@@ -169,36 +120,38 @@ export default function capture(
             break;
     };
 
-    // @ts-ignore
-    console.info(host, canister, type, request?.method);
-
 
     // Capture / decode the response
     // NOTE: Apparently manifest v3 allows a promise based architecture for everything, but I can't find any docs on it for this method.
     event.getContent((content, encoding) => {
 
+        // @ts-ignore
         let response : DecodedQueryResponse | DecodedCallResponse | DecodedReadStateResponse = null;
         if (content) {
             const bytes = _base64ToBytes(content);
-            const { value : data } = CBOR.decode(bytes) as { value : RawQueryResponse | RawReadStateResponse };
+            const { value : data } = CBOR.decode(bytes) as { value : Agent.QueryResponse  | Agent.ReadStateResponse };
             // const responseByteFields = findByteFields(responseCBOR);
             // const responseCandid = findCandid(responseByteFields);
             // Further decode response.
             switch (type) {
                 case 'query':
-                    const d1 = data as RawQueryResponse;
+                    const d1 = data as Agent.QueryResponse;
                     const r1 : DecodedQueryResponse = {
-                        data : decodeDfinityObject(decode(d1.reply.arg)),
+                        status  : d1.status,
+                        data    : d1.status === 'replied' ? decodeDfinityObject(decode(d1?.reply?.arg)) : undefined,
                     };
                     response = r1;
                     break;
                 case 'read_state':
-                    // TODO: Not sure how to decode this certificate yet. Perhaps I need access to the signing agent.
-                    const d2 = data as RawReadStateResponse;
+                    // TODO: Decoding the certificate certainly requires the signing agent. Is it at all possible to acquire the agent? If not, can I simply ask the user to authorize a new agent specifically for the decoder?
+                    const d2 = data as Agent.ReadStateResponse;
+                    // const cert = new Agent.Certificate(d2);
+                    // console.log(cert)
                     const r2 : DecodedReadStateResponse = {
                         certificate : d2.certificate,
                     };
                     response = r2;
+                    console.log()
                     break;
             };
         };
@@ -254,15 +207,3 @@ function _base64ToBytes(base64: string) {
     }
     return bytes;
 }
-
-// function toHexString(byteArray: Uint8Array) {
-//     return Array.from(byteArray).map(x => {
-//         return byteToHex(x);
-//     }).join(' ');
-// }
-
-// const hexChar = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
-
-// function byteToHex(b: number) {
-//     return hexChar[(b >> 4) & 0x0f] + hexChar[b & 0x0f];
-// }
