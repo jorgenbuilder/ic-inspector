@@ -131,7 +131,7 @@ function App() {
                             return (
                                 <tr {...row.getRowProps()}>
                                     {row.cells.map((cell, i) => {
-                                        return <td onClick={i === 0 ? () => setFocusLog(log[j]) : undefined} {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                        return <td onClick={i === 0 ? () => setFocusLog(log[row.index]) : undefined} {...cell.getCellProps()}>{cell.render('Cell')}</td>
                                     })}
                                 </tr>
                             )
