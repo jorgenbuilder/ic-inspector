@@ -4,7 +4,7 @@
 
 A little chrome extension to decode CBOR/Candid responses from the Dfinity blockchain in Chrome devtools.
 
-_Alpha release pending review in chrome webstore now._
+[Download from the Chrome Web Store](https://chrome.google.com/webstore/detail/dfinity-decoder/meaadkenfkhjakkkdapaallimhbdofck)
 
 ICP Tips: 799d9974ec7604d031c34ea487015ef7efc92f283da4ce0b84a3aaadbeae0934
 
