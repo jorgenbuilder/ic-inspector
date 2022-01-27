@@ -96,7 +96,7 @@ export default async function capture(
     // For now we focus on ingress messages bound for the IC and their responses. It might be interesting to look at HTTP requests more broadly in the future, to examine assets canisters and so on.
     let host: string, canister: string, type: CallType;
     try {
-        const [, x, y, z] = event.request.url.match(/https?:\/\/((?:.+)?ic0\.app|localhost:[0-9]+)\/api\/v2\/canister\/(.+)\/(query|call|read_state)/) as [any, string, string, CallType];
+        const [, x, y, z] = event.request.url.match(/https?:\/\/((?:.+)?(?:ic0\.app|dfinity.network)|localhost:[0-9]+)\/api\/v2\/canister\/(.+)\/(query|call|read_state)/) as [any, string, string, CallType];
         host = x, canister = y, type = z;
     } catch (e) {
         return;
