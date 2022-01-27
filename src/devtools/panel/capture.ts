@@ -66,13 +66,17 @@ const agent = new Agent.HttpAgent({ host: "https://ic0.app" });
 // @ts-ignore
 const candidService = ({ IDL }) => IDL.Service({ __get_candid_interface_tmp_hack: IDL.Func([], [IDL.Text], ["query"]), });
 const actors: { [key: string]: Agent.Actor } = {};
-const candid: { [key: string]: [any, string] } = {};
+const candid: { [key: string]: [any, string | false] } = {};
 async function getActor(id: string): Promise<Agent.Actor> {
-    if (!actors[id]) {
+    if (actors[id] === undefined) {
         actors[id] = Agent.Actor.createActor(candidService, { agent, canisterId: id });
-        // @ts-ignore
-        const did = (await actors[id].__get_candid_interface_tmp_hack()) as string;
-        console.log(candid[id]);
+        try {
+            // @ts-ignore
+            candid[id] = (await actors[id].__get_candid_interface_tmp_hack()) as string;
+        } catch (e) {
+            console.error('Error fetching canister candid', e);
+            candid[id] = [undefined, false];
+        };
     }
     return actors[id];
 };
@@ -92,7 +96,7 @@ export default async function capture(
     // For now we focus on ingress messages bound for the IC and their responses. It might be interesting to look at HTTP requests more broadly in the future, to examine assets canisters and so on.
     let host: string, canister: string, type: CallType;
     try {
-        const [, x, y, z] = event.request.url.match(/https?:\/\/(raw\.ic0\.app|boundary\.ic0\.app|localhost:[0-9]+)\/api\/v2\/canister\/(.+)\/(query|call|read_state)/) as [any, string, string, CallType];
+        const [, x, y, z] = event.request.url.match(/https?:\/\/((?:.+)?ic0\.app|localhost:[0-9]+)\/api\/v2\/canister\/(.+)\/(query|call|read_state)/) as [any, string, string, CallType];
         host = x, canister = y, type = z;
     } catch (e) {
         return;
