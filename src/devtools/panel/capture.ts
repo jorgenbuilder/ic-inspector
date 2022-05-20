@@ -1,13 +1,11 @@
 // NOTE: Comments and code represent my best understanding. They are not authoritative and they are error prone.
 import * as Agent from '@dfinity/agent';
-import { RequestId, requestIdOf } from '@dfinity/agent';
+import { Certificate, ReadStateRequest, RequestId, RequestStatusResponseStatus } from '@dfinity/agent';
 import { Principal } from '@dfinity/principal';
 import CBOR from 'cbor';
 import { decode } from './candid';
 
 type CallType = 'query' | 'call' | 'read_state';
-
-let requestId : RequestId;
 
 export interface LogEvent {
     time: Date;
@@ -47,7 +45,9 @@ interface DecodedCallRequest extends DecodedICRequest {
 // A decoded read_state request.
 interface DecodedReadStateRequest extends DecodedICRequest {
     type: 'read_state';
-    x: any;
+    // An update call response contains a hash tree of state, and the paths allow us to pull the response from that tree. 
+    requestId: string;
+    method: string;
 };
 
 // A decoded query response.
@@ -60,8 +60,8 @@ interface DecodedQueryResponse {
 type DecodedCallResponse = null;
 
 // A decoded read_state response.
-interface DecodedReadStateResponse {
-    response: any;
+interface DecodedReadStateResponse extends ReadStateResult {
+    method: string;
 };
 
 const agent = new Agent.HttpAgent({ host: "https://ic0.app" });
@@ -111,10 +111,6 @@ export default async function capture(
     // Fetch the candid interface for this actor if we don't have it already.
     // await getActor(canister, isLocal);
 
-    // NOTE: We're giving up on read_state for now. I don't see how we'll be able to decode these messages without stealing the agent across global scopes.
-    // if (type === 'read_state') return;
-    const utfDecoder = new TextDecoder('utf-8');
-
     // Chrome erroneously parses our cbor into a string, so we need to back that out, then we can properly decode it as CBOR. (String -> B64 -> Bytes -> CBOR = Javascript Object)
     const bytes = _base64ToBytes(btoa(event?.request?.postData?.text as string));
     const { value: { content: data } } = CBOR.decode(bytes) as { value: { content: Agent.QueryRequest | Agent.CallRequest | Agent.ReadStateRequest } };
@@ -134,21 +130,22 @@ export default async function capture(
             break;
         case 'call':
             const callData = data as Agent.CallRequest;
+            console.log(callData);
             const callRequest: DecodedCallRequest = {
                 type, host, canister,
                 method: (data as Agent.CallRequest).method_name,
                 payload: decodeDfinityObject((decode(callData.arg))),
                 caller: ((callData.sender as Principal)._isPrincipal ? callData.sender as Principal : Principal.fromUint8Array(callData.sender as Uint8Array)).toString(),
             };
-            requestId = requestIdOf(callData);
             request = callRequest;
             break;
         case 'read_state':
             const readStateData = data as Agent.ReadStateRequest;
+            console.log(data)
             const readStateRequest: DecodedReadStateRequest = {
-                type, host, canister,
+                type, host, canister, method: data.method_name,
                 caller: ((readStateData.sender as Principal)._isPrincipal ? readStateData.sender as Principal : Principal.fromUint8Array(readStateData.sender as Uint8Array)).toString(),
-                x: readStateData.paths.map(([k, v]) => [utfDecoder.decode(k), '*Hashed address to retrieve response from IC output queue.*']),
+                requestId: toHex(readStateData.paths[0][1]),
             };
             request = readStateRequest;
             break;
@@ -186,13 +183,12 @@ export default async function capture(
                     break;
                 case 'read_state':
                     const readStateData = data as Agent.ReadStateResponse;
-                    const cert = new Agent.Certificate(readStateData, agent);
-                    const path = [new TextEncoder().encode('request_status'), requestId, 'reply'];
-                    
-                    const readStateResponse: DecodedReadStateResponse = {
-                        response: decode(cert.lookup(path) as ArrayBuffer)
-                    };
-                    response = readStateResponse;
+                    const r = (request as DecodedReadStateRequest);
+                    const state = readHashTree(agent, readStateData, requestIdFromHex(r.requestId));
+                    response = {
+                        ...state,
+                        method: r.method
+                    }
                     break;
             };
         };
@@ -247,3 +243,99 @@ function _base64ToBytes(base64: string) {
     }
     return bytes;
 }
+
+// Reading hash trees from read_state (https://github.com/dfinity/agent-js/blob/2fe3dd99cddfcf45c6d9d5b7a199a86285ce9740/packages/agent/src/polling/index.ts#L24)
+interface ReadStateResult {
+    rejected?: {
+        reject_code: number;
+        reject_message: string;
+    };
+    replied?: any;
+};
+
+function readHashTree(
+    agent: Agent.Agent,
+    state: Agent.ReadStateResponse,
+    requestId: RequestId,
+  ): ReadStateResult {
+    const cert = new Agent.Certificate(state, agent);
+    // @ts-ignore: manipulating the private `verified` property to bypass BLS verification. This is fine for debugging purposes, but it breaks the security model of the IC, so logs in the extension will not be trustable. There's a pure js BLS lib, but it will take 8 seconds to verify each certificate. There's a much faster WASM lib, but chrome extensions make that a pain.
+    cert.verified = true;
+    // const path = [...(request as unknown as ReadStateRequest).paths[0], 'reply'];
+
+    const path = [new TextEncoder().encode('request_status'), requestId];
+    
+    // @ts-ignore: manipulating the private `verified` property to bypass BLS verification. This is fine for debugging purposes, but it breaks the security model of the IC, so logs in the extension will not be trustable. There's a pure js BLS lib, but it will take 8 seconds to verify each certificate. There's a much faster WASM lib, but chrome extensions make that a pain.
+    cert.verified = true;
+
+    console.log(path);
+    console.log(cert.lookup([...path, new TextEncoder().encode('reply')]));
+
+    const maybeBuf = cert.lookup([...path, new TextEncoder().encode('status')]);
+    let status;
+    if (typeof maybeBuf === 'undefined') {
+        // Missing requestId means we need to wait
+        status = RequestStatusResponseStatus.Unknown;
+    } else {
+        status = new TextDecoder().decode(maybeBuf);
+    }
+
+    switch (status) {
+        case RequestStatusResponseStatus.Replied: {
+            return {
+                replied: decodeDfinityObject(decode(cert.lookup([...path, 'reply']) as ArrayBuffer)),
+            };
+        }
+
+        case RequestStatusResponseStatus.Received:
+        case RequestStatusResponseStatus.Unknown:
+        case RequestStatusResponseStatus.Processing:
+            // Pass
+            throw new Error('We only capture completed read_state requests');
+
+        case RequestStatusResponseStatus.Rejected: {
+            const rejectCode = new Uint8Array(cert.lookup([...path, 'reject_code'])!)[0];
+            const rejectMessage = new TextDecoder().decode(cert.lookup([...path, 'reject_message'])!);
+            return {
+                rejected: {
+                    reject_code: rejectCode,
+                    reject_message: rejectMessage,
+                }
+            }
+        }
+
+        case RequestStatusResponseStatus.Done:
+            // This is _technically_ not an error, but we still didn't see the `Replied` status so
+            // we don't know the result and cannot decode it.
+            throw new Error(
+                `Call was marked as done but we never saw the reply:\n` +
+                `  Request ID: ${toHex(requestId)}\n`,
+            );
+    }
+    throw new Error('unreachable');
+}
+
+export function toHex(buffer: ArrayBuffer): string {
+    return [...new Uint8Array(buffer)].map(x => x.toString(16).padStart(2, '0')).join('');
+}
+
+const hexRe = /^([0-9A-F]{2})*$/i;
+
+export function fromHex(hex: string): ArrayBuffer {
+    if (!hexRe.test(hex)) {
+      throw new Error('Invalid hexadecimal string.');
+    }
+    const buffer = [...hex]
+      .reduce((acc, curr, i) => {
+        // tslint:disable-next-line:no-bitwise
+        acc[(i / 2) | 0] = (acc[(i / 2) | 0] || '') + curr;
+        return acc;
+      }, [] as string[])
+      .map(x => Number.parseInt(x, 16));
+  
+    return new Uint8Array(buffer).buffer;
+}
+
+function requestIdFromHex(hex: string): RequestId {
+    return fromHex(hex) as RequestId;
+};
