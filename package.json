@@ -1,6 +1,6 @@
 {
   "name": "dfinity-decoder",
-  "version": "0.0.8",
+  "version": "0.0.10",
   "private": true,
   "description": "Decode network responses from the Dfinity blockchain.",
   "author": "Jorgen Builder",
@@ -12,7 +12,7 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@dfinity/agent": "^0.10.2",
+    "@dfinity/agent": "^0.10.4",
     "@dfinity/candid": "^0.10.1",
     "@extend-chrome/messages": "^1.2.2",
     "@rollup/plugin-replace": "^3.0.0",
