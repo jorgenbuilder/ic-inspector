@@ -1,7 +1,7 @@
 {
   "name": "dfinity-decoder",
   "version": "0.0.10",
-  "private": true,
+  "private": false,
   "description": "Decode network responses from the Dfinity blockchain.",
   "author": "Jorgen Builder",
   "scripts": {
