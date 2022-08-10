@@ -1,3 +1,3 @@
 export interface CandidUI {
-  did_to_js: (string) => string | undefined
+  did_to_js: (string) => [string] | []
 }

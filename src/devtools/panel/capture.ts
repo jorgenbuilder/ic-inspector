@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as Agent from '@dfinity/agent'
 import { RequestId, RequestStatusResponseStatus } from '@dfinity/agent'
+import { decode } from '@dfinity/candid/lib/cjs/idl'
 import { Principal } from '@dfinity/principal'
 import CBOR from 'cbor'
 import { agent } from '../../api/actors'
-import { decode } from './candid'
-import { getInterface } from './idl'
+import { decodeCandid, getInterface } from './idl'
 
 type CallType = 'query' | 'call' | 'read_state'
 
@@ -92,9 +92,7 @@ export default async function capture(
   }
 
   // Get candid interface for the canister.
-  console.log('capture')
   const candid = await getInterface(canister)
-  console.log(candid)
 
   // Chrome erroneously parses our cbor into a string, so we need to back that out, then we can properly decode it as CBOR. (String -> B64 -> Bytes -> CBOR = Javascript Object)
   const bytes = _base64ToBytes(btoa(event?.request?.postData?.text as string))
@@ -119,7 +117,7 @@ export default async function capture(
         host,
         canister,
         method: queryData.method_name,
-        payload: decodeDfinityObject(decode(queryData.arg)),
+        payload: decodeDfinityObject(decode([], queryData.arg)),
         caller: ((queryData.sender as Principal)._isPrincipal
           ? (queryData.sender as Principal)
           : Principal.fromUint8Array(queryData.sender as Uint8Array)
@@ -135,7 +133,7 @@ export default async function capture(
         host,
         canister,
         method: (data as Agent.CallRequest).method_name,
-        payload: decodeDfinityObject(decode(callData.arg)),
+        payload: decodeDfinityObject(decode([], callData.arg)),
         caller: ((callData.sender as Principal)._isPrincipal
           ? (callData.sender as Principal)
           : Principal.fromUint8Array(callData.sender as Uint8Array)
@@ -181,11 +179,17 @@ export default async function capture(
       switch (type) {
         case 'query': {
           const queryData = data as Agent.QueryResponse
+          const r = await decodeCandid(
+            candid,
+            queryData.reply.arg,
+            request.method,
+            'response',
+          )
           const queryResponse: DecodedQueryResponse = {
             status: queryData.status,
             data:
               queryData.status === 'replied'
-                ? decodeDfinityObject(decode(queryData?.reply?.arg))
+                ? decodeDfinityObject(r)
                 : undefined,
           }
           response = queryResponse
@@ -193,11 +197,17 @@ export default async function capture(
         }
         case 'call': {
           const callData = data as Agent.QueryResponse
+          const r = await decodeCandid(
+            candid,
+            callData.reply.arg,
+            request.method,
+            'response',
+          )
           const callResponse: DecodedQueryResponse = {
             status: callData.status,
             data:
               callData.status === 'replied'
-                ? decodeDfinityObject(decode(callData?.reply?.arg))
+                ? decodeDfinityObject(r)
                 : undefined,
           }
           response = callResponse
@@ -239,21 +249,31 @@ export default async function capture(
 }
 
 function decodeDfinityObject(obj: { [key: string]: any }) {
-  const response: { [key: string]: unknown } = {}
-  for (const [key, value] of Object.entries<unknown>(obj)) {
-    if ((value as Principal)?._isPrincipal) {
-      response[key] = (value as Principal)?.toText()
-    } else if (typeof value === 'bigint') {
-      response[key] = Number(value)
-    } else if ((value as any)?._isBuffer) {
-      response[key] = value
-    } else if (typeof value === 'object') {
-      response[key] = decodeDfinityObject(value as Record<string, unknown>)
-    } else {
-      response[key] = value
-    }
-  }
-  return response
+  // const response: { [key: string]: unknown } = {}
+  // for (const [key, value] of Object.entries<unknown>(obj)) {
+  //   if ((value as Principal)?._isPrincipal) {
+  //     response[key] = (value as Principal)?.toText()
+  //   } else if (typeof value === 'bigint') {
+  //     response[key] = Number(value)
+  //   } else if ((value as any)?._isBuffer) {
+  //     response[key] = value
+  //   } else if (typeof value === 'object') {
+  //     response[key] = decodeDfinityObject(value as Record<string, unknown>)
+  //   } else {
+  //     response[key] = value
+  //   }
+  // }
+  // return response
+  return JSON.parse(
+    JSON.stringify(obj, (key, value) => {
+      if (typeof value === 'bigint') {
+        return Number(value)
+      } else if (value?._isPrincipal) {
+        return Principal.fromUint8Array(value._arr).toString()
+      }
+      return value
+    }),
+  )
 }
 
 // Converting things...
@@ -304,7 +324,7 @@ function readHashTree(
     case RequestStatusResponseStatus.Replied: {
       return {
         replied: decodeDfinityObject(
-          decode(cert.lookup([...path, 'reply']) as ArrayBuffer),
+          decode([], cert.lookup([...path, 'reply']) as ArrayBuffer),
         ),
       }
     }

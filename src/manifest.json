@@ -5,7 +5,11 @@
   "permissions": [],
   "web_accessible_resources": [
     {
-      "resources": ["devtools/panel/index.html", "assets/icons.svg"],
+      "resources": [
+        "devtools/panel/index.html",
+        "assets/icons.svg",
+        "devtools/panel/sandbox.html"
+      ],
       "matches": ["<all_urls>"]
     }
   ],
@@ -13,5 +17,11 @@
     "16": "assets/16.png",
     "48": "assets/48.png",
     "128": "assets/128.png"
+  },
+  "sandbox": {
+    "pages": ["devtools/panel/sandbox.html"]
+  },
+  "content_security_policy": {
+    "sandbox": "sandbox allow-scripts; script-src-elem  'unsafe-eval' 'unsafe-inline' 'self' https://* http://*; object-src 'self'"
   }
 }
