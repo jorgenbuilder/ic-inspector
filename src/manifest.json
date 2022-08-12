@@ -1,14 +1,14 @@
 {
   "manifest_version": 3,
   "name": "Dfinity Decoder",
-  "devtools_page": "devtools/index.html",
+  "devtools_page": "index.html",
   "permissions": [],
   "web_accessible_resources": [
     {
       "resources": [
-        "devtools/panel/index.html",
         "assets/icons.svg",
-        "devtools/panel/sandbox.html"
+        "devtools/index.html",
+        "sandbox/index.html"
       ],
       "matches": ["<all_urls>"]
     }
@@ -19,7 +19,7 @@
     "128": "assets/128.png"
   },
   "sandbox": {
-    "pages": ["devtools/panel/sandbox.html"]
+    "pages": ["sandbox/index.html"]
   },
   "content_security_policy": {
     "sandbox": "sandbox allow-scripts; script-src-elem  'unsafe-eval' 'unsafe-inline' 'self' https://* http://*; object-src 'self'"
