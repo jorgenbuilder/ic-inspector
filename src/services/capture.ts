@@ -1,409 +1,383 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import * as Agent from '@dfinity/agent';
-import { RequestId, RequestStatusResponseStatus } from '@dfinity/agent';
-import { decode } from '@dfinity/candid/lib/cjs/idl';
+import {
+    ReadRequest,
+    CallRequest,
+    requestIdOf,
+    ReadStateResponse,
+    QueryResponse,
+    SubmitResponse,
+    Certificate,
+    Expiry,
+    HttpAgent,
+    RequestStatusResponseStatus,
+    QueryResponseStatus,
+} from '@dfinity/agent';
 import { Principal } from '@dfinity/principal';
-import CBOR from 'cbor';
-import { agent } from '../api/actors';
-import { decodeCandidArgs, decodeCandidVals } from './candid';
+import { decode as cborDecode } from 'cbor-x';
+import { toHexString } from 'ictool';
 
-type CallType = 'query' | 'call' | 'read_state';
+import {
+    CandidDecodeResult,
+    decodeCandidArgs,
+    decodeCandidVals,
+} from './candid';
+import { asPrincipal, base64ToBytes } from './common';
 
-export interface LogEvent {
-    time: Date;
-    decoded: {
-        request:
-            | DecodedQueryRequest
-            | DecodedCallRequest
-            | DecodedReadStateRequest;
-        response:
-            | DecodedQueryResponse
-            | DecodedCallResponse
-            | DecodedReadStateResponse;
-    };
-    raw: {
-        url: string;
-        request: unknown;
-        response: unknown;
-    };
-}
+/////////////////////
+// Decode Request //
+///////////////////
 
-// Abstract decoded request.
-interface DecodedICRequest {
-    host: string;
-    canister: string;
-    type: CallType;
-    caller: string;
-}
+export type RequestType = 'query' | 'call' | 'read_state';
+type InternetComputerRequest = ReadRequest | CallRequest;
 
-// A decoded query request.
-interface DecodedQueryRequest extends DecodedICRequest {
-    type: 'query';
-    method: string;
-    payload: unknown;
-}
-
-// A decoded call request.
-interface DecodedCallRequest extends DecodedICRequest {
-    type: 'call';
-    method: string;
-    payload: unknown;
-}
-
-// A decoded read_state request.
-interface DecodedReadStateRequest extends DecodedICRequest {
-    type: 'read_state';
-    // An update call response contains a hash tree of state, and the paths allow us to pull the response from that tree.
+interface AbstractDecodedRequest {
+    message: string;
     requestId: string;
+    canisterId: string;
     method: string;
+    sender: Principal;
+    requestType: RequestType;
+    ingressExpiry: Expiry;
+    boundary: URL;
 }
 
-// A decoded query response.
-interface DecodedQueryResponse {
-    status: 'replied' | 'rejected';
-    data?: { [key: string]: any };
+interface DecodedCallRequest extends AbstractDecodedRequest {
+    paths: ArrayBuffer[][];
 }
 
-// A decoded call response.
-type DecodedCallResponse = null;
-
-// A decoded read_state response.
-interface DecodedReadStateResponse extends ReadStateResult {
-    method: string;
+interface DecodedReadRequest extends AbstractDecodedRequest {
+    args: {
+        result: any;
+        withInterface: boolean;
+    };
 }
 
-// Capture, decode and log a Dfinity CBOR/Candid network event from a chrome network event.
-export default async function capture(
+export type DecodedRequest = DecodedCallRequest | DecodedReadRequest;
+
+const boundaryNodeRegex =
+    /https?:\/\/(?:.+)?((?:ic0\.app|dfinity.network)|localhost:[0-9]+)\/api\/v2\/canister\/(.+)\/(query|call|read_state)/;
+
+/**
+ * Determines whether a URL represents a request to an internet computer boundary node.
+ */
+export function isBoundaryNodeURL(url: string) {
+    return Boolean(url.match(boundaryNodeRegex));
+}
+
+/**
+ * Determines whether a network event is an internet computer request/response that we want to record.
+ */
+function shouldCapture(event: chrome.devtools.network.Request) {
+    return (
+        isBoundaryNodeURL(event.request.url) && event.request.method === 'POST'
+    );
+}
+
+// A read_state requests doesn't include critical information about the original call request, so we track this data in memory.
+const messageDetails: {
+    [key: string]: {
+        canisterId: string;
+        method: string;
+    };
+} = {};
+
+/**
+ * Decode the body of an internet computer request.
+ */
+async function decodeRequest(
     event: chrome.devtools.network.Request,
-    log: LogEvent[],
-    callback?: (event: LogEvent) => void,
-): Promise<void> {
-    const time = new Date();
-
-    // Not interested in pre flight requests for the moment.
-    if (event.request.method === 'OPTIONS') return;
-
-    // For now we focus on ingress messages bound for the IC and their responses. It might be interesting to look at HTTP requests more broadly in the future, to examine assets canisters and so on.
-    let host: string, canister: string, type: CallType;
-    try {
-        const [, x, y, z] = event.request.url.match(
-            /https?:\/\/(?:.+)?((?:ic0\.app|dfinity.network)|localhost:[0-9]+)\/api\/v2\/canister\/(.+)\/(query|call|read_state)/,
-        ) as [any, string, string, CallType];
-        (host = x), (canister = y), (type = z);
-    } catch (e) {
-        return;
+): Promise<DecodedRequest> {
+    if (!event.request.postData?.text) {
+        throw new Error('Could not retrieve post data for request');
     }
 
-    // Chrome erroneously parses our cbor into a string, so we need to back that out, then we can properly decode it as CBOR. (String -> B64 -> Bytes -> CBOR = Javascript Object)
-    const bytes = _base64ToBytes(
-        btoa(event?.request?.postData?.text as string),
-    );
-    const {
-        value: { content: data },
-    } = CBOR.decode(bytes) as {
-        value: {
-            content:
-                | Agent.QueryRequest
-                | Agent.CallRequest
-                | Agent.ReadStateRequest;
+    const requestText = event.request.postData.text;
+
+    // Chrome encodes the string into a latin character set. We reverse that.
+    const b64 = window.btoa(requestText);
+
+    // The network request text is a B64 encoded string. We decode to bytes.
+    const bytes = base64ToBytes(b64);
+
+    // The resulting bytes are encoded in CBOR. We decode to an InternetComputerRequest.
+    const result: { content: InternetComputerRequest } = cborDecode(bytes);
+
+    // Validate the decoded content (not even sure where the content key comes from...)
+    if (!('content' in result)) {
+        console.error(result);
+        throw new Error(
+            `Unreachable: unexpected missing "content" key in decode.`,
+        );
+    }
+
+    // Validate the request.
+    const request = result.content;
+    if (
+        !('request_type' in request) ||
+        !['query', 'call', 'read_state'].includes(request.request_type)
+    ) {
+        console.error("Unexpected request", request);
+        throw new Error(`Unreachable: unexpected result decoded from request.`);
+    }
+
+    // Following parameters are common to all request types.
+    const sender = asPrincipal(request.sender);
+    const requestType = request.request_type;
+    const ingressExpiry = request.ingress_expiry;
+    const requestId = toHexString([...new Uint8Array(requestIdOf(request))]);
+    const boundary = new URL(event.request.url);
+
+    if (requestType === 'query' || requestType === 'call') {
+        // These parameters common to "call" and "query" requests.
+        const canisterId = asPrincipal(request.canister_id).toText();
+        const method = request.method_name;
+
+        // This parameter allows us to determine which original ic message a request is concerned with
+        const message = requestId;
+        // NOTE: Bad side effect. Why does putting this below the next await cause the value not to be set when accessed in decodeRequest?
+        messageDetails[message] = {
+            canisterId: canisterId,
+            method,
         };
-    };
+        const args = await decodeCandidArgs(canisterId, method, request.arg);
 
-    // Further decode the request.
-    let request:
-        | DecodedQueryRequest
-        | DecodedCallRequest
-        | DecodedReadStateRequest;
-    switch (type) {
-        case 'query': {
-            const queryData = data as Agent.QueryRequest;
-            const queryRequest: DecodedQueryRequest = {
-                type,
-                host,
-                canister,
-                method: queryData.method_name,
-                payload: decodeDfinityObject(
-                    await decodeCandidArgs(
-                        canister,
-                        queryData.method_name,
-                        queryData.arg,
-                    ),
-                ),
-                caller: ((queryData.sender as Principal)._isPrincipal
-                    ? (queryData.sender as Principal)
-                    : Principal.fromUint8Array(queryData.sender as Uint8Array)
-                ).toString(),
-            };
-            request = queryRequest;
-            break;
-        }
-        case 'call': {
-            const callData = data as Agent.CallRequest;
-            const callRequest: DecodedCallRequest = {
-                type,
-                host,
-                canister,
-                method: (data as Agent.CallRequest).method_name,
-                payload: decodeDfinityObject(
-                    await decodeCandidArgs(
-                        canister,
-                        callData.method_name,
-                        callData.arg,
-                    ),
-                ),
-                caller: ((callData.sender as Principal)._isPrincipal
-                    ? (callData.sender as Principal)
-                    : Principal.fromUint8Array(callData.sender as Uint8Array)
-                ).toString(),
-            };
-            request = callRequest;
-            break;
-        }
-        case 'read_state': {
-            const readStateData = data as Agent.ReadStateRequest;
-            const readStateRequest: DecodedReadStateRequest = {
-                type,
-                host,
-                canister,
-                method: data.method_name,
-                caller: ((readStateData.sender as Principal)._isPrincipal
-                    ? (readStateData.sender as Principal)
-                    : Principal.fromUint8Array(
-                          readStateData.sender as Uint8Array,
-                      )
-                ).toString(),
-                requestId: toHex(readStateData.paths[0][1]),
-            };
-            request = readStateRequest;
-            break;
-        }
-    }
-
-    // Capture / decode the response
-    // NOTE: Apparently manifest v3 allows a promise based architecture for everything, but I can't find any docs on it for this method.
-    event.getContent(async (content, encoding) => {
-        // @ts-ignore
-        let response:
-            | DecodedQueryResponse
-            | DecodedCallResponse
-            | DecodedReadStateResponse = null;
-        if (content) {
-            const bytes = _base64ToBytes(content);
-            const { value: data } = CBOR.decode(bytes) as {
-                value: Agent.QueryResponse | Agent.ReadStateResponse;
-            };
-            // const responseByteFields = findByteFields(responseCBOR);
-            // const responseCandid = findCandid(responseByteFields);
-            // Further decode response.
-            switch (type) {
-                case 'query': {
-                    const queryData = data as Agent.QueryResponse;
-                    const queryResponse: DecodedQueryResponse = {
-                        status: queryData.status,
-                        data:
-                            queryData.status === 'replied'
-                                ? decodeDfinityObject(
-                                      await decodeCandidVals(
-                                          canister,
-                                          request.method,
-                                          queryData.reply.arg,
-                                      ),
-                                  )
-                                : undefined,
-                    };
-                    response = queryResponse;
-                    break;
-                }
-                case 'call': {
-                    const callData = data as Agent.QueryResponse;
-                    const callResponse: DecodedQueryResponse = {
-                        status: callData.status,
-                        data:
-                            callData.status === 'replied'
-                                ? decodeDfinityObject(
-                                      await decodeCandidVals(
-                                          canister,
-                                          request.method,
-                                          callData.reply.arg,
-                                      ),
-                                  )
-                                : undefined,
-                    };
-                    response = callResponse;
-                    break;
-                }
-                case 'read_state': {
-                    const readStateData = data as Agent.ReadStateResponse;
-                    const r = request as DecodedReadStateRequest;
-                    const state = readHashTree(
-                        agent,
-                        readStateData,
-                        requestIdFromHex(r.requestId),
-                    );
-                    response = {
-                        ...state,
-                        method: r.method,
-                    };
-                    break;
-                }
-            }
-        }
-
-        const entry: LogEvent = {
-            time,
-            decoded: { request, response },
-            raw: {
-                url: event.request.url,
-                request: event.request,
-                response: event.response,
-            },
+        return {
+            boundary,
+            message,
+            requestId,
+            sender,
+            requestType,
+            ingressExpiry,
+            canisterId,
+            method,
+            args,
         };
-
-        log.push(entry);
-
-        if (callback) {
-            callback(entry);
-        }
-    });
-}
-
-function decodeDfinityObject(obj: { [key: string]: any }) {
-    // const response: { [key: string]: unknown } = {}
-    // for (const [key, value] of Object.entries<unknown>(obj)) {
-    //   if ((value as Principal)?._isPrincipal) {
-    //     response[key] = (value as Principal)?.toText()
-    //   } else if (typeof value === 'bigint') {
-    //     response[key] = Number(value)
-    //   } else if ((value as any)?._isBuffer) {
-    //     response[key] = value
-    //   } else if (typeof value === 'object') {
-    //     response[key] = decodeDfinityObject(value as Record<string, unknown>)
-    //   } else {
-    //     response[key] = value
-    //   }
-    // }
-    // return response
-    return JSON.parse(
-        JSON.stringify(obj, (key, value) => {
-            if (typeof value === 'bigint') {
-                return Number(value);
-            } else if (value?._isPrincipal) {
-                return Principal.fromUint8Array(value._arr).toString();
-            }
-            return value;
-        }),
-    );
-}
-
-// Converting things...
-function _base64ToBytes(base64: string) {
-    const binary_string = window.atob(base64);
-    const len = binary_string.length;
-    const bytes = new Uint8Array(len);
-    for (let i = 0; i < len; i++) {
-        bytes[i] = binary_string.charCodeAt(i);
-    }
-    return bytes;
-}
-
-// Reading hash trees from read_state (https://github.com/dfinity/agent-js/blob/2fe3dd99cddfcf45c6d9d5b7a199a86285ce9740/packages/agent/src/polling/index.ts#L24)
-interface ReadStateResult {
-    rejected?: {
-        reject_code: number;
-        reject_message: string;
-    };
-    replied?: any;
-}
-
-function readHashTree(
-    agent: Agent.Agent,
-    state: Agent.ReadStateResponse,
-    requestId: RequestId,
-): ReadStateResult {
-    const cert = new Agent.Certificate(state, agent);
-    // @ts-ignore: manipulating the private `verified` property to bypass BLS verification. This is fine for debugging purposes, but it breaks the security model of the IC, so logs in the extension will not be trustable. There's a pure js BLS lib, but it will take 8 seconds to verify each certificate. There's a much faster WASM lib, but chrome extensions make that a pain.
-    cert.verified = true;
-    // const path = [...(request as unknown as ReadStateRequest).paths[0], 'reply'];
-
-    const path = [new TextEncoder().encode('request_status'), requestId];
-
-    // @ts-ignore: manipulating the private `verified` property to bypass BLS verification. This is fine for debugging purposes, but it breaks the security model of the IC, so logs in the extension will not be trustable. There's a pure js BLS lib, but it will take 8 seconds to verify each certificate. There's a much faster WASM lib, but chrome extensions make that a pain.
-    cert.verified = true;
-
-    const maybeBuf = cert.lookup([...path, new TextEncoder().encode('status')]);
-    let status;
-    if (typeof maybeBuf === 'undefined') {
-        // Missing requestId means we need to wait
-        status = RequestStatusResponseStatus.Unknown;
     } else {
-        status = new TextDecoder().decode(maybeBuf);
+        // These parameters only on "read_state" requests
+        const paths = request.paths;
+
+        // The lookup path provided in "read_state" request is the requestId of the original "call" request
+        const message = toHexString([...new Uint8Array(request.paths[0][1])]);
+
+        const { method, canisterId } = messageDetails[message];
+        return {
+            boundary,
+            message,
+            requestId,
+            canisterId,
+            method,
+            sender,
+            requestType,
+            ingressExpiry,
+            paths,
+        };
+    }
+}
+
+//////////////////////
+// Decode Response //
+////////////////////
+
+type InternetComputerResponse =
+    | QueryResponse
+    | ReadStateResponse
+    | SubmitResponse;
+
+interface DecodedQueryResponse {
+    status: QueryResponseStatus;
+}
+
+interface RepliedQueryResponse extends DecodedQueryResponse {
+    reply: CandidDecodeResult;
+}
+
+interface RejectedQueryResponse extends DecodedQueryResponse {
+    message: string;
+    code: number;
+}
+
+interface DecodedReadStateResponse {
+    status: RequestStatusResponseStatus;
+}
+
+interface RepliedReadStateResponse extends DecodedReadStateResponse {
+    reply: CandidDecodeResult;
+}
+
+interface RejectedReadStateResponse extends DecodedReadStateResponse {
+    message: string;
+    code: number;
+}
+
+export type DecodedResponse =
+    | DecodedQueryResponse
+    | RepliedQueryResponse
+    | RejectedQueryResponse
+    | DecodedReadStateResponse
+    | RepliedReadStateResponse
+    | RejectedReadStateResponse;
+
+async function decodeResponse(
+    event: chrome.devtools.network.Request,
+    request: DecodedRequest,
+): Promise<DecodedResponse> {
+    // We retrieve the response text through chrome's async api
+    const content = await new Promise<string>((res) =>
+        event.getContent((content) => res(content)),
+    ) as string | undefined;
+
+    // The resulting content is a B64 encoded string. We decode to byes.
+    const bytes = content ? base64ToBytes(content) : undefined;
+
+    // The resulting bytes are encoded in CBOR. We decode to an InternetComputerResponse.
+    const response = (function () {
+        try {
+            return bytes ? cborDecode(bytes) : undefined;
+        } catch (e) {
+            if (e instanceof Error && e.message === 'Unknown token 30') {
+                // TODO: Some error for call responses here. I don't really care about call responses for the moment.
+                throw 'TODO: call response cbor decode issue.';
+            } else {
+                throw e;
+            }
+        }
+    })() as InternetComputerResponse | undefined;
+
+    // Validate the response
+    if (
+        !response ||
+        (!('status' in response) &&
+            !('certificate' in response) &&
+            !('requestId' in response))
+    ) {
+        // TODO: http_request responses are undefined, which leads to this error
+        console.error("Unexpected response", response);
+        throw new Error(
+            `Unreachable: unexpected result decoded from response.`,
+        );
     }
 
-    switch (status) {
-        case RequestStatusResponseStatus.Replied: {
-            return {
-                replied: decodeDfinityObject(
-                    // TODO: This should use our new candid decode response method
-                    decode([], cert.lookup([...path, 'reply']) as ArrayBuffer),
-                ),
-            };
-        }
-
-        case RequestStatusResponseStatus.Received:
-        case RequestStatusResponseStatus.Unknown:
-        case RequestStatusResponseStatus.Processing:
-            // Pass
-            throw new Error('We only capture completed read_state requests');
-
-        case RequestStatusResponseStatus.Rejected: {
-            const rejectCode = new Uint8Array(
-                cert.lookup([...path, 'reject_code'])!,
-            )[0];
-            const rejectMessage = new TextDecoder().decode(
-                cert.lookup([...path, 'reject_message'])!,
-            );
-            return {
-                rejected: {
-                    reject_code: rejectCode,
-                    reject_message: rejectMessage,
-                },
-            };
-        }
-
-        case RequestStatusResponseStatus.Done:
-            // This is _technically_ not an error, but we still didn't see the `Replied` status so
-            // we don't know the result and cannot decode it.
+    if ('status' in response) {
+        // Validate we have corresponding query request
+        if (request.requestType !== 'query') {
             throw new Error(
-                `Call was marked as done but we never saw the reply:\n` +
-                    `  Request ID: ${toHex(requestId)}\n`,
+                'Unreachable: query response follows query request.',
             );
+        }
+        const { canisterId, method } = request as DecodedReadRequest;
+
+        // These parameters exist on query response
+        const status = response.status;
+        if (status === 'replied') {
+            // These parameters exist on successful query response
+            const reply = await decodeCandidVals(
+                canisterId,
+                method,
+                response.reply.arg,
+            );
+            return { status, reply };
+        } else {
+            // These parameters exist on failed query response
+            const message = response.reject_message;
+            const code = response.reject_code;
+            return { status, message, code };
+        }
+    } else if ('certificate' in response) {
+        // Validate we have corresponding read_state request
+        if (request.requestType !== 'read_state') {
+            throw new Error(
+                'Unreachable: read_state response follows read_state request.',
+            );
+        }
+        const { paths, message } = request as DecodedCallRequest;
+
+        // Validate the request path
+        const p1 = new TextDecoder().decode(paths[0][0]);
+        if (p1 !== 'request_status') {
+            throw new Error(`Unexpected first path fragment: ${p1}`);
+        }
+
+        const details = messageDetails[message];
+
+        if (!details) {
+            console.log(messageDetails);
+            throw new Error(
+                `Unreachable: could not retrieve canister and method: ${message}`,
+            );
+        }
+
+        const { canisterId, method } = details;
+
+        const cert = new Certificate(response, new HttpAgent());
+        // @ts-ignore: manipulating the private `verified` property to bypass BLS verification. This is fine for debugging purposes, but it breaks the security model of the IC, so logs in the extension will not be trustable. There's a pure js BLS lib, but it will take 8 seconds to verify each certificate. There's a much faster WASM lib, but chrome extensions make that a pain (could be something worth implementing in the sandbox.)
+        cert.verified = true;
+
+        const status = (function () {
+            const result = cert.lookup([
+                ...paths.flat(),
+                new TextEncoder().encode('status'),
+            ]);
+            if (result instanceof ArrayBuffer) {
+                const status = new TextDecoder().decode(result);
+                return status as RequestStatusResponseStatus;
+            }
+            // Missing requestId means we need to wait
+            return RequestStatusResponseStatus.Unknown;
+        })();
+
+        switch (status) {
+            case RequestStatusResponseStatus.Replied: {
+                const buffer = cert.lookup([...paths.flat(), 'reply']);
+                if (!buffer) {
+                    throw new Error(
+                        'Unreachable: successful read_state must have reply',
+                    );
+                }
+                const reply = await decodeCandidVals(
+                    canisterId,
+                    method,
+                    buffer,
+                );
+                return { status, reply } as RepliedReadStateResponse;
+            }
+
+            case RequestStatusResponseStatus.Received:
+            case RequestStatusResponseStatus.Unknown:
+            case RequestStatusResponseStatus.Processing:
+                return { status };
+
+            case RequestStatusResponseStatus.Rejected: {
+                const code = new Uint8Array(
+                    cert.lookup([...paths.flat(), 'reject_code'])!,
+                )[0];
+                const message = new TextDecoder().decode(
+                    cert.lookup([...paths.flat(), 'reject_message'])!,
+                );
+                return { status, message, code };
+            }
+
+            case RequestStatusResponseStatus.Done:
+                throw new Error(
+                    `Call was marked as done but we never saw the reply`,
+                );
+        }
+    } else {
+        throw 'TODO: Call responses';
     }
-    throw new Error('unreachable');
 }
 
-export function toHex(buffer: ArrayBuffer): string {
-    return [...new Uint8Array(buffer)]
-        .map((x) => x.toString(16).padStart(2, '0'))
-        .join('');
-}
+/**
+ * Filter and decode internet computer message from a chrome network event.
+ */
+export async function captureInternetComputerMessageFromNetworkEvent(
+    event: chrome.devtools.network.Request,
+) {
+    if (!shouldCapture(event)) return;
 
-const hexRe = /^([0-9A-F]{2})*$/i;
+    const request = await decodeRequest(event);
+    console.debug(decodeRequest.name, request);
 
-export function fromHex(hex: string): ArrayBuffer {
-    if (!hexRe.test(hex)) {
-        throw new Error('Invalid hexadecimal string.');
-    }
-    const buffer = [...hex]
-        .reduce((acc, curr, i) => {
-            // tslint:disable-next-line:no-bitwise
-            acc[(i / 2) | 0] = (acc[(i / 2) | 0] || '') + curr;
-            return acc;
-        }, [] as string[])
-        .map((x) => Number.parseInt(x, 16));
+    const response = await decodeResponse(event, request);
+    console.debug(decodeResponse.name, response);
 
-    return new Uint8Array(buffer).buffer;
-}
-
-function requestIdFromHex(hex: string): RequestId {
-    return fromHex(hex) as RequestId;
+    return { request, response };
 }

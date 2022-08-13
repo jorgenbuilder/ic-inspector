@@ -1,4 +1,4 @@
-import { chrome as jestChrome } from 'jest-chrome';
+// import { chrome as jestChrome } from 'jest-chrome';
 
 test('browser is defined in the global scope', () => {
     expect(browser).toBeDefined();
@@ -7,19 +7,25 @@ test('browser is defined in the global scope', () => {
     expect(browser.runtime.sendMessage).toBeUndefined();
 });
 
-test('browser api methods are defined after implementation in chrome api', () => {
-    // You need to add an implementation for each Chrome API method you use
-    //   Methods will be present in the Chrome API without implementations
-    //     but unused methods in the Browser API will be undefined
-    jestChrome.runtime.sendMessage.mockImplementation((message, cb) => {
-        cb({ greeting: 'test-response' });
-    });
+// test('browser api methods are defined after implementation in chrome api', () => {
+//     // You need to add an implementation for each Chrome API method you use
+//     //   Methods will be present in the Chrome API without implementations
+//     //     but unused methods in the Browser API will be undefined
+//     jestChrome.runtime.sendMessage.mockImplementation((message, cb) => {
+//         cb({ greeting: 'test-response' });
+//     });
 
-    expect(browser.runtime.sendMessage).toBeDefined();
-});
+//     expect(browser.runtime.sendMessage).toBeDefined();
+// });
 
 test('chrome is mocked in the global scope', () => {
     expect(chrome).toBeDefined();
     expect(chrome.runtime).toBeDefined();
     expect(chrome.runtime.sendMessage).toBeDefined();
+});
+
+test('chrome devtools is mocked in the global scope', async () => {
+    expect(chrome.devtools).toBeDefined();
+    expect(chrome.devtools.network).toBeDefined();
+    expect(chrome.devtools.network.onRequestFinished.addListener).toBeDefined();
 });

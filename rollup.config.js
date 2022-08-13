@@ -23,6 +23,7 @@ export default {
   },
   plugins: [
     wasm(),
+    commonjs(),
     replace({
       'process.env.NODE_ENV': isProduction
         ? JSON.stringify('production')
@@ -32,7 +33,6 @@ export default {
     chromeExtension(),
     // Adds a Chrome extension reloader during watch mode
     simpleReloader(),
-    commonjs(),
     nodePolyfills(),
     resolve(),
     typescript(),

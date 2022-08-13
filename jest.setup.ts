@@ -1,5 +1,6 @@
 import { chrome } from 'jest-chrome';
 import { TextEncoder, TextDecoder } from 'util';
+import fetchMock from 'jest-fetch-mock';
 
 // @ts-expect-error we need to set this to use browser polyfill
 chrome.runtime.id = 'test id';
@@ -13,4 +14,5 @@ Object.assign(global, { browser });
 global.TextEncoder = TextEncoder;
 // @ts-ignore
 global.TextDecoder = TextDecoder;
-global.fetch = window.fetch;
+
+fetchMock.enableMocks();

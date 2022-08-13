@@ -4,35 +4,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Column, useGlobalFilter, useTable } from 'react-table';
-import capture, { LogEvent } from '../services/capture';
-import { captureInternetComputerMessageFromNetworkEvent } from '../services/capture-new';
+import { captureInternetComputerMessageFromNetworkEvent } from '../../services/capture';
+import logRepository, { MessageEntry, MessageStatus } from '../../repositories/logs';
+import { useStore } from 'zustand';
+import { serialize } from '../../services/common';
 
 (window as any).global = window;
 
 interface Row {
-    i: number;
-    timestamp: Date;
-    canister: string;
-    method: string;
-    type: string;
-    request: {};
-    url: string;
+    message: string
+    name: string
+    canister: string
+    status: MessageStatus
+    type: string
+    timestamp: Date
+    duration?: number
 }
 
 function App() {
-    const [log, setLog] = React.useState<LogEvent[]>([]);
     const [capturing, setCapturing] = React.useState<boolean>(true);
-    const [focusLog, setFocusLog] = React.useState<LogEvent>();
     const [filter, setfilter] = React.useState<string>('');
+    const { messages, log: newLog, focusedMessage, focus, clear } = useStore(logRepository);
 
     const captureRequest = React.useMemo(() => {
         return (request: chrome.devtools.network.Request) => {
-            captureInternetComputerMessageFromNetworkEvent(request);
-            capture(request, [], (event) => {
-                setLog((prev) => [...prev, event]);
-            });
+            captureInternetComputerMessageFromNetworkEvent(request).then(
+                (r) => r && newLog(r.request, r.response),
+            );
         };
     }, []);
+
+    React.useEffect(() => console.log(focusedMessage), [focusedMessage])
 
     React.useEffect(() => {
         if (capturing) {
@@ -46,28 +48,25 @@ function App() {
         }
     }, [capturing]);
 
-    // Transform log into a react-table compatible structure
     const data = React.useMemo<Row[]>(
         () =>
-            log.map((event, i) => ({
-                i,
-                timestamp: event.time,
-                canister: event.decoded.request.canister,
-                // @ts-ignore
-                method: event.decoded.request?.method,
-                type: event.decoded.request.type,
-                request: event.decoded.request,
-                response: event.decoded.response,
-                url: event.raw.url,
+            Object.entries(messages).map(([messageId, log]) => ({
+                message: messageId,
+                name: log.method.name,
+                canister: log.canister.identifier,
+                type: log.meta.type,
+                status: log.meta.status,
+                timestamp: log.timing.timestamp,
+                duration: log.timing.durationMs,
             })),
-        [log],
+        [messages],
     );
 
     const columns = React.useMemo<Column<Row>[]>(
         () => [
             {
                 Header: 'Name',
-                accessor: 'method',
+                accessor: 'name',
                 Cell: (x: { value: string }) => <>{x.value || '-'}</>,
             },
             {
@@ -88,6 +87,10 @@ function App() {
                 ),
             },
             {
+                Header: 'Status',
+                accessor: 'status',
+            },
+            {
                 Header: 'Timestamp',
                 accessor: 'timestamp',
                 Cell: (x: { value: Date }) => (
@@ -98,6 +101,10 @@ function App() {
                         {String(x.value.getMilliseconds()).padStart(3, '0')}
                     </>
                 ),
+            },
+            {
+                Header: 'Duration',
+                accessor: 'duration',
             },
         ],
         [],
@@ -132,7 +139,7 @@ function App() {
                         ' ',
                     )}
                 ></span>
-                <span onClick={() => setLog([])} className="clear icon"></span>
+                <span onClick={() => clear()} className="clear icon"></span>
                 <input
                     type="text"
                     className="filter"
@@ -145,7 +152,7 @@ function App() {
                 />
             </div>
             <div
-                className={['panel-body', focusLog ? 'side-by-side' : ''].join(
+                className={['panel-body', focusedMessage ? 'side-by-side' : ''].join(
                     ' ',
                 )}
             >
@@ -170,17 +177,7 @@ function App() {
                                         {row.cells.map((cell, i) => {
                                             return (
                                                 <td
-                                                    onClick={
-                                                        i === 0
-                                                            ? () =>
-                                                                  setFocusLog(
-                                                                      log[
-                                                                          row
-                                                                              .index
-                                                                      ],
-                                                                  )
-                                                            : undefined
-                                                    }
+                                                    onClick={() => focus(row.original.message)}
                                                     {...cell.getCellProps()}
                                                 >
                                                     {cell.render('Cell')}
@@ -193,15 +190,15 @@ function App() {
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colSpan={6}>{log.length} Events</td>
+                                <td colSpan={6}>{messages.length} Messages</td>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
-                {focusLog && (
+                {focusedMessage && (
                     <DetailsPane
-                        event={focusLog}
-                        clear={() => setFocusLog(undefined)}
+                        message={focusedMessage}
+                        clear={() => focus()}
                     />
                 )}
             </div>
@@ -209,7 +206,9 @@ function App() {
     );
 }
 
-function DetailsPane(props: { event: LogEvent; clear: () => void }) {
+function DetailsPane(props: { message: MessageEntry; clear: () => void }) {
+    const { message } = props
+    const request = message.requests[message.meta.originalRequestId]
     return (
         <div className="details-pane">
             <div className="details-pane__head">
@@ -217,23 +216,18 @@ function DetailsPane(props: { event: LogEvent; clear: () => void }) {
             </div>
             <div className="details-pane__body">
                 <strong>Canister</strong>
-                <pre>{props.event.decoded.request.canister}</pre>
+                <pre>{message.canister.identifier}</pre>
                 <strong>Caller</strong>
-                <pre>{props.event.decoded.request.caller}</pre>
+                <pre>{message.caller.identifier.toText()}</pre>
                 <strong>Method</strong>
-                <pre>
-                    {
-                        // @ts-ignore
-                        props.event.decoded.request?.method
-                    }
-                </pre>
+                <pre>{message.method.name}</pre>
                 <strong>Request</strong>
                 <pre>
-                    {JSON.stringify(props.event.decoded.request, undefined, 4)}
+                    {JSON.stringify(request.request, serialize, 4)}
                 </pre>
                 <strong>Response</strong>
                 <pre>
-                    {JSON.stringify(props.event.decoded.response, undefined, 4)}
+                    {JSON.stringify(request.response, serialize, 4)}
                 </pre>
             </div>
         </div>

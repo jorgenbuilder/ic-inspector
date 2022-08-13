@@ -6,6 +6,8 @@ import type { All } from './idl/all.d';
 import { idlFactory as allIDL } from './idl/all';
 import type { CandidUI } from './idl/candid-ui.d';
 import { idlFactory as candidIDL } from './idl/candid-ui';
+import CanisterRegistry from './idl/canister-registry.did.d';
+import { idlFactory as dabIDL } from './idl/canister-registry.did';
 
 /////////////
 // Config //
@@ -13,6 +15,7 @@ import { idlFactory as candidIDL } from './idl/candid-ui';
 
 const canisters: { [key: string]: string } = {
     candidUI: 'a4gq6-oaaaa-aaaab-qaa4q-cai',
+    dab: 'curr3-vaaaa-aaaah-abbdq-cai',
 };
 
 const host = 'https://ic0.app';
@@ -31,6 +34,7 @@ agentLocal.fetchRootKey();
 ///////////
 
 export const candidUI = actor<CandidUI>(canisters.candidUI, candidIDL);
+export const dab = actor<CanisterRegistry>(canisters.dab, dabIDL);
 export const canister = generic<All>(allIDL);
 
 //////////

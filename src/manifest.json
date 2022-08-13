@@ -7,8 +7,8 @@
     {
       "resources": [
         "assets/icons.svg",
-        "devtools/index.html",
-        "sandbox/index.html"
+        "entries/devtools/index.html",
+        "entries/sandbox/index.html"
       ],
       "matches": ["<all_urls>"]
     }
@@ -19,7 +19,7 @@
     "128": "assets/128.png"
   },
   "sandbox": {
-    "pages": ["sandbox/index.html"]
+    "pages": ["entries/sandbox/index.html"]
   },
   "content_security_policy": {
     "sandbox": "sandbox allow-scripts; script-src-elem  'unsafe-eval' 'unsafe-inline' 'self' https://* http://*; object-src 'self'"
