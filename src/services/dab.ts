@@ -50,10 +50,12 @@ export const parseDetailValue = (detailValue: DetailValue): DetailType => {
         : Object.values(detailValue)[0];
     if (Array.isArray(value)) {
         return value.map((v) =>
-            typeof value === 'number' ? v : parseDetailValue(
-                // @ts-ignore: psychedelic code
-                v
-            ),
+            typeof value === 'number'
+                ? v
+                : parseDetailValue(
+                      // @ts-ignore: psychedelic code
+                      v,
+                  ),
         );
     }
     return value;

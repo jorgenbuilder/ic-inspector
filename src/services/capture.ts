@@ -115,7 +115,7 @@ async function decodeRequest(
         !('request_type' in request) ||
         !['query', 'call', 'read_state'].includes(request.request_type)
     ) {
-        console.error("Unexpected request", request);
+        console.error('Unexpected request', request);
         throw new Error(`Unreachable: unexpected result decoded from request.`);
     }
 
@@ -221,26 +221,22 @@ async function decodeResponse(
     request: DecodedRequest,
 ): Promise<DecodedResponse> {
     // We retrieve the response text through chrome's async api
-    const content = await new Promise<string>((res) =>
+    const content = (await new Promise<string>((res) =>
         event.getContent((content) => res(content)),
-    ) as string | undefined;
+    )) as string | undefined;
+
+    if (!content) {
+        console.warn(
+            `Received empty response. This is expected for empty 202 call responses, and http_request, but there may be other unknown cases.`,
+        );
+        return { status: RequestStatusResponseStatus.Unknown };
+    }
 
     // The resulting content is a B64 encoded string. We decode to byes.
-    const bytes = content ? base64ToBytes(content) : undefined;
+    const bytes = base64ToBytes(content);
 
     // The resulting bytes are encoded in CBOR. We decode to an InternetComputerResponse.
-    const response = (function () {
-        try {
-            return bytes ? cborDecode(bytes) : undefined;
-        } catch (e) {
-            if (e instanceof Error && e.message === 'Unknown token 30') {
-                // TODO: Some error for call responses here. I don't really care about call responses for the moment.
-                throw 'TODO: call response cbor decode issue.';
-            } else {
-                throw e;
-            }
-        }
-    })() as InternetComputerResponse | undefined;
+    const response = cborDecode(bytes);
 
     // Validate the response
     if (
@@ -249,8 +245,7 @@ async function decodeResponse(
             !('certificate' in response) &&
             !('requestId' in response))
     ) {
-        // TODO: http_request responses are undefined, which leads to this error
-        console.error("Unexpected response", response);
+        console.error('Unexpected response', response, event);
         throw new Error(
             `Unreachable: unexpected result decoded from response.`,
         );

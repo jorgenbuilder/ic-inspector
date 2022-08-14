@@ -37,12 +37,9 @@ export function decodeDfinityObject(obj: { [key: string]: any }) {
     );
 }
 
-export function serialize (key: string, value: any) {
-    if (
-        typeof value === 'bigint'
-        || value instanceof Principal
-    ) {
-        return value.toString()
+export function serialize(key: string, value: any) {
+    if (typeof value === 'bigint' || value instanceof Principal) {
+        return value.toString();
     }
-    return value
+    return value;
 }

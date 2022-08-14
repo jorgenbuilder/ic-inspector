@@ -1,6 +1,5 @@
 import { Principal } from '@dfinity/principal';
 import create from 'zustand';
-import { dab } from '../api/actors';
 import {
     DecodedRequest,
     DecodedResponse,
@@ -93,14 +92,14 @@ interface RequestTimingData {
 
 const logRepository = create<{
     messages: MessageRepository;
-    focusedMessage?: MessageEntry,
+    focusedMessage?: MessageEntry;
     log: (request: DecodedRequest, response: DecodedResponse) => void;
     focus: (message?: MessageId) => void;
     clear: () => void;
 }>((set, get) => ({
     messages: {},
-    clear () {
-        set({ messages: {} })
+    clear() {
+        set({ messages: {} });
     },
     async log(request, response) {
         // We don't want async in out update logic because it could cause stale state in parallel updates, so we put it up here.
@@ -115,9 +114,9 @@ const logRepository = create<{
         );
         set(() => ({ messages: update }));
     },
-    focus (message) {
-        const { messages } = get()
-        set({ focusedMessage: message ? messages[message] : undefined })
+    focus(message) {
+        const { messages } = get();
+        set({ focusedMessage: message ? messages[message] : undefined });
     },
 }));
 
@@ -376,4 +375,16 @@ function getMessageStatus(response: DecodedResponse): MessageStatus {
         default:
             return 'pending';
     }
+}
+
+export function getMessageRequest(message: MessageEntry): RequestEntry {
+    return message.requests[message.meta.originalRequestId];
+}
+
+export function getMessageResponse(
+    message: MessageEntry,
+): RequestEntry | undefined {
+    return Object.values(message.requests).find((request) =>
+        isResponseComplete(request.response),
+    );
 }

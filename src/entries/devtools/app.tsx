@@ -5,26 +5,37 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Column, useGlobalFilter, useTable } from 'react-table';
 import { captureInternetComputerMessageFromNetworkEvent } from '../../services/capture';
-import logRepository, { MessageEntry, MessageStatus } from '../../repositories/logs';
+import logRepository, {
+    getMessageRequest,
+    getMessageResponse,
+    MessageEntry,
+    MessageStatus,
+} from '../../repositories/logs';
 import { useStore } from 'zustand';
 import { serialize } from '../../services/common';
 
 (window as any).global = window;
 
 interface Row {
-    message: string
-    name: string
-    canister: string
-    status: MessageStatus
-    type: string
-    timestamp: Date
-    duration?: number
+    message: string;
+    name: string;
+    canister: string;
+    status: MessageStatus;
+    type: string;
+    timestamp: Date;
+    duration?: number;
 }
 
 function App() {
     const [capturing, setCapturing] = React.useState<boolean>(true);
     const [filter, setfilter] = React.useState<string>('');
-    const { messages, log: newLog, focusedMessage, focus, clear } = useStore(logRepository);
+    const {
+        messages,
+        log: newLog,
+        focusedMessage,
+        focus,
+        clear,
+    } = useStore(logRepository);
 
     const captureRequest = React.useMemo(() => {
         return (request: chrome.devtools.network.Request) => {
@@ -34,7 +45,7 @@ function App() {
         };
     }, []);
 
-    React.useEffect(() => console.log(focusedMessage), [focusedMessage])
+    React.useEffect(() => console.log(focusedMessage), [focusedMessage]);
 
     React.useEffect(() => {
         if (capturing) {
@@ -105,6 +116,8 @@ function App() {
             {
                 Header: 'Duration',
                 accessor: 'duration',
+                Cell: (x: { value: number }) =>
+                    x.value ? `${x.value}ms` : '-',
             },
         ],
         [],
@@ -152,9 +165,10 @@ function App() {
                 />
             </div>
             <div
-                className={['panel-body', focusedMessage ? 'side-by-side' : ''].join(
-                    ' ',
-                )}
+                className={[
+                    'panel-body',
+                    focusedMessage ? 'side-by-side' : '',
+                ].join(' ')}
             >
                 <div className="table-container">
                     <table {...getTableProps()}>
@@ -177,7 +191,12 @@ function App() {
                                         {row.cells.map((cell, i) => {
                                             return (
                                                 <td
-                                                    onClick={() => focus(row.original.message)}
+                                                    onClick={() =>
+                                                        focus(
+                                                            row.original
+                                                                .message,
+                                                        )
+                                                    }
                                                     {...cell.getCellProps()}
                                                 >
                                                     {cell.render('Cell')}
@@ -207,8 +226,7 @@ function App() {
 }
 
 function DetailsPane(props: { message: MessageEntry; clear: () => void }) {
-    const { message } = props
-    const request = message.requests[message.meta.originalRequestId]
+    const { message } = props;
     return (
         <div className="details-pane">
             <div className="details-pane__head">
@@ -223,11 +241,19 @@ function DetailsPane(props: { message: MessageEntry; clear: () => void }) {
                 <pre>{message.method.name}</pre>
                 <strong>Request</strong>
                 <pre>
-                    {JSON.stringify(request.request, serialize, 4)}
+                    {JSON.stringify(
+                        getMessageRequest(message).request,
+                        serialize,
+                        4,
+                    )}
                 </pre>
                 <strong>Response</strong>
                 <pre>
-                    {JSON.stringify(request.response, serialize, 4)}
+                    {JSON.stringify(
+                        getMessageResponse(message)?.response,
+                        serialize,
+                        4,
+                    )}
                 </pre>
             </div>
         </div>
