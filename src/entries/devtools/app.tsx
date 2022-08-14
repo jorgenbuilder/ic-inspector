@@ -5,14 +5,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Column, useGlobalFilter, useTable } from 'react-table';
 import { captureInternetComputerMessageFromNetworkEvent } from '../../services/capture';
-import logRepository, {
-    getMessageRequest,
-    getMessageResponse,
-    MessageEntry,
-    MessageStatus,
-} from '../../repositories/logs';
+import logRepository, { MessageStatus } from '../../repositories/logs';
 import { useStore } from 'zustand';
-import ReactJson from 'react-json-view';
+import { DetailsPane } from '../../ui/details';
 
 (window as any).global = window;
 
@@ -220,31 +215,6 @@ function App() {
                         clear={() => focus()}
                     />
                 )}
-            </div>
-        </div>
-    );
-}
-
-function DetailsPane(props: { message: MessageEntry; clear: () => void }) {
-    const { message } = props;
-    const response = getMessageResponse(message)?.response
-    const request = getMessageRequest(message).response
-    return (
-        <div className="details-pane">
-            <div className="details-pane__head">
-                <div onClick={props.clear} className="close icon"></div>
-            </div>
-            <div className="details-pane__body">
-                <strong>Canister</strong>
-                <pre>{message.canister.identifier}</pre>
-                <strong>Caller</strong>
-                <pre>{message.caller.identifier.toText()}</pre>
-                <strong>Method</strong>
-                <pre>{message.method.name}</pre>
-                <strong>Request</strong>
-                <ReactJson style={{ backgroundColor: 'transparent' }} theme="hopscotch" src={request} />
-                <strong>Response</strong>
-                <ReactJson style={{ backgroundColor: 'transparent' }} theme="hopscotch" src={response || {}} />
             </div>
         </div>
     );

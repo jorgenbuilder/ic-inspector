@@ -1,0 +1,54 @@
+.details {
+    display: none;
+    position: relative;
+}
+
+.detailsHead {
+    height: 24px;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    display: flex;
+    gap: 10px;
+}
+
+.detailsBody {
+    padding: 5px;
+}
+
+.tabs {
+    display: flex;
+    align-items: center;
+}
+
+.tab {
+    padding: 0 5px;
+    cursor: pointer;
+}
+
+.tab.active {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.section {
+}
+
+.section .header {
+    display: flex;
+    gap: 5px;
+    font-weight: 600;
+}
+
+.section.open .carat {
+    transform: rotate(180deg);
+}
+
+.section .carat {
+}
+
+.section .title {
+}
+
+.section .body {
+    padding: 20px;
+}

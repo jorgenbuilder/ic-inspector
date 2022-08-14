@@ -341,7 +341,7 @@ async function getIcApiCanisterData(canisterId: string) {
     }
     return {
         subnet: response.subnet_id,
-        moduleHash: response.subnet_id,
+        moduleHash: response.module_hash,
         controllers: response.controllers,
     };
 }

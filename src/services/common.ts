@@ -1,13 +1,13 @@
 import { Principal } from '@dfinity/principal';
 
-export function mapOptional<T>(value: [T] | []) {
+export function mapOptional<T>(value: [T] | []): T | undefined {
     if (value.length) {
         return value[0];
     }
     return undefined;
 }
 
-export function base64ToBytes(base64: string) {
+export function base64ToBytes(base64: string): Uint8Array {
     const binary_string = window.atob(base64);
     const len = binary_string.length;
     const bytes = new Uint8Array(len);
@@ -17,14 +17,16 @@ export function base64ToBytes(base64: string) {
     return bytes;
 }
 
-export function asPrincipal(principal: Principal | Uint8Array | unknown) {
+export function asPrincipal(
+    principal: Principal | Uint8Array | unknown,
+): Principal {
     if (principal instanceof Principal) return principal;
     if (principal instanceof Uint8Array)
         return Principal.fromUint8Array(principal);
     return Principal.from(principal);
 }
 
-export function decodeDfinityObject(obj: { [key: string]: any }) {
+export function decodeDfinityObject(obj: { [key: string]: any }): any {
     return JSON.parse(
         JSON.stringify(obj, (key, value) => {
             if (typeof value === 'bigint') {
@@ -37,7 +39,7 @@ export function decodeDfinityObject(obj: { [key: string]: any }) {
     );
 }
 
-export function serialize(key: string, value: any) {
+export function serialize(key: string, value: any): any {
     if (typeof value === 'bigint' || value instanceof Principal) {
         return value.toString();
     }

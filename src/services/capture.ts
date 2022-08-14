@@ -2,9 +2,6 @@ import {
     ReadRequest,
     CallRequest,
     requestIdOf,
-    ReadStateResponse,
-    QueryResponse,
-    SubmitResponse,
     Certificate,
     Expiry,
     HttpAgent,
@@ -59,7 +56,7 @@ const boundaryNodeRegex =
 /**
  * Determines whether a URL represents a request to an internet computer boundary node.
  */
-export function isBoundaryNodeURL(url: string) {
+export function isBoundaryNodeURL(url: string): boolean {
     return Boolean(url.match(boundaryNodeRegex));
 }
 
@@ -176,11 +173,6 @@ async function decodeRequest(
 //////////////////////
 // Decode Response //
 ////////////////////
-
-type InternetComputerResponse =
-    | QueryResponse
-    | ReadStateResponse
-    | SubmitResponse;
 
 interface DecodedQueryResponse {
     status: QueryResponseStatus;
@@ -303,8 +295,8 @@ async function decodeResponse(
         const { canisterId, method } = details;
 
         const cert = new Certificate(response, new HttpAgent());
-        // @ts-ignore: manipulating the private `verified` property to bypass BLS verification. This is fine for debugging purposes, but it breaks the security model of the IC, so logs in the extension will not be trustable. There's a pure js BLS lib, but it will take 8 seconds to verify each certificate. There's a much faster WASM lib, but chrome extensions make that a pain (could be something worth implementing in the sandbox.)
-        cert.verified = true;
+        // manipulating the private `verified` property to bypass BLS verification. This is fine for debugging purposes, but it breaks the security model of the IC, so logs in the extension will not be trustable. There's a pure js BLS lib, but it will take 8 seconds to verify each certificate. There's a much faster WASM lib, but chrome extensions make that a pain (could be something worth implementing in the sandbox.)
+        (cert as any).verified = true;
 
         const status = (function () {
             const result = cert.lookup([
@@ -365,7 +357,13 @@ async function decodeResponse(
  */
 export async function captureInternetComputerMessageFromNetworkEvent(
     event: chrome.devtools.network.Request,
-) {
+): Promise<
+    | {
+          request: DecodedRequest;
+          response: DecodedResponse;
+      }
+    | undefined
+> {
     if (!shouldCapture(event)) return;
 
     const request = await decodeRequest(event);

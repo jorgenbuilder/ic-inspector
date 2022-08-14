@@ -134,7 +134,9 @@ function sandboxPostResponse(
 /**
  * Route sandbox messages to handlers.
  */
-export function sandboxHandleMessage(message: MessageEvent<SandboxRequest>) {
+export function sandboxHandleMessage(
+    message: MessageEvent<SandboxRequest>,
+): void {
     if (!message.source) {
         throw new Error('Unreachable: could not determine request source');
     }
@@ -262,7 +264,7 @@ function decodeArgumentValues(
 export function sandboxEvalInterface(
     canisterId: string,
     javascriptAsString: string,
-) {
+): Promise<'ok'> {
     return sandboxRequest<SandboxResponseEvalInterface>({
         type: 'evalInterface',
         data: { canisterId, javascriptAsString },
@@ -273,7 +275,7 @@ export function sandboxDecodeCandidArgs(
     canisterId: string,
     method: string,
     data: ArrayBuffer,
-) {
+): Promise<any> {
     return sandboxRequest<SandboxResponsedecodeCandidArgs>({
         type: 'decodeCandidArgs',
         data: { canisterId, method, data },
@@ -284,7 +286,7 @@ export function sandboxDecodeCandidVals(
     canisterId: string,
     method: string,
     data: ArrayBuffer,
-) {
+): Promise<any> {
     return sandboxRequest<SandboxResponsedecodeCandidVals>({
         type: 'decodeCandidVals',
         data: { canisterId, method, data },
