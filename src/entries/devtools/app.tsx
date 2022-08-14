@@ -12,7 +12,7 @@ import logRepository, {
     MessageStatus,
 } from '../../repositories/logs';
 import { useStore } from 'zustand';
-import { serialize } from '../../services/common';
+import ReactJson from 'react-json-view';
 
 (window as any).global = window;
 
@@ -227,6 +227,8 @@ function App() {
 
 function DetailsPane(props: { message: MessageEntry; clear: () => void }) {
     const { message } = props;
+    const response = getMessageResponse(message)?.response
+    const request = getMessageRequest(message).response
     return (
         <div className="details-pane">
             <div className="details-pane__head">
@@ -240,21 +242,9 @@ function DetailsPane(props: { message: MessageEntry; clear: () => void }) {
                 <strong>Method</strong>
                 <pre>{message.method.name}</pre>
                 <strong>Request</strong>
-                <pre>
-                    {JSON.stringify(
-                        getMessageRequest(message).request,
-                        serialize,
-                        4,
-                    )}
-                </pre>
+                <ReactJson style={{ backgroundColor: 'transparent' }} theme="hopscotch" src={request} />
                 <strong>Response</strong>
-                <pre>
-                    {JSON.stringify(
-                        getMessageResponse(message)?.response,
-                        serialize,
-                        4,
-                    )}
-                </pre>
+                <ReactJson style={{ backgroundColor: 'transparent' }} theme="hopscotch" src={response || {}} />
             </div>
         </div>
     );
