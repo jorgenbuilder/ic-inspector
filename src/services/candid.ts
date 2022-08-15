@@ -1,5 +1,5 @@
 import { candidUI, canister } from '../api/actors';
-import { decodeDfinityObject, mapOptional } from './common';
+import { mapOptional } from './common';
 import {
     sandboxDecodeCandidArgs,
     sandboxDecodeCandidVals,
@@ -91,17 +91,13 @@ export async function decodeCandidArgs(
     try {
         await getCanisterIDL(canisterId);
         return {
-            result: decodeDfinityObject(
-                await sandboxDecodeCandidArgs(canisterId, method, data),
-            ),
+            result: await sandboxDecodeCandidArgs(canisterId, method, data),
             withInterface: true,
         };
     } catch (e) {
         if (e instanceof InterfaceDoesntExistError) {
             return {
-                result: decodeDfinityObject(
-                    await decodeCandidWithoutInterface(data),
-                ),
+                result: await decodeCandidWithoutInterface(data),
                 withInterface: false,
             };
         }
@@ -120,17 +116,13 @@ export async function decodeCandidVals(
     try {
         await getCanisterIDL(canisterId);
         return {
-            result: decodeDfinityObject(
-                await sandboxDecodeCandidVals(canisterId, method, data),
-            ),
+            result: await sandboxDecodeCandidVals(canisterId, method, data),
             withInterface: true,
         };
     } catch (e) {
         if (e instanceof InterfaceDoesntExistError) {
             return {
-                result: decodeDfinityObject(
-                    await decodeCandidWithoutInterface(data),
-                ),
+                result: await decodeCandidWithoutInterface(data),
                 withInterface: false,
             };
         }

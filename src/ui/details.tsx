@@ -5,6 +5,7 @@ import {
     getMessageResponse,
     MessageEntry,
 } from '../repositories/logs';
+import { serialize } from '../services/common';
 import Styles from './details.module.css';
 
 export function DetailsPane(props: {
@@ -24,7 +25,10 @@ export function DetailsPane(props: {
     );
 
     const [tab, setTab] = React.useState(tabs[0][0]);
-    const active = React.useMemo(() => tabs.find(([title]) => title === tab)?.[1], [tab, message])
+    const active = React.useMemo(
+        () => tabs.find(([title]) => title === tab)?.[1],
+        [tab, message],
+    );
 
     return (
         <div className={Styles.details}>
@@ -45,9 +49,7 @@ export function DetailsPane(props: {
                     ))}
                 </div>
             </div>
-            <div className={Styles.detailsBody}>
-                {active}
-            </div>
+            <div className={Styles.detailsBody}>{active}</div>
         </div>
     );
 }
@@ -112,14 +114,19 @@ function Overview(props: { message: MessageEntry }) {
                     <dt>Boundary</dt>
                     <dd>{message.meta.boundary.host}</dd>
                     <dt>Status</dt>
-                    <dd>{function () {switch (message.meta.status) {
-                        case "pending":
-                            return "🔵"
-                        case "replied":
-                            return "🟢"
-                        case "rejected":
-                            return "🔴"
-                    }}()}{message.meta.status}</dd>
+                    <dd>
+                        {(function () {
+                            switch (message.meta.status) {
+                                case 'pending':
+                                    return '🔵';
+                                case 'replied':
+                                    return '🟢';
+                                case 'rejected':
+                                    return '🔴';
+                            }
+                        })()}
+                        {message.meta.status}
+                    </dd>
                     <dt>Consensus</dt>
                     <dd>{message.meta.consensus}</dd>
                 </dl>
@@ -140,7 +147,7 @@ function Payload(props: { message: MessageEntry }) {
             <ReactJson
                 style={{ backgroundColor: 'transparent' }}
                 theme="hopscotch"
-                src={request}
+                src={serialize(request)}
             />
         </div>
     );
@@ -158,7 +165,7 @@ function Response(props: { message: MessageEntry }) {
             <ReactJson
                 style={{ backgroundColor: 'transparent' }}
                 theme="hopscotch"
-                src={response || {}}
+                src={serialize(response || {})}
             />
         </div>
     );

@@ -26,7 +26,12 @@ export function asPrincipal(
     return Principal.from(principal);
 }
 
-export function decodeDfinityObject(obj: { [key: string]: any }): any {
+/**
+ * Replace big int and principal types with string values, use before JSON.stringify.
+ * @param obj any javascript object
+ * @returns the same object with bigint and principals cast to strings
+ */
+export function serialize(obj: { [key: string]: any }): any {
     return JSON.parse(
         JSON.stringify(obj, (key, value) => {
             if (typeof value === 'bigint') {
@@ -37,11 +42,4 @@ export function decodeDfinityObject(obj: { [key: string]: any }): any {
             return value;
         }),
     );
-}
-
-export function serialize(key: string, value: any): any {
-    if (typeof value === 'bigint' || value instanceof Principal) {
-        return value.toString();
-    }
-    return value;
 }
