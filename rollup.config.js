@@ -4,7 +4,6 @@ import nodePolyfills from 'rollup-plugin-polyfill-node';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
-import modularCss from '@modular-css/rollup';
 
 import {
     chromeExtension,
@@ -14,6 +13,7 @@ import { emptyDir } from 'rollup-plugin-empty-dir';
 import zip from 'rollup-plugin-zip';
 import replace from '@rollup/plugin-replace';
 import { wasm } from '@rollup/plugin-wasm';
+import postcss from 'rollup-plugin-postcss'
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -26,6 +26,9 @@ export default {
         // sourcemap: 'inline'
     },
     plugins: [
+        postcss({
+            modules: true,
+        }),
         wasm(),
         commonjs(),
         replace({
@@ -42,7 +45,6 @@ export default {
         typescript(),
         // Empties the output dir before a new build
         emptyDir(),
-        modularCss(),
         // Outputs a zip file in ./releases
         isProduction && zip({ dir: 'releases' }),
     ],

@@ -10,6 +10,7 @@
         "noUnusedLocals": true,
         "strict": true,
         "target": "es2018",
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "plugins": [{ "name": "typescript-plugin-css-modules" }]
     }
 }
