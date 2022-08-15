@@ -24,7 +24,7 @@ export function DetailsPane(props: {
     );
 
     const [tab, setTab] = React.useState(tabs[0][0]);
-    console.log(tab);
+    const active = React.useMemo(() => tabs.find(([title]) => title === tab)?.[1], [tab, message])
 
     return (
         <div className={Styles.details}>
@@ -38,7 +38,7 @@ export function DetailsPane(props: {
                                 tab === title ? Styles.active : '',
                             ].join(' ')}
                             key={title}
-                            onClick={() => setTab(tab)}
+                            onClick={() => setTab(title)}
                         >
                             {title}
                         </div>
@@ -46,7 +46,7 @@ export function DetailsPane(props: {
                 </div>
             </div>
             <div className={Styles.detailsBody}>
-                {tabs.find(([title]) => title === tab)?.[1]}
+                {active}
             </div>
         </div>
     );
@@ -57,14 +57,16 @@ function Overview(props: { message: MessageEntry }) {
 
     return (
         <div>
-            <Section title="General">
+            <Section title="Method">
                 <dl>
-                    <dt>Boundary</dt>
-                    <dl>{message.meta.boundary.host}</dl>
-                    <dt>Status</dt>
-                    <dl>{message.meta.status}</dl>
-                    <dt>Consensus</dt>
-                    <dl>{message.meta.consensus}</dl>
+                    <dt>Type</dt>
+                    <dd>{message.method.query ? 'Query' : 'Update'}</dd>
+                    <dt>Name</dt>
+                    <dd>{message.method.name}</dd>
+                    {/* <dt>Arg Types</dt>
+                    <dd></dd>
+                    <dt>Return Types</dt>
+                    <dd></dd> */}
                 </dl>
             </Section>
             <Section title="Canister">
@@ -97,24 +99,29 @@ function Overview(props: { message: MessageEntry }) {
                     <dd>{message.canister.moduleHash}</dd>
                 </dl>
             </Section>
-            <Section title="Method">
-                <dl>
-                    <dt>Type</dt>
-                    <dd>{message.method.query ? 'Query' : 'Update'}</dd>
-                    <dt>Name</dt>
-                    <dd>{message.method.name}</dd>
-                    {/* <dt>Arg Types</dt>
-                    <dd></dd>
-                    <dt>Return Types</dt>
-                    <dd></dd> */}
-                </dl>
-            </Section>
             <Section title="Caller">
                 <dl>
                     <dt>Identifier</dt>
-                    <dd>{message.caller.identifier.toText()}</dd>
+                    <dd>{message.caller.identifier}</dd>
                     <dt>Anonymous</dt>
                     <dd>{message.caller.isAnonymous ? 'Yes' : 'No'}</dd>
+                </dl>
+            </Section>
+            <Section title="General">
+                <dl>
+                    <dt>Boundary</dt>
+                    <dd>{message.meta.boundary.host}</dd>
+                    <dt>Status</dt>
+                    <dd>{function () {switch (message.meta.status) {
+                        case "pending":
+                            return "🔵"
+                        case "replied":
+                            return "🟢"
+                        case "rejected":
+                            return "🔴"
+                    }}()}{message.meta.status}</dd>
+                    <dt>Consensus</dt>
+                    <dd>{message.meta.consensus}</dd>
                 </dl>
             </Section>
         </div>

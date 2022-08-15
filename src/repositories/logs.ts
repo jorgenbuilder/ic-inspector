@@ -9,11 +9,11 @@ import { mapOptional } from '../services/common';
 import { getDabCanisterData } from '../services/dab';
 
 type RequestId = string;
-type MessageId = RequestId;
+export type MessageId = RequestId;
 type MessageType = 'update' | 'query';
 export type MessageStatus = 'pending' | 'replied' | 'rejected';
 
-interface MessageRepository {
+export interface MessageRepository {
     [key: MessageId]: MessageEntry;
 }
 
@@ -56,7 +56,7 @@ interface MessageMetaData {
 }
 
 interface CallerData {
-    identifier: Principal;
+    identifier: string;
     isAnonymous: boolean;
 }
 
@@ -348,7 +348,7 @@ async function getIcApiCanisterData(canisterId: string) {
 
 function getCallerData(caller: Principal): CallerData {
     return {
-        identifier: caller,
+        identifier: caller.toText(),
         isAnonymous: caller.isAnonymous(),
     };
 }

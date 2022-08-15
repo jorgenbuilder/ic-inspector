@@ -1,68 +1,94 @@
+:root {
+    --color-chrome-0: rgb(36 36 36);
+    --color-chrome-1: rgb(41 41 41);
+    --color-chrome-2: rgb(41 42 45);
+    --color-chrome-3: rgb(75, 75, 75);
+    --color-chrome-4: rgb(145 145 145);
+    --color-chrome-5: rgb(154, 160, 166);
+    --color-chrome-6: white;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --color-chrome-0: rgb(242, 242, 242);
+        --color-chrome-1: rgb(202, 205, 215);
+        --color-chrome-2: rgb(192, 197, 213);
+        --color-chrome-3: rgb(177, 177, 177);
+        --color-chrome-4: rgb(163, 163, 163);
+        --color-chrome-5: rgb(81, 85, 89);
+        --color-chrome-6: black;
+    }
+}
+
+a, a:link, a:visited {
+    color: var(--color-chrome-6);
+}
+
 @media (prefers-color-scheme: dark) {
     body {
-        background-color: rgb(36 36 36);
-        color: white;
+        background-color: var(--color-chrome-0);
+        color: var(--color-chrome-5);
     }
     thead {
-        background: rgb(41 42 45);
-        box-shadow: 0 1px 0 rgb(75, 75, 75);
+        background: var(--color-chrome-2);
+        box-shadow: 0 1px 0 var(--color-chrome-3);
     }
 
     tfoot {
-        background-color: rgb(41 42 45);
-        border-top: 1px solid rgb(75, 75, 75);
+        background-color: var(--color-chrome-2);
+        border-top: 1px solid var(--color-chrome-3);
     }
 
     td:not(:last-child),
     th:not(:last-child) {
-        border-right: 1px solid rgb(75, 75, 75);
+        border-right: 1px solid var(--color-chrome-3);
     }
 
     tbody tr {
-        background: rgb(36 36 36);
+        background: var(--color-chrome-0);
     }
 
     tbody tr:nth-child(odd) {
-        background: rgb(41 41 41);
+        background: var(--color-chrome-1);
     }
 
     tbody td:first-child:hover {
-        color: white;
+        color: var(--color-chrome-5);
     }
 
     .controls {
-        background: rgb(41 42 45);
-        box-shadow: 0 1px 0 rgb(75, 75, 75);
+        background: var(--color-chrome-2);
+        box-shadow: 0 1px 0 var(--color-chrome-3);
     }
 
     .icon {
-        background-color: rgb(154, 160, 166);
+        background-color: var(--color-chrome-5);
     }
 
     .icon:hover {
-        background-color: white;
+        background-color: var(--color-chrome-5);
     }
 
     .filter {
-        background: rgb(41 41 41);
-        color: rgb(154, 160, 166);
+        background: var(--color-chrome-1);
+        color: var(--color-chrome-5);
     }
 
     .clear {
-        --override-icon-mask-background-color: rgb(145 145 145);
+        --override-icon-mask-background-color: var(--color-chrome-4);
     }
 
     .close {
-        --override-icon-mask-background-color: rgb(145 145 145);
+        --override-icon-mask-background-color: var(--color-chrome-4);
     }
 
     .side-by-side .table-container {
-        border-right: 1px solid rgb(75, 75, 75);
+        border-right: 1px solid var(--color-chrome-3);
     }
 
     .details-pane__head {
-        background: rgb(41 42 45);
-        box-shadow: 0 1px 0 rgb(75, 75, 75);
+        background: var(--color-chrome-2);
+        box-shadow: 0 1px 0 var(--color-chrome-3);
     }
 }
 
@@ -138,6 +164,7 @@ html,
 body {
     padding: 0;
     margin: 0;
+    font-family: "Segoe UI", Tahoma, sans-serif;
 }
 
 * {
@@ -204,7 +231,8 @@ th {
     display: block;
     width: 28px;
     height: 24px;
-    -webkit-mask-image: url(/assets/icons.svg);
+    /* TODO: replace this */
+    /* -webkit-mask-image: url(/assets/icons.svg); */
     -webkit-mask-position-x: 0px;
     -webkit-mask-position-y: 144px;
 }
@@ -220,7 +248,8 @@ th {
     display: block;
     width: 28px;
     height: 24px;
-    -webkit-mask-image: url(/assets/icons.svg);
+    /* TODO: replace this */
+    /* -webkit-mask-image: url(/assets/icons.svg); */
     -webkit-mask-position-x: -84px;
     -webkit-mask-position-y: 0px;
 }
