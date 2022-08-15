@@ -11,9 +11,10 @@ import { Root } from '../../ui/root';
 (window as any).global = window;
 
 function App() {
-    const { messages, log, focusedMessage, clear, focus } = useStore(logRepository);
+    const { messages, log, focusedMessage, clear, focus } =
+        useStore(logRepository);
     const [capturing, setCapturing] = React.useState<boolean>(true);
-    
+
     const captureRequest = React.useMemo(() => {
         return (request: chrome.devtools.network.Request) => {
             captureInternetComputerMessageFromNetworkEvent(request).then(
@@ -34,14 +35,16 @@ function App() {
         }
     }, [capturing]);
 
-    return <Root
-        messages={messages}
-        focusedMessage={focusedMessage}
-        capturing={capturing}
-        handleCaptureToggle={() => setCapturing(!capturing)}
-        handleClear={clear}
-        handleFocus={(m: MessageId) => focus(m)}
-    />
+    return (
+        <Root
+            messages={messages}
+            focusedMessage={focusedMessage}
+            capturing={capturing}
+            handleCaptureToggle={() => setCapturing(!capturing)}
+            handleClear={clear}
+            handleFocus={(m: MessageId) => focus(m)}
+        />
+    );
 }
 
 ReactDOM.render(

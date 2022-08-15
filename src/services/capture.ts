@@ -41,7 +41,8 @@ interface DecodedCallRequest extends AbstractDecodedRequest {
     paths: ArrayBuffer[][];
 }
 
-interface DecodedReadRequest extends AbstractDecodedRequest {
+// TODO: This type poorly thought out. "Read" seems to indicate "read_state", but that request type has no args param.
+export interface DecodedReadRequest extends AbstractDecodedRequest {
     args: {
         result: any;
         withInterface: boolean;
@@ -182,7 +183,7 @@ interface RepliedQueryResponse extends DecodedQueryResponse {
     reply: CandidDecodeResult;
 }
 
-interface RejectedQueryResponse extends DecodedQueryResponse {
+export interface RejectedResponse extends DecodedQueryResponse {
     message: string;
     code: number;
 }
@@ -195,18 +196,12 @@ interface RepliedReadStateResponse extends DecodedReadStateResponse {
     reply: CandidDecodeResult;
 }
 
-interface RejectedReadStateResponse extends DecodedReadStateResponse {
-    message: string;
-    code: number;
-}
-
 export type DecodedResponse =
     | DecodedQueryResponse
     | RepliedQueryResponse
-    | RejectedQueryResponse
     | DecodedReadStateResponse
     | RepliedReadStateResponse
-    | RejectedReadStateResponse;
+    | RejectedResponse;
 
 async function decodeResponse(
     event: chrome.devtools.network.Request,

@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactJson from 'react-json-view';
 import {
+    getMessageReply,
     getMessageRequest,
-    getMessageResponse,
     MessageEntry,
 } from '../repositories/logs';
 import { serialize } from '../services/common';
@@ -138,36 +138,40 @@ function Overview(props: { message: MessageEntry }) {
 function Payload(props: { message: MessageEntry }) {
     const { message } = props;
 
-    const request = React.useMemo(
-        () => getMessageRequest(message).response,
+    const { result: payload, withInterface } = React.useMemo(
+        () => getMessageRequest(message).args,
         [message],
     );
+
     return (
-        <div>
-            <ReactJson
-                style={{ backgroundColor: 'transparent' }}
-                theme="hopscotch"
-                src={serialize(request)}
-            />
-        </div>
+        <PrettyJson value={payload} candidWarning={withInterface === false} />
     );
 }
 
 function Response(props: { message: MessageEntry }) {
     const { message } = props;
 
-    const response = React.useMemo(
-        () => getMessageResponse(message)?.response,
-        [message],
-    );
+    const reply = React.useMemo(() => {
+        const reply = getMessageReply(message);
+        if (!reply) {
+            return {
+                result: undefined,
+                withInterface: undefined,
+            };
+        } else if ('result' in reply) {
+            return reply;
+        } else {
+            return {
+                result: reply,
+                withInterface: undefined,
+            };
+        }
+    }, [message]);
     return (
-        <div>
-            <ReactJson
-                style={{ backgroundColor: 'transparent' }}
-                theme="hopscotch"
-                src={serialize(response || {})}
-            />
-        </div>
+        <PrettyJson
+            value={reply.result}
+            candidWarning={reply.withInterface === false}
+        />
     );
 }
 
@@ -180,6 +184,29 @@ function Section(props: { children: React.ReactNode; title: string }) {
                 <div className={Styles.title}>{props.title}</div>
             </div>
             <div className={Styles.body}>{props.children}</div>
+        </div>
+    );
+}
+
+function PrettyJson(props: { value: any; candidWarning: boolean }) {
+    const { value, candidWarning } = props;
+    return (
+        <div>
+            {candidWarning && (
+                <div>
+                    ⚠️ Could not determine candid interface for this canister,
+                    so this is a partial decode.
+                </div>
+            )}
+            {value && typeof value === 'object' ? (
+                <ReactJson
+                    style={{ backgroundColor: 'transparent' }}
+                    theme="hopscotch"
+                    src={serialize(value)}
+                />
+            ) : (
+                <pre>{value || 'null'}</pre>
+            )}
         </div>
     );
 }

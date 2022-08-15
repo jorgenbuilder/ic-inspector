@@ -1,5 +1,10 @@
 import React from 'react';
-import { MessageEntry, MessageId, MessageRepository, MessageStatus } from '../repositories/logs';
+import {
+    MessageEntry,
+    MessageId,
+    MessageRepository,
+    MessageStatus,
+} from '../repositories/logs';
 import { Column, useGlobalFilter, useTable } from 'react-table';
 import { DetailsPane } from './details';
 
@@ -13,13 +18,13 @@ interface Row {
     duration?: number;
 }
 
-export function Root (props: {
-    messages: MessageRepository
-    focusedMessage?: MessageEntry
-    capturing: boolean,
-    handleClear: () => void
-    handleCaptureToggle: () => void
-    handleFocus: (message: MessageId) => void
+export function Root(props: {
+    messages: MessageRepository;
+    focusedMessage?: MessageEntry;
+    capturing: boolean;
+    handleClear: () => void;
+    handleCaptureToggle: () => void;
+    handleFocus: (message: MessageId) => void;
 }) {
     const {
         messages,
@@ -28,7 +33,7 @@ export function Root (props: {
         handleClear,
         handleCaptureToggle,
         handleFocus,
-    } = props    
+    } = props;
 
     const [filter, setfilter] = React.useState<string>('');
     const data = React.useMemo<Row[]>(
@@ -124,7 +129,10 @@ export function Root (props: {
                         ' ',
                     )}
                 ></span>
-                <span onClick={() => handleClear()} className="clear icon"></span>
+                <span
+                    onClick={() => handleClear()}
+                    className="clear icon"
+                ></span>
                 <input
                     type="text"
                     className="filter"
@@ -163,7 +171,12 @@ export function Root (props: {
                                         {row.cells.map((cell, i) => {
                                             return (
                                                 <td
-                                                    onClick={() => handleFocus(row.original.message)}
+                                                    onClick={() =>
+                                                        handleFocus(
+                                                            row.original
+                                                                .message,
+                                                        )
+                                                    }
                                                     {...cell.getCellProps()}
                                                 >
                                                     {cell.render('Cell')}
@@ -176,7 +189,9 @@ export function Root (props: {
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colSpan={6}>{messages.length || 0} Messages</td>
+                                <td colSpan={6}>
+                                    {messages.length || 0} Messages
+                                </td>
                             </tr>
                         </tfoot>
                     </table>

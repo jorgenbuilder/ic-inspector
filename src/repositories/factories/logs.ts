@@ -1,9 +1,9 @@
-import { DecodedRequest } from "../../services/capture";
-import { MessageEntry } from "../logs";
+// import { DecodedRequest } from '../../services/capture';
+import { MessageEntry } from '../logs';
 
 export function randomLog(): MessageEntry {
     const logs = Object.values(logsStub);
-    const log = logs[Math.floor(logs.length * Math.random())]
+    const log = logs[Math.floor(logs.length * Math.random())];
     return {
         ...log,
         meta: {
@@ -12,8 +12,8 @@ export function randomLog(): MessageEntry {
         },
         timing: {
             ...log.timing,
-            timestamp: new Date(log.timing.timestamp)
-        }
+            timestamp: new Date(log.timing.timestamp),
+        },
     } as unknown as MessageEntry;
 }
 
@@ -27,7 +27,7 @@ export function randomLog(): MessageEntry {
 //     const ingressExpiry = Expiry;
 //     const boundary = URL;
 //     return {}
-    
+
 // }
 
 const e = {
@@ -251,454 +251,484 @@ const e = {
 };
 
 export const logsStub = {
-    "d7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa": {
-        "canister": {
-            "identifier": "tzvxm-jqaaa-aaaaj-qabga-cai",
-            "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
-            "moduleHash": "5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04",
-            "controllers": [
-                "tmsgb-iyaaa-aaaaj-qabfq-cai"
-            ]
+    d7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa: {
+        canister: {
+            identifier: 'tzvxm-jqaaa-aaaaj-qabga-cai',
+            subnet: 'jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe',
+            moduleHash:
+                '5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04',
+            controllers: ['tmsgb-iyaaa-aaaaj-qabfq-cai'],
         },
-        "caller": {
-            "identifier": "2vxsx-fae",
-            "isAnonymous": true
+        caller: {
+            identifier: '2vxsx-fae',
+            isAnonymous: true,
         },
-        "method": {
-            "name": "getPlayerCount",
-            "query": false
+        method: {
+            name: 'getPlayerCount',
+            query: false,
         },
-        "timing": {
-            "timestamp": "2022-08-14T14:46:00.666Z",
-            "requestCount": 3,
-            "durationMs": 3214
+        timing: {
+            timestamp: '2022-08-14T14:46:00.666Z',
+            requestCount: 3,
+            durationMs: 3214,
         },
-        "meta": {
-            "originalRequestId": "d7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa",
-            "type": "update",
-            "status": "replied",
-            "consensus": true,
-            "verified": null,
-            "boundary": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state"
+        meta: {
+            originalRequestId:
+                'd7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa',
+            type: 'update',
+            status: 'replied',
+            consensus: true,
+            verified: null,
+            boundary:
+                'https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state',
         },
-        "requests": {
-            "41187fe4422f754d7245d1d3cdf53476908e925d7bbe82b5832e9a77bc75a7be": {
-                "caller": {
-                    "identifier": "2vxsx-fae",
-                    "isAnonymous": true
-                },
-                "method": {
-                    "name": "getPlayerCount",
-                    "query": false
-                },
-                "canister": {
-                    "identifier": "tzvxm-jqaaa-aaaaj-qabga-cai",
-                    "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
-                    "moduleHash": "5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04",
-                    "controllers": [
-                        "tmsgb-iyaaa-aaaaj-qabfq-cai"
-                    ]
-                },
-                "meta": {
-                    "originalRequestId": "d7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa",
-                    "requestId": "41187fe4422f754d7245d1d3cdf53476908e925d7bbe82b5832e9a77bc75a7be",
-                    "type": "read_state",
-                    "boundary": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state"
-                },
-                "timing": {
-                    "timestamp": "2022-08-14T14:46:00.666Z"
-                },
-                "request": {
-                    "boundary": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state",
-                    "message": "d7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa",
-                    "requestId": "41187fe4422f754d7245d1d3cdf53476908e925d7bbe82b5832e9a77bc75a7be",
-                    "canisterId": "tzvxm-jqaaa-aaaaj-qabga-cai",
-                    "method": "getPlayerCount",
-                    "sender": "2vxsx-fae",
-                    "requestType": "read_state",
-                    "ingressExpiry": "1660488598851000000",
-                    "paths": [
-                        [
-                            {
-                                "0": 114,
-                                "1": 101,
-                                "2": 113,
-                                "3": 117,
-                                "4": 101,
-                                "5": 115,
-                                "6": 116,
-                                "7": 95,
-                                "8": 115,
-                                "9": 116,
-                                "10": 97,
-                                "11": 116,
-                                "12": 117,
-                                "13": 115
-                            },
-                            {
-                                "0": 215,
-                                "1": 255,
-                                "2": 9,
-                                "3": 200,
-                                "4": 206,
-                                "5": 141,
-                                "6": 238,
-                                "7": 170,
-                                "8": 157,
-                                "9": 247,
-                                "10": 253,
-                                "11": 8,
-                                "12": 230,
-                                "13": 162,
-                                "14": 69,
-                                "15": 219,
-                                "16": 164,
-                                "17": 152,
-                                "18": 37,
-                                "19": 74,
-                                "20": 159,
-                                "21": 189,
-                                "22": 189,
-                                "23": 244,
-                                "24": 89,
-                                "25": 208,
-                                "26": 11,
-                                "27": 181,
-                                "28": 117,
-                                "29": 250,
-                                "30": 14,
-                                "31": 250
-                            }
-                        ]
-                    ]
-                },
-                "response": {
-                    "status": "unknown"
-                }
-            },
-            "d7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa": {
-                "caller": {
-                    "identifier": "2vxsx-fae",
-                    "isAnonymous": true
-                },
-                "method": {
-                    "name": "getPlayerCount",
-                    "query": false
-                },
-                "canister": {
-                    "identifier": "tzvxm-jqaaa-aaaaj-qabga-cai",
-                    "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
-                    "moduleHash": "5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04",
-                    "controllers": [
-                        "tmsgb-iyaaa-aaaaj-qabfq-cai"
-                    ]
-                },
-                "meta": {
-                    "originalRequestId": "d7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa",
-                    "requestId": "d7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa",
-                    "type": "call",
-                    "boundary": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/call"
-                },
-                "timing": {
-                    "timestamp": "2022-08-14T14:46:01.305Z"
-                },
-                "request": {
-                    "boundary": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/call",
-                    "message": "d7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa",
-                    "requestId": "d7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa",
-                    "sender": "2vxsx-fae",
-                    "requestType": "call",
-                    "ingressExpiry": "1660488598522000000",
-                    "canisterId": "tzvxm-jqaaa-aaaaj-qabga-cai",
-                    "method": "getPlayerCount",
-                    "args": {
-                        "result": null,
-                        "withInterface": true
-                    }
-                },
-                "response": {
-                    "status": "unknown"
-                }
-            },
-            "dab737ca136520af846e5fe4857949364e0f9493d3f180e3b178e6694ad23f0b": {
-                "caller": {
-                    "identifier": "2vxsx-fae",
-                    "isAnonymous": true
-                },
-                "method": {
-                    "name": "getPlayerCount",
-                    "query": false
-                },
-                "canister": {
-                    "identifier": "tzvxm-jqaaa-aaaaj-qabga-cai",
-                    "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
-                    "moduleHash": "5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04",
-                    "controllers": [
-                        "tmsgb-iyaaa-aaaaj-qabfq-cai"
-                    ]
-                },
-                "meta": {
-                    "originalRequestId": "d7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa",
-                    "requestId": "dab737ca136520af846e5fe4857949364e0f9493d3f180e3b178e6694ad23f0b",
-                    "type": "read_state",
-                    "boundary": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state"
-                },
-                "timing": {
-                    "timestamp": "2022-08-14T14:46:03.880Z"
-                },
-                "request": {
-                    "boundary": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state",
-                    "message": "d7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa",
-                    "requestId": "dab737ca136520af846e5fe4857949364e0f9493d3f180e3b178e6694ad23f0b",
-                    "canisterId": "tzvxm-jqaaa-aaaaj-qabga-cai",
-                    "method": "getPlayerCount",
-                    "sender": "2vxsx-fae",
-                    "requestType": "read_state",
-                    "ingressExpiry": "1660488601823000000",
-                    "paths": [
-                        [
-                            {
-                                "0": 114,
-                                "1": 101,
-                                "2": 113,
-                                "3": 117,
-                                "4": 101,
-                                "5": 115,
-                                "6": 116,
-                                "7": 95,
-                                "8": 115,
-                                "9": 116,
-                                "10": 97,
-                                "11": 116,
-                                "12": 117,
-                                "13": 115
-                            },
-                            {
-                                "0": 215,
-                                "1": 255,
-                                "2": 9,
-                                "3": 200,
-                                "4": 206,
-                                "5": 141,
-                                "6": 238,
-                                "7": 170,
-                                "8": 157,
-                                "9": 247,
-                                "10": 253,
-                                "11": 8,
-                                "12": 230,
-                                "13": 162,
-                                "14": 69,
-                                "15": 219,
-                                "16": 164,
-                                "17": 152,
-                                "18": 37,
-                                "19": 74,
-                                "20": 159,
-                                "21": 189,
-                                "22": 189,
-                                "23": 244,
-                                "24": 89,
-                                "25": 208,
-                                "26": 11,
-                                "27": 181,
-                                "28": 117,
-                                "29": 250,
-                                "30": 14,
-                                "31": 250
-                            }
-                        ]
-                    ]
-                },
-                "response": {
-                    "status": "replied",
-                    "reply": {
-                        "result": 2,
-                        "withInterface": true
-                    }
-                }
-            }
-        }
-    },
-    "5e8760662d8cbe9c431db858aff69fe804d19da04c5566ba42d8ea31e8462c1d": {
-        "caller": {
-            "identifier": "2vxsx-fae",
-            "isAnonymous": true
-        },
-        "canister": {
-            "identifier": "tzvxm-jqaaa-aaaaj-qabga-cai",
-            "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
-            "moduleHash": "5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04",
-            "controllers": [
-                "tmsgb-iyaaa-aaaaj-qabfq-cai"
-            ]
-        },
-        "meta": {
-            "originalRequestId": "5e8760662d8cbe9c431db858aff69fe804d19da04c5566ba42d8ea31e8462c1d",
-            "type": "query",
-            "status": "replied",
-            "consensus": false,
-            "verified": null,
-            "boundary": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/query"
-        },
-        "method": {
-            "name": "getScoreCount",
-            "query": true
-        },
-        "timing": {
-            "timestamp": "2022-08-14T14:46:00.807Z",
-            "requestCount": 1
-        },
-        "requests": {
-            "5e8760662d8cbe9c431db858aff69fe804d19da04c5566ba42d8ea31e8462c1d": {
-                "caller": {
-                    "identifier": "2vxsx-fae",
-                    "isAnonymous": true
-                },
-                "method": {
-                    "name": "getScoreCount",
-                    "query": true
-                },
-                "canister": {
-                    "identifier": "tzvxm-jqaaa-aaaaj-qabga-cai",
-                    "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
-                    "moduleHash": "5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04",
-                    "controllers": [
-                        "tmsgb-iyaaa-aaaaj-qabfq-cai"
-                    ]
-                },
-                "meta": {
-                    "originalRequestId": "5e8760662d8cbe9c431db858aff69fe804d19da04c5566ba42d8ea31e8462c1d",
-                    "requestId": "5e8760662d8cbe9c431db858aff69fe804d19da04c5566ba42d8ea31e8462c1d",
-                    "type": "query",
-                    "boundary": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/query"
-                },
-                "timing": {
-                    "timestamp": "2022-08-14T14:46:00.807Z"
-                },
-                "request": {
-                    "boundary": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/query",
-                    "message": "5e8760662d8cbe9c431db858aff69fe804d19da04c5566ba42d8ea31e8462c1d",
-                    "requestId": "5e8760662d8cbe9c431db858aff69fe804d19da04c5566ba42d8ea31e8462c1d",
-                    "sender": "2vxsx-fae",
-                    "requestType": "query",
-                    "ingressExpiry": "1660488598522000000",
-                    "canisterId": "tzvxm-jqaaa-aaaaj-qabga-cai",
-                    "method": "getScoreCount",
-                    "args": {
-                        "result": null,
-                        "withInterface": true
-                    }
-                },
-                "response": {
-                    "status": "replied",
-                    "reply": {
-                        "result": 180,
-                        "withInterface": true
-                    }
-                }
-            }
-        }
-    },
-    "c2a68920738032451382eb7f9f54cb61653c2ff6e307035b1cbc7295b5b36bb3": {
-        "caller": {
-            "identifier": "2vxsx-fae",
-            "isAnonymous": true
-        },
-        "canister": {
-            "identifier": "tzvxm-jqaaa-aaaaj-qabga-cai",
-            "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
-            "moduleHash": "5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04",
-            "controllers": [
-                "tmsgb-iyaaa-aaaaj-qabfq-cai"
-            ]
-        },
-        "meta": {
-            "originalRequestId": "c2a68920738032451382eb7f9f54cb61653c2ff6e307035b1cbc7295b5b36bb3",
-            "type": "query",
-            "status": "replied",
-            "consensus": false,
-            "verified": null,
-            "boundary": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/query"
-        },
-        "method": {
-            "name": "getGames",
-            "query": true
-        },
-        "timing": {
-            "timestamp": "2022-08-14T14:46:01.427Z",
-            "requestCount": 1
-        },
-        "requests": {
-            "c2a68920738032451382eb7f9f54cb61653c2ff6e307035b1cbc7295b5b36bb3": {
-                "caller": {
-                    "identifier": "2vxsx-fae",
-                    "isAnonymous": true
-                },
-                "method": {
-                    "name": "getGames",
-                    "query": true
-                },
-                "canister": {
-                    "identifier": "tzvxm-jqaaa-aaaaj-qabga-cai",
-                    "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
-                    "moduleHash": "5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04",
-                    "controllers": [
-                        "tmsgb-iyaaa-aaaaj-qabfq-cai"
-                    ]
-                },
-                "meta": {
-                    "originalRequestId": "c2a68920738032451382eb7f9f54cb61653c2ff6e307035b1cbc7295b5b36bb3",
-                    "requestId": "c2a68920738032451382eb7f9f54cb61653c2ff6e307035b1cbc7295b5b36bb3",
-                    "type": "query",
-                    "boundary": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/query"
-                },
-                "timing": {
-                    "timestamp": "2022-08-14T14:46:01.427Z"
-                },
-                "request": {
-                    "boundary": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/query",
-                    "message": "c2a68920738032451382eb7f9f54cb61653c2ff6e307035b1cbc7295b5b36bb3",
-                    "requestId": "c2a68920738032451382eb7f9f54cb61653c2ff6e307035b1cbc7295b5b36bb3",
-                    "sender": "2vxsx-fae",
-                    "requestType": "query",
-                    "ingressExpiry": "1660488598522000000",
-                    "canisterId": "tzvxm-jqaaa-aaaaj-qabga-cai",
-                    "method": "getGames",
-                    "args": {
-                        "result": null,
-                        "withInterface": true
-                    }
-                },
-                "response": {
-                    "status": "replied",
-                    "reply": {
-                        "result": [
+        requests: {
+            '41187fe4422f754d7245d1d3cdf53476908e925d7bbe82b5832e9a77bc75a7be':
+                {
+                    caller: {
+                        identifier: '2vxsx-fae',
+                        isAnonymous: true,
+                    },
+                    method: {
+                        name: 'getPlayerCount',
+                        query: false,
+                    },
+                    canister: {
+                        identifier: 'tzvxm-jqaaa-aaaaj-qabga-cai',
+                        subnet: 'jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe',
+                        moduleHash:
+                            '5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04',
+                        controllers: ['tmsgb-iyaaa-aaaaj-qabfq-cai'],
+                    },
+                    meta: {
+                        originalRequestId:
+                            'd7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa',
+                        requestId:
+                            '41187fe4422f754d7245d1d3cdf53476908e925d7bbe82b5832e9a77bc75a7be',
+                        type: 'read_state',
+                        boundary:
+                            'https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state',
+                    },
+                    timing: {
+                        timestamp: '2022-08-14T14:46:00.666Z',
+                    },
+                    request: {
+                        boundary:
+                            'https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state',
+                        message:
+                            'd7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa',
+                        requestId:
+                            '41187fe4422f754d7245d1d3cdf53476908e925d7bbe82b5832e9a77bc75a7be',
+                        canisterId: 'tzvxm-jqaaa-aaaaj-qabga-cai',
+                        method: 'getPlayerCount',
+                        sender: '2vxsx-fae',
+                        requestType: 'read_state',
+                        ingressExpiry: '1660488598851000000',
+                        paths: [
                             [
-                                "qxd6u-vqaaa-aaaah-qbpcq-cai",
                                 {
-                                    "name": "Reversi",
-                                    "playUrl": "https://q6avi-dyaaa-aaaah-qbpda-cai.raw.ic0.app/",
-                                    "flavorText": [
-                                        "A multiplayer reversi game."
-                                    ]
-                                }
+                                    '0': 114,
+                                    '1': 101,
+                                    '2': 113,
+                                    '3': 117,
+                                    '4': 101,
+                                    '5': 115,
+                                    '6': 116,
+                                    '7': 95,
+                                    '8': 115,
+                                    '9': 116,
+                                    '10': 97,
+                                    '11': 116,
+                                    '12': 117,
+                                    '13': 115,
+                                },
+                                {
+                                    '0': 215,
+                                    '1': 255,
+                                    '2': 9,
+                                    '3': 200,
+                                    '4': 206,
+                                    '5': 141,
+                                    '6': 238,
+                                    '7': 170,
+                                    '8': 157,
+                                    '9': 247,
+                                    '10': 253,
+                                    '11': 8,
+                                    '12': 230,
+                                    '13': 162,
+                                    '14': 69,
+                                    '15': 219,
+                                    '16': 164,
+                                    '17': 152,
+                                    '18': 37,
+                                    '19': 74,
+                                    '20': 159,
+                                    '21': 189,
+                                    '22': 189,
+                                    '23': 244,
+                                    '24': 89,
+                                    '25': 208,
+                                    '26': 11,
+                                    '27': 181,
+                                    '28': 117,
+                                    '29': 250,
+                                    '30': 14,
+                                    '31': 250,
+                                },
+                            ],
+                        ],
+                    },
+                    response: {
+                        status: 'unknown',
+                    },
+                },
+            d7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa: {
+                caller: {
+                    identifier: '2vxsx-fae',
+                    isAnonymous: true,
+                },
+                method: {
+                    name: 'getPlayerCount',
+                    query: false,
+                },
+                canister: {
+                    identifier: 'tzvxm-jqaaa-aaaaj-qabga-cai',
+                    subnet: 'jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe',
+                    moduleHash:
+                        '5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04',
+                    controllers: ['tmsgb-iyaaa-aaaaj-qabfq-cai'],
+                },
+                meta: {
+                    originalRequestId:
+                        'd7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa',
+                    requestId:
+                        'd7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa',
+                    type: 'call',
+                    boundary:
+                        'https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/call',
+                },
+                timing: {
+                    timestamp: '2022-08-14T14:46:01.305Z',
+                },
+                request: {
+                    boundary:
+                        'https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/call',
+                    message:
+                        'd7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa',
+                    requestId:
+                        'd7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa',
+                    sender: '2vxsx-fae',
+                    requestType: 'call',
+                    ingressExpiry: '1660488598522000000',
+                    canisterId: 'tzvxm-jqaaa-aaaaj-qabga-cai',
+                    method: 'getPlayerCount',
+                    args: {
+                        result: null,
+                        withInterface: true,
+                    },
+                },
+                response: {
+                    status: 'unknown',
+                },
+            },
+            dab737ca136520af846e5fe4857949364e0f9493d3f180e3b178e6694ad23f0b: {
+                caller: {
+                    identifier: '2vxsx-fae',
+                    isAnonymous: true,
+                },
+                method: {
+                    name: 'getPlayerCount',
+                    query: false,
+                },
+                canister: {
+                    identifier: 'tzvxm-jqaaa-aaaaj-qabga-cai',
+                    subnet: 'jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe',
+                    moduleHash:
+                        '5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04',
+                    controllers: ['tmsgb-iyaaa-aaaaj-qabfq-cai'],
+                },
+                meta: {
+                    originalRequestId:
+                        'd7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa',
+                    requestId:
+                        'dab737ca136520af846e5fe4857949364e0f9493d3f180e3b178e6694ad23f0b',
+                    type: 'read_state',
+                    boundary:
+                        'https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state',
+                },
+                timing: {
+                    timestamp: '2022-08-14T14:46:03.880Z',
+                },
+                request: {
+                    boundary:
+                        'https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state',
+                    message:
+                        'd7ff09c8ce8deeaa9df7fd08e6a245dba498254a9fbdbdf459d00bb575fa0efa',
+                    requestId:
+                        'dab737ca136520af846e5fe4857949364e0f9493d3f180e3b178e6694ad23f0b',
+                    canisterId: 'tzvxm-jqaaa-aaaaj-qabga-cai',
+                    method: 'getPlayerCount',
+                    sender: '2vxsx-fae',
+                    requestType: 'read_state',
+                    ingressExpiry: '1660488601823000000',
+                    paths: [
+                        [
+                            {
+                                '0': 114,
+                                '1': 101,
+                                '2': 113,
+                                '3': 117,
+                                '4': 101,
+                                '5': 115,
+                                '6': 116,
+                                '7': 95,
+                                '8': 115,
+                                '9': 116,
+                                '10': 97,
+                                '11': 116,
+                                '12': 117,
+                                '13': 115,
+                            },
+                            {
+                                '0': 215,
+                                '1': 255,
+                                '2': 9,
+                                '3': 200,
+                                '4': 206,
+                                '5': 141,
+                                '6': 238,
+                                '7': 170,
+                                '8': 157,
+                                '9': 247,
+                                '10': 253,
+                                '11': 8,
+                                '12': 230,
+                                '13': 162,
+                                '14': 69,
+                                '15': 219,
+                                '16': 164,
+                                '17': 152,
+                                '18': 37,
+                                '19': 74,
+                                '20': 159,
+                                '21': 189,
+                                '22': 189,
+                                '23': 244,
+                                '24': 89,
+                                '25': 208,
+                                '26': 11,
+                                '27': 181,
+                                '28': 117,
+                                '29': 250,
+                                '30': 14,
+                                '31': 250,
+                            },
+                        ],
+                    ],
+                },
+                response: {
+                    status: 'replied',
+                    reply: {
+                        result: 2,
+                        withInterface: true,
+                    },
+                },
+            },
+        },
+    },
+    '5e8760662d8cbe9c431db858aff69fe804d19da04c5566ba42d8ea31e8462c1d': {
+        caller: {
+            identifier: '2vxsx-fae',
+            isAnonymous: true,
+        },
+        canister: {
+            identifier: 'tzvxm-jqaaa-aaaaj-qabga-cai',
+            subnet: 'jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe',
+            moduleHash:
+                '5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04',
+            controllers: ['tmsgb-iyaaa-aaaaj-qabfq-cai'],
+        },
+        meta: {
+            originalRequestId:
+                '5e8760662d8cbe9c431db858aff69fe804d19da04c5566ba42d8ea31e8462c1d',
+            type: 'query',
+            status: 'replied',
+            consensus: false,
+            verified: null,
+            boundary:
+                'https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/query',
+        },
+        method: {
+            name: 'getScoreCount',
+            query: true,
+        },
+        timing: {
+            timestamp: '2022-08-14T14:46:00.807Z',
+            requestCount: 1,
+        },
+        requests: {
+            '5e8760662d8cbe9c431db858aff69fe804d19da04c5566ba42d8ea31e8462c1d':
+                {
+                    caller: {
+                        identifier: '2vxsx-fae',
+                        isAnonymous: true,
+                    },
+                    method: {
+                        name: 'getScoreCount',
+                        query: true,
+                    },
+                    canister: {
+                        identifier: 'tzvxm-jqaaa-aaaaj-qabga-cai',
+                        subnet: 'jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe',
+                        moduleHash:
+                            '5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04',
+                        controllers: ['tmsgb-iyaaa-aaaaj-qabfq-cai'],
+                    },
+                    meta: {
+                        originalRequestId:
+                            '5e8760662d8cbe9c431db858aff69fe804d19da04c5566ba42d8ea31e8462c1d',
+                        requestId:
+                            '5e8760662d8cbe9c431db858aff69fe804d19da04c5566ba42d8ea31e8462c1d',
+                        type: 'query',
+                        boundary:
+                            'https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/query',
+                    },
+                    timing: {
+                        timestamp: '2022-08-14T14:46:00.807Z',
+                    },
+                    request: {
+                        boundary:
+                            'https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/query',
+                        message:
+                            '5e8760662d8cbe9c431db858aff69fe804d19da04c5566ba42d8ea31e8462c1d',
+                        requestId:
+                            '5e8760662d8cbe9c431db858aff69fe804d19da04c5566ba42d8ea31e8462c1d',
+                        sender: '2vxsx-fae',
+                        requestType: 'query',
+                        ingressExpiry: '1660488598522000000',
+                        canisterId: 'tzvxm-jqaaa-aaaaj-qabga-cai',
+                        method: 'getScoreCount',
+                        args: {
+                            result: null,
+                            withInterface: true,
+                        },
+                    },
+                    response: {
+                        status: 'replied',
+                        reply: {
+                            result: 180,
+                            withInterface: true,
+                        },
+                    },
+                },
+        },
+    },
+    c2a68920738032451382eb7f9f54cb61653c2ff6e307035b1cbc7295b5b36bb3: {
+        caller: {
+            identifier: '2vxsx-fae',
+            isAnonymous: true,
+        },
+        canister: {
+            identifier: 'tzvxm-jqaaa-aaaaj-qabga-cai',
+            subnet: 'jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe',
+            moduleHash:
+                '5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04',
+            controllers: ['tmsgb-iyaaa-aaaaj-qabfq-cai'],
+        },
+        meta: {
+            originalRequestId:
+                'c2a68920738032451382eb7f9f54cb61653c2ff6e307035b1cbc7295b5b36bb3',
+            type: 'query',
+            status: 'replied',
+            consensus: false,
+            verified: null,
+            boundary:
+                'https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/query',
+        },
+        method: {
+            name: 'getGames',
+            query: true,
+        },
+        timing: {
+            timestamp: '2022-08-14T14:46:01.427Z',
+            requestCount: 1,
+        },
+        requests: {
+            c2a68920738032451382eb7f9f54cb61653c2ff6e307035b1cbc7295b5b36bb3: {
+                caller: {
+                    identifier: '2vxsx-fae',
+                    isAnonymous: true,
+                },
+                method: {
+                    name: 'getGames',
+                    query: true,
+                },
+                canister: {
+                    identifier: 'tzvxm-jqaaa-aaaaj-qabga-cai',
+                    subnet: 'jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe',
+                    moduleHash:
+                        '5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04',
+                    controllers: ['tmsgb-iyaaa-aaaaj-qabfq-cai'],
+                },
+                meta: {
+                    originalRequestId:
+                        'c2a68920738032451382eb7f9f54cb61653c2ff6e307035b1cbc7295b5b36bb3',
+                    requestId:
+                        'c2a68920738032451382eb7f9f54cb61653c2ff6e307035b1cbc7295b5b36bb3',
+                    type: 'query',
+                    boundary:
+                        'https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/query',
+                },
+                timing: {
+                    timestamp: '2022-08-14T14:46:01.427Z',
+                },
+                request: {
+                    boundary:
+                        'https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/query',
+                    message:
+                        'c2a68920738032451382eb7f9f54cb61653c2ff6e307035b1cbc7295b5b36bb3',
+                    requestId:
+                        'c2a68920738032451382eb7f9f54cb61653c2ff6e307035b1cbc7295b5b36bb3',
+                    sender: '2vxsx-fae',
+                    requestType: 'query',
+                    ingressExpiry: '1660488598522000000',
+                    canisterId: 'tzvxm-jqaaa-aaaaj-qabga-cai',
+                    method: 'getGames',
+                    args: {
+                        result: null,
+                        withInterface: true,
+                    },
+                },
+                response: {
+                    status: 'replied',
+                    reply: {
+                        result: [
+                            [
+                                'qxd6u-vqaaa-aaaah-qbpcq-cai',
+                                {
+                                    name: 'Reversi',
+                                    playUrl:
+                                        'https://q6avi-dyaaa-aaaah-qbpda-cai.raw.ic0.app/',
+                                    flavorText: ['A multiplayer reversi game.'],
+                                },
                             ],
                             [
-                                "c6dch-iiaaa-aaaah-qacxq-cai",
+                                'c6dch-iiaaa-aaaah-qacxq-cai',
                                 {
-                                    "name": "Dots",
-                                    "playUrl": "https://2kvgp-zyaaa-aaaai-aappq-cai.raw.ic0.app/",
-                                    "flavorText": [
-                                        "Eehm... just snake? And a few dots here and there."
-                                    ]
-                                }
-                            ]
+                                    name: 'Dots',
+                                    playUrl:
+                                        'https://2kvgp-zyaaa-aaaai-aappq-cai.raw.ic0.app/',
+                                    flavorText: [
+                                        'Eehm... just snake? And a few dots here and there.',
+                                    ],
+                                },
+                            ],
                         ],
-                        "withInterface": true
-                    }
-                }
-            }
-        }
-    }
-}
+                        withInterface: true,
+                    },
+                },
+            },
+        },
+    },
+};

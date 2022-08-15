@@ -1,8 +1,11 @@
 import { Principal } from '@dfinity/principal';
 import create from 'zustand';
+import { CandidDecodeResult } from '../services/candid';
 import {
+    DecodedReadRequest,
     DecodedRequest,
     DecodedResponse,
+    RejectedResponse,
     RequestType,
 } from '../services/capture';
 import { mapOptional } from '../services/common';
@@ -377,14 +380,43 @@ function getMessageStatus(response: DecodedResponse): MessageStatus {
     }
 }
 
-export function getMessageRequest(message: MessageEntry): RequestEntry {
-    return message.requests[message.meta.originalRequestId];
+export function getMessageRequest(message: MessageEntry): DecodedReadRequest {
+    const request: DecodedReadRequest = (function () {
+        const request =
+            message.requests[message.meta.originalRequestId].request;
+        if (!('args' in request))
+            throw new Error(
+                'Unexpected: args should always be defined in initial request.',
+            );
+        return request;
+    })();
+    return request;
 }
 
 export function getMessageResponse(
     message: MessageEntry,
-): RequestEntry | undefined {
+): DecodedResponse | undefined {
     return Object.values(message.requests).find((request) =>
         isResponseComplete(request.response),
+    )?.response;
+}
+
+export function getMessageArgs(message: MessageEntry): CandidDecodeResult {
+    const request = getMessageRequest(message);
+    return request.args;
+}
+
+export function getMessageReply(
+    message: MessageEntry,
+): CandidDecodeResult | RejectedResponse | undefined {
+    const response = getMessageResponse(message);
+    if (!response) return undefined;
+    if ('reply' in response) {
+        return response.reply;
+    } else if ('code' in response) {
+        return response;
+    }
+    throw new Error(
+        'Unreachable: message reply must be one of null, replied, rejected.',
     );
 }
