@@ -60,6 +60,9 @@
 .section dd {
     float: left;
     margin: 0;
+    white-space: nowrap;
+    max-width: calc(100% - 150px);
+    overflow-x: auto;
 }
 
 .section .header {

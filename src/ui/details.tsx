@@ -21,7 +21,7 @@ export function DetailsPane(props: {
                 ['Payload', <Payload message={message} key="payload" />],
                 ['Response', <Response message={message} key="response" />],
             ] as [string, JSX.Element][],
-        [],
+        [message],
     );
 
     const [tab, setTab] = React.useState(tabs[0][0]);

@@ -3,6 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Root } from './root';
 import { useStore } from 'zustand';
 import logRepository, { MessageId } from '../repositories/logs';
+import { randomMessage } from '../repositories/stubs';
 
 export default {
     title: 'Components/Root',
@@ -19,7 +20,10 @@ const Template: ComponentStory<typeof Root> = (args) => {
     const [capturing, setCapturing] = React.useState(true);
 
     React.useEffect(() => {
-        // log()
+        for (let i = 5; i > 0; i--) {
+            const message = randomMessage()
+            Object.values(message.requests).forEach(({ request, response }) => log(request, response))
+        }
     }, []);
 
     return (
