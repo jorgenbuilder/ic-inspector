@@ -232,7 +232,7 @@ th {
     width: 28px;
     height: 24px;
     /* TODO: replace this */
-    /* -webkit-mask-image: url(/assets/icons.svg); */
+    -webkit-mask-image: url(/assets/icons.svg);
     -webkit-mask-position-x: 0px;
     -webkit-mask-position-y: 144px;
 }
@@ -249,7 +249,7 @@ th {
     width: 28px;
     height: 24px;
     /* TODO: replace this */
-    /* -webkit-mask-image: url(/assets/icons.svg); */
+    -webkit-mask-image: url(/assets/icons.svg);
     -webkit-mask-position-x: -84px;
     -webkit-mask-position-y: 0px;
 }
