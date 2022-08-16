@@ -1,3 +1,5 @@
+// Old hack of the dfinity candid lib to support candid decode without interfaces.
+// Newer versions of agent-js support unknown types, but still struggle with unknown numbers of argument.
 import { lebDecode, safeRead, slebDecode } from '@dfinity/candid';
 import { PipeArrayBuffer as Pipe } from '@dfinity/candid/lib/cjs/utils/buffer';
 import { JsonValue } from '@dfinity/candid/lib/cjs/types';

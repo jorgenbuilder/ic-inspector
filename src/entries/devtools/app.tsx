@@ -4,7 +4,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { captureInternetComputerMessageFromNetworkEvent } from '../../services/capture';
-import logRepository, { MessageId } from '../../services/logging';
+import { logstore, MessageId } from '../../services/logging';
 import { useStore } from 'zustand';
 import { Root } from '../../ui/root';
 
@@ -12,7 +12,7 @@ import { Root } from '../../ui/root';
 
 function App() {
     const { messages, log, focusedMessage, clear, focus } =
-        useStore(logRepository);
+        useStore(logstore);
     const [capturing, setCapturing] = React.useState<boolean>(true);
 
     const captureRequest = React.useMemo(() => {

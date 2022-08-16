@@ -1,5 +1,5 @@
-import { readStub } from '../common';
-import { MessageEntry } from '../logging';
+import { readStub } from '../services/common';
+import { MessageEntry } from '../services/logging';
 
 import { default as metascore_getGames } from './metascore.getGames.json';
 import { default as metascore_getPlayerCount } from './metascore.getPlayerCount.json';

@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { isBoundaryNodeURL } from './capture';
+import { isBoundaryNodeURL } from './select';
 
 describe('isBoundaryNodeURL', () => {
     it('matches known boundary node URLs', () => {

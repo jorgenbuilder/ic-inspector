@@ -1,27 +1,15 @@
-import { Principal } from '@dfinity/principal';
-import create from 'zustand';
-import { CandidDecodeResult, fetchCandidInterface } from './candid';
-import {
-    DecodedReadRequest,
-    DecodedRequest,
-    DecodedResponse,
-    RejectedResponse,
-    RequestType,
-} from './capture';
-import { dumpStub, mapOptional } from './common';
-import { getDabCanisterData } from './dab';
+import { CandidDecodeResult } from "../candid";
+import { DecodedRequest, DecodedResponse, DecodedReadRequest, RejectedResponse } from "../capture";
+import { dumpStub } from "../common";
+import { CanisterData, MethodData, CallerData, isResponseComplete, getCallerData, getMethodData } from "./common";
+import { newRequestEntry, RequestId, RequestRepository } from "./requests";
 
-type RequestId = string;
 export type MessageId = RequestId;
-type MessageType = 'update' | 'query';
+export type MessageType = 'update' | 'query';
 export type MessageStatus = 'pending' | 'replied' | 'rejected';
 
 export interface MessageRepository {
     [key: string]: MessageEntry;
-}
-
-interface RequestRepository {
-    [key: string]: RequestEntry;
 }
 
 export interface MessageEntry {
@@ -31,16 +19,6 @@ export interface MessageEntry {
     caller: CallerData;
     timing: MessageTimingData;
     requests: RequestRepository;
-}
-
-interface RequestEntry {
-    meta: RequestMetaData;
-    caller: CallerData;
-    canister: CanisterData;
-    method: MethodData;
-    timing: RequestTimingData;
-    request: DecodedRequest;
-    response: DecodedResponse;
 }
 
 interface MessageTimingData {
@@ -58,75 +36,7 @@ interface MessageMetaData {
     boundary: URL;
 }
 
-interface CallerData {
-    identifier: string;
-    isAnonymous: boolean;
-}
-
-interface CanisterData {
-    identifier: string;
-    // dab-js
-    // version?: number;
-    name?: string;
-    url?: string;
-    description?: string;
-    logoUrl?: string;
-    subnet: string;
-    moduleHash: string;
-    controllers: string[];
-    hasCandid: boolean;
-}
-
-interface MethodData {
-    name: string;
-    query: boolean;
-}
-
-interface RequestMetaData {
-    requestId: RequestId;
-    originalRequestId: MessageId;
-    type: RequestType;
-    boundary: URL;
-}
-
-interface RequestTimingData {
-    timestamp: Date;
-    durationMs?: number;
-}
-
-const logRepository = create<{
-    messages: MessageRepository;
-    focusedMessage?: MessageEntry;
-    log: (request: DecodedRequest, response: DecodedResponse) => void;
-    focus: (message?: MessageId) => void;
-    clear: () => void;
-}>((set, get) => ({
-    messages: {},
-    clear() {
-        set({ messages: {} });
-    },
-    async log(request, response) {
-        // We don't want async in out update logic because it could cause stale state in parallel updates, so we put it up here.
-        const asyncData = {
-            canister: await getCanisterData(request.canisterId),
-        };
-        const { messages } = get();
-        const update = getMessageRepositoryUpdate(
-            messages,
-            { request, response },
-            asyncData,
-        );
-        set(() => ({ messages: update }));
-    },
-    focus(message) {
-        const { messages } = get();
-        set({ focusedMessage: message ? messages[message] : undefined });
-    },
-}));
-
-export default logRepository;
-
-function getMessageRepositoryUpdate(
+export function getMessageRepositoryUpdate(
     messages: MessageRepository,
     update: {
         request: DecodedRequest;
@@ -276,107 +186,6 @@ function getRequestRepositoryUpdate(
         ...requests,
         [requestId]: newRequestEntry(request, response, canister),
     };
-}
-
-function newRequestEntry(
-    request: DecodedRequest,
-    response: DecodedResponse,
-    canister: CanisterData,
-): RequestEntry {
-    const meta = newRequestMetaData(request);
-    const timing = newRequestTiming(request, response);
-    const caller = getCallerData(request.sender);
-    const method = getMethodData(request);
-    return {
-        caller,
-        method,
-        canister,
-        meta,
-        timing,
-        request,
-        response,
-    };
-}
-
-function newRequestMetaData(request: DecodedRequest): RequestMetaData {
-    const originalRequestId = request.message;
-    const requestId = request.requestId;
-    const type = request.requestType;
-    const boundary = request.boundary;
-    return {
-        originalRequestId,
-        requestId,
-        type,
-        boundary,
-    };
-}
-
-function newRequestTiming(
-    request: DecodedRequest,
-    response: DecodedResponse,
-): RequestTimingData {
-    return {
-        timestamp: new Date(),
-    };
-}
-
-async function getCanisterData(canisterId: string): Promise<CanisterData> {
-    const dab = await getDabCanisterData(canisterId);
-    const { subnet, moduleHash, controllers } = await getIcApiCanisterData(
-        canisterId,
-    );
-    const hasCandid = Boolean(await fetchCandidInterface(canisterId));
-    return {
-        identifier: canisterId,
-        subnet,
-        moduleHash,
-        controllers,
-        name: dab?.name,
-        url: dab?.frontend ? mapOptional(dab.frontend) : undefined,
-        description: dab?.description,
-        logoUrl: dab?.thumbnail,
-        hasCandid,
-    };
-}
-
-async function getIcApiCanisterData(canisterId: string) {
-    const response: {
-        canister_id: string;
-        controllers: string[];
-        module_hash: string;
-        subnet_id: string;
-    } = await fetch(
-        `https://ic-api.internetcomputer.org/api/v3/canisters/${canisterId}`,
-    ).then((r) => r.json());
-    for (const field of ['subnet_id', 'controllers', 'module_hash']) {
-        if (!(field in response)) {
-            throw new Error(`Expected "${field}" in IC API response.`);
-        }
-    }
-    return {
-        subnet: response.subnet_id,
-        moduleHash: response.module_hash,
-        controllers: response.controllers,
-    };
-}
-
-function getCallerData(caller: Principal): CallerData {
-    return {
-        identifier: caller.toText(),
-        isAnonymous: caller.isAnonymous(),
-    };
-}
-
-function getMethodData(request: DecodedRequest): MethodData {
-    return {
-        name: request.method,
-        // TODO: I'd like to identify whether a method is _capable_ of a query, not whether a call was made as a query. Can probably get this from idl via sandbox.
-        query: request.requestType === 'query',
-    };
-}
-
-function isResponseComplete(response: DecodedResponse): boolean {
-    return ['replied', 'done', 'rejected'].includes(response.status);
 }
 
 function getMessageStatus(response: DecodedResponse): MessageStatus {

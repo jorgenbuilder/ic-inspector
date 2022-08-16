@@ -2,8 +2,8 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Root } from './root';
 import { useStore } from 'zustand';
-import logRepository, { MessageId } from '../services/logging';
-import { randomMessage } from '../services/stubs';
+import { logstore, MessageId } from '../services/logging';
+import { randomMessage } from '../stubs';
 
 export default {
     title: 'Components/Root',
@@ -16,7 +16,7 @@ export default {
 
 const Template: ComponentStory<typeof Root> = (args) => {
     const { focusedMessage, clear, focus, log, messages } =
-        useStore(logRepository);
+        useStore(logstore);
     const [capturing, setCapturing] = React.useState(true);
 
     React.useEffect(() => {

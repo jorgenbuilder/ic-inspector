@@ -1,6 +1,6 @@
 import { Principal } from '@dfinity/principal';
-import { dab } from '../api/actors';
-import { mapOptional } from './common';
+import { dab } from '../../api/actors';
+import { mapOptional } from '../common';
 
 // Copy pasted a bunch of dab-js code because their deps mess with my build
 export type DetailType =

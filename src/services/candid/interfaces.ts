@@ -1,11 +1,6 @@
-import { candidUI, canister } from '../api/actors';
-import { mapOptional } from './common';
-import {
-    sandboxDecodeCandidArgs,
-    sandboxDecodeCandidVals,
-    sandboxEvalInterface,
-} from './sandbox';
-import { decodeNoInterface } from './candid-no-interface';
+import { candidUI, canister } from "../../api/actors";
+import { mapOptional } from "../common";
+import { sandboxEvalInterface } from "../sandbox";
 
 const interfaces: { [key: string]: 'ok' } = {};
 
@@ -16,16 +11,12 @@ export class CanisterExposesNoInterfaceError extends CandidInterfaceError {}
 
 export class InterfaceMismatchError extends CandidInterfaceError {}
 
-export interface CandidDecodeResult {
-    result: any;
-    withInterface: boolean;
-}
 
 /**
  * Get interface factory from memory, or attempt to import it. Throws an error if an interface factory can't be imported.
  * @deprecated We can't transmit IDLs to and from the sandbox
  */
-async function getCanisterIDL(canisterId: string): Promise<'ok'> {
+export async function getCanisterIDL(canisterId: string): Promise<'ok'> {
     if (!(canisterId in interfaces)) {
         const i = await importCandidInterface(canisterId);
         if (!i) {
@@ -74,61 +65,4 @@ async function convertCandidToJavascript(
     candid: string,
 ): Promise<string | undefined> {
     return mapOptional(await candidUI.did_to_js(candid));
-}
-
-/**
- * If an interface cannot be retrieved for a canister, we can do a partial decode without one.
- */
-function decodeCandidWithoutInterface(data: ArrayBuffer): any {
-    return decodeNoInterface(data);
-}
-
-/**
- * Decode candid ArrayBuffer for an internet computer request.
- */
-export async function decodeCandidArgs(
-    canisterId: string,
-    method: string,
-    data: ArrayBuffer,
-): Promise<CandidDecodeResult> {
-    try {
-        await getCanisterIDL(canisterId);
-        return {
-            result: await sandboxDecodeCandidArgs(canisterId, method, data),
-            withInterface: true,
-        };
-    } catch (e) {
-        if (e instanceof CandidInterfaceError) {
-            return {
-                result: await decodeCandidWithoutInterface(data),
-                withInterface: false,
-            };
-        }
-        throw e;
-    }
-}
-
-/**
- * Decode candid ArrayBuffer for an internet computer response.
- */
-export async function decodeCandidVals(
-    canisterId: string,
-    method: string,
-    data: ArrayBuffer,
-): Promise<CandidDecodeResult> {
-    try {
-        await getCanisterIDL(canisterId);
-        return {
-            result: await sandboxDecodeCandidVals(canisterId, method, data),
-            withInterface: true,
-        };
-    } catch (e) {
-        if (e instanceof CandidInterfaceError) {
-            return {
-                result: await decodeCandidWithoutInterface(data),
-                withInterface: false,
-            };
-        }
-        throw e;
-    }
 }
