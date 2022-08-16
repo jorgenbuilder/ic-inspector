@@ -78,7 +78,7 @@ export function dumpStub(object: any): string {
  */
 export function readStub(stub: string): any {
     function reviver(key: string, value: any) {
-        if (value._stub) {
+        if (value?._stub) {
             if (value._bigint) {
                 return BigInt(value.val);
             }

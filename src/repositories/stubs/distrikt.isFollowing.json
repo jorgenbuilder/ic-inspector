@@ -1,0 +1,122 @@
+{
+    "caller": {
+      "identifier": "mr2uc-ob4zm-yik2z-vbsny-qsj2h-2np4i-drw75-7seho-a6jjx-5stsu-fqe",
+      "isAnonymous": false
+    },
+    "canister": {
+      "identifier": "cea4l-ryaaa-aaaae-aaa6a-cai",
+      "subnet": "shefu-t3kr5-t5q3w-mqmdq-jabyv-vyvtf-cyyey-3kmo4-toyln-emubw-4qe",
+      "moduleHash": "cfbc6e42e626947d7cf5b7976d58422c0cdf3e5c04c4d1e31384343cb0b6145f",
+      "controllers": [
+        "hy3go-2qaaa-aaaae-aaabq-cai",
+        "ins6m-vyaaa-aaaag-qabuq-cai",
+        "xo4am-ryaaa-aaaai-qh4va-cai",
+        "ho5nh-4iaaa-aaaaj-aaipa-cai",
+        "vi77x-kqaaa-aaaak-aadyq-cai",
+        "zheur-rqaaa-aaaal-qanoq-cai",
+        "ljmf3-4iaaa-aaaan-qaafq-cai",
+        "auw2h-nsumg-eq552-wz7u7-ckc2l-teo22-wjsea-gsprn-kk6ln-rofyd-bqe"
+      ]
+    },
+    "meta": {
+      "originalRequestId": "26291801dcc2b40e471d23beeb558e7a468efcfe44e739b2f8948e91716acada",
+      "type": "query",
+      "status": "replied",
+      "consensus": false,
+      "verified": null,
+      "boundary": {
+        "_stub": true,
+        "_url": true,
+        "val": "https://boundary.ic0.app/api/v2/canister/cea4l-ryaaa-aaaae-aaa6a-cai/query"
+      }
+    },
+    "method": {
+      "name": "isFollowing",
+      "query": true
+    },
+    "timing": {
+      "timestamp": "2022-08-16T04:13:45.851Z",
+      "requestCount": 1
+    },
+    "requests": {
+      "26291801dcc2b40e471d23beeb558e7a468efcfe44e739b2f8948e91716acada": {
+        "caller": {
+          "identifier": "mr2uc-ob4zm-yik2z-vbsny-qsj2h-2np4i-drw75-7seho-a6jjx-5stsu-fqe",
+          "isAnonymous": false
+        },
+        "method": {
+          "name": "isFollowing",
+          "query": true
+        },
+        "canister": {
+          "identifier": "cea4l-ryaaa-aaaae-aaa6a-cai",
+          "subnet": "shefu-t3kr5-t5q3w-mqmdq-jabyv-vyvtf-cyyey-3kmo4-toyln-emubw-4qe",
+          "moduleHash": "cfbc6e42e626947d7cf5b7976d58422c0cdf3e5c04c4d1e31384343cb0b6145f",
+          "controllers": [
+            "hy3go-2qaaa-aaaae-aaabq-cai",
+            "ins6m-vyaaa-aaaag-qabuq-cai",
+            "xo4am-ryaaa-aaaai-qh4va-cai",
+            "ho5nh-4iaaa-aaaaj-aaipa-cai",
+            "vi77x-kqaaa-aaaak-aadyq-cai",
+            "zheur-rqaaa-aaaal-qanoq-cai",
+            "ljmf3-4iaaa-aaaan-qaafq-cai",
+            "auw2h-nsumg-eq552-wz7u7-ckc2l-teo22-wjsea-gsprn-kk6ln-rofyd-bqe"
+          ]
+        },
+        "meta": {
+          "originalRequestId": "26291801dcc2b40e471d23beeb558e7a468efcfe44e739b2f8948e91716acada",
+          "requestId": "26291801dcc2b40e471d23beeb558e7a468efcfe44e739b2f8948e91716acada",
+          "type": "query",
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://boundary.ic0.app/api/v2/canister/cea4l-ryaaa-aaaae-aaa6a-cai/query"
+          }
+        },
+        "timing": {
+          "timestamp": "2022-08-16T04:13:45.851Z"
+        },
+        "request": {
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://boundary.ic0.app/api/v2/canister/cea4l-ryaaa-aaaae-aaa6a-cai/query"
+          },
+          "message": "26291801dcc2b40e471d23beeb558e7a468efcfe44e739b2f8948e91716acada",
+          "requestId": "26291801dcc2b40e471d23beeb558e7a468efcfe44e739b2f8948e91716acada",
+          "sender": {
+            "_stub": true,
+            "_principal": true,
+            "val": "mr2uc-ob4zm-yik2z-vbsny-qsj2h-2np4i-drw75-7seho-a6jjx-5stsu-fqe"
+          },
+          "requestType": "query",
+          "ingressExpiry": {
+            "_stub": true,
+            "_bigint": true,
+            "val": "1660623463731000000"
+          },
+          "canisterId": "cea4l-ryaaa-aaaae-aaa6a-cai",
+          "method": "isFollowing",
+          "args": {
+            "result": [
+              {
+                "_stub": true,
+                "_bigint": true,
+                "val": "177057365940518912"
+              }
+            ],
+            "withInterface": false
+          }
+        },
+        "response": {
+          "status": "replied",
+          "reply": {
+            "result": [
+              false
+            ],
+            "withInterface": false
+          }
+        }
+      }
+    }
+  }

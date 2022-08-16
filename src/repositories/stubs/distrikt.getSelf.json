@@ -1,0 +1,113 @@
+{
+    "canister": {
+      "identifier": "cea4l-ryaaa-aaaae-aaa6a-cai",
+      "subnet": "shefu-t3kr5-t5q3w-mqmdq-jabyv-vyvtf-cyyey-3kmo4-toyln-emubw-4qe",
+      "moduleHash": "cfbc6e42e626947d7cf5b7976d58422c0cdf3e5c04c4d1e31384343cb0b6145f",
+      "controllers": [
+        "hy3go-2qaaa-aaaae-aaabq-cai",
+        "ins6m-vyaaa-aaaag-qabuq-cai",
+        "xo4am-ryaaa-aaaai-qh4va-cai",
+        "ho5nh-4iaaa-aaaaj-aaipa-cai",
+        "vi77x-kqaaa-aaaak-aadyq-cai",
+        "zheur-rqaaa-aaaal-qanoq-cai",
+        "ljmf3-4iaaa-aaaan-qaafq-cai",
+        "auw2h-nsumg-eq552-wz7u7-ckc2l-teo22-wjsea-gsprn-kk6ln-rofyd-bqe"
+      ]
+    },
+    "caller": {
+      "identifier": "2vxsx-fae",
+      "isAnonymous": true
+    },
+    "method": {
+      "name": "getSelf",
+      "query": true
+    },
+    "timing": {
+      "timestamp": "2022-08-16T04:13:42.248Z",
+      "requestCount": 2,
+      "durationMs": 168
+    },
+    "meta": {
+      "originalRequestId": "0db643d1cacc1936b39f75ac3eeb15c18aa073dbc03eab8bdbc1c6223a1e7b64",
+      "type": "query",
+      "status": "rejected",
+      "consensus": false,
+      "verified": null,
+      "boundary": {
+        "_stub": true,
+        "_url": true,
+        "val": "https://boundary.ic0.app/api/v2/canister/cea4l-ryaaa-aaaae-aaa6a-cai/query"
+      }
+    },
+    "requests": {
+      "0db643d1cacc1936b39f75ac3eeb15c18aa073dbc03eab8bdbc1c6223a1e7b64": {
+        "caller": {
+          "identifier": "2vxsx-fae",
+          "isAnonymous": true
+        },
+        "method": {
+          "name": "getSelf",
+          "query": true
+        },
+        "canister": {
+          "identifier": "cea4l-ryaaa-aaaae-aaa6a-cai",
+          "subnet": "shefu-t3kr5-t5q3w-mqmdq-jabyv-vyvtf-cyyey-3kmo4-toyln-emubw-4qe",
+          "moduleHash": "cfbc6e42e626947d7cf5b7976d58422c0cdf3e5c04c4d1e31384343cb0b6145f",
+          "controllers": [
+            "hy3go-2qaaa-aaaae-aaabq-cai",
+            "ins6m-vyaaa-aaaag-qabuq-cai",
+            "xo4am-ryaaa-aaaai-qh4va-cai",
+            "ho5nh-4iaaa-aaaaj-aaipa-cai",
+            "vi77x-kqaaa-aaaak-aadyq-cai",
+            "zheur-rqaaa-aaaal-qanoq-cai",
+            "ljmf3-4iaaa-aaaan-qaafq-cai",
+            "auw2h-nsumg-eq552-wz7u7-ckc2l-teo22-wjsea-gsprn-kk6ln-rofyd-bqe"
+          ]
+        },
+        "meta": {
+          "originalRequestId": "0db643d1cacc1936b39f75ac3eeb15c18aa073dbc03eab8bdbc1c6223a1e7b64",
+          "requestId": "0db643d1cacc1936b39f75ac3eeb15c18aa073dbc03eab8bdbc1c6223a1e7b64",
+          "type": "query",
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://boundary.ic0.app/api/v2/canister/cea4l-ryaaa-aaaae-aaa6a-cai/query"
+          }
+        },
+        "timing": {
+          "timestamp": "2022-08-16T04:13:42.416Z"
+        },
+        "request": {
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://boundary.ic0.app/api/v2/canister/cea4l-ryaaa-aaaae-aaa6a-cai/query"
+          },
+          "message": "0db643d1cacc1936b39f75ac3eeb15c18aa073dbc03eab8bdbc1c6223a1e7b64",
+          "requestId": "0db643d1cacc1936b39f75ac3eeb15c18aa073dbc03eab8bdbc1c6223a1e7b64",
+          "sender": {
+            "_stub": true,
+            "_principal": true,
+            "val": "2vxsx-fae"
+          },
+          "requestType": "query",
+          "ingressExpiry": {
+            "_stub": true,
+            "_bigint": true,
+            "val": "1660623460053000000"
+          },
+          "canisterId": "cea4l-ryaaa-aaaae-aaa6a-cai",
+          "method": "getSelf",
+          "args": {
+            "result": [],
+            "withInterface": false
+          }
+        },
+        "response": {
+          "status": "rejected",
+          "message": "IC0503: Canister cea4l-ryaaa-aaaae-aaa6a-cai trapped explicitly: Can't use the anonymous identity.",
+          "code": 5
+        }
+      }
+    }
+  }

@@ -1,5 +1,6 @@
 import { IDL } from '@dfinity/candid';
 import { v4 as uuid } from 'uuid';
+import { CandidInterfaceError, InterfaceMismatchError } from './candid';
 
 const sandbox = document.getElementById('sandbox') as HTMLIFrameElement;
 
@@ -89,17 +90,31 @@ interface SandboxResponse {
     requestId: string;
 }
 
+interface SandboxError {
+    requestId: string;
+    error: Error;
+}
+
+type SandboxResult = SandboxResponse | SandboxError
+
 /**
  * Bind a handler to receive a response from the sandbox.
  */
 async function sandboxRecieveResponse<T>(requestId: string) {
-    return new Promise<T>((res) => {
-        const receiveResponse = (event: MessageEvent<SandboxResponse>) => {
+    return new Promise<T>((res, rej) => {
+        const receiveResponse = (event: MessageEvent<SandboxResult>) => {
             if (event.data.requestId === requestId) {
-                res(event.data.response as unknown as T);
-                console.debug(sandboxRecieveResponse.name, {
-                    response: event.data.response,
-                });
+                if ('response' in event.data) {
+                    res(event.data.response as unknown as T);
+                    console.debug(sandboxRecieveResponse.name, {
+                        response: event.data.response,
+                    });
+                } else {
+                    rej(event.data.error)
+                    console.debug(sandboxRecieveResponse.name, {
+                        error: event.data.error,
+                    });
+                }
                 window.removeEventListener('message', receiveResponse);
             }
         };
@@ -132,6 +147,22 @@ function sandboxPostResponse(
 }
 
 /**
+ * Post an error from the sandbox to the request origin.
+ */
+function sandboxPostError(
+    source: MessageEventSource,
+    requestId: string,
+    error: Error
+) {
+    console.debug(sandboxPostError.name, {
+        source, requestId, error
+    })
+    source.postMessage({ requestId, error} as SandboxError, {
+        targetOrigin: '*'
+    })
+}
+
+/**
  * Route sandbox messages to handlers.
  */
 export function sandboxHandleMessage(
@@ -140,25 +171,30 @@ export function sandboxHandleMessage(
     if (!message.source) {
         throw new Error('Unreachable: could not determine request source');
     }
-    switch (message.data.request.type) {
-        case 'evalInterface':
-            sandboxPostResponse(message.source, message.data.requestId, {
-                type: message.data.request.type,
-                data: sandboxHandleEvalInterface(message.data.request),
-            });
-            break;
-        case 'decodeCandidArgs':
-            sandboxPostResponse(message.source, message.data.requestId, {
-                type: message.data.request.type,
-                data: sandboxHandledecodeCandidArgs(message.data.request),
-            });
-            break;
-        case 'decodeCandidVals':
-            sandboxPostResponse(message.source, message.data.requestId, {
-                type: message.data.request.type,
-                data: sandboxHandledecodeCandidVals(message.data.request),
-            });
-            break;
+    try {
+        switch (message.data.request.type) {
+            case 'evalInterface':
+                sandboxPostResponse(message.source, message.data.requestId, {
+                    type: message.data.request.type,
+                    data: sandboxHandleEvalInterface(message.data.request),
+                });
+                break;
+            case 'decodeCandidArgs':
+                sandboxPostResponse(message.source, message.data.requestId, {
+                    type: message.data.request.type,
+                    data: sandboxHandledecodeCandidArgs(message.data.request),
+                });
+                break;
+            case 'decodeCandidVals':
+                sandboxPostResponse(message.source, message.data.requestId, {
+                    type: message.data.request.type,
+                    data: sandboxHandledecodeCandidVals(message.data.request),
+                });
+                break;
+        }
+    } catch (e) {
+        // Catch, serialize, and post errors to the origin, because we can't catch errors across execution environments.
+        sandboxPostError(message.source, message.data.requestId, e)
     }
 }
 
@@ -189,7 +225,7 @@ function sandboxHandledecodeCandidArgs(
             'Missing interface definition. Make sure to call sandboxHandleEvalInterface first.',
         );
     }
-    console.debug('sandboxHandledecodeCandidArgs', request);
+    console.debug('sandboxHandledecodeCandidArgs', { idl, request});
     return decodeArgumentValues(idl, request.data.method, request.data.data);
 }
 
@@ -205,7 +241,7 @@ function sandboxHandledecodeCandidVals(
             'Missing interface definition. Make sure to call sandboxHandleEvalInterface first.',
         );
     }
-    console.debug('sandboxHandledecodeCandidVals', request);
+    console.debug('sandboxHandledecodeCandidVals', {idl, request});
     return decodeReturnValue(idl, request.data.method, request.data.data);
 }
 
@@ -220,8 +256,20 @@ function decodeReturnValue(
     const service = Object.fromEntries(
         (idl as any)._fields, // Accessing a private field in this class 😬
     );
-    const types = service[method].retTypes;
-    const returnValues = IDL.decode(types, msg);
+    const types = function () {
+        try {
+            return service[method].retTypes;
+        } catch {
+            throw new InterfaceMismatchError(`"${method}" does not exist on interface: ${JSON.stringify(Object.keys(service), null, 2)}`)
+        }
+    }();
+    const returnValues = function () {
+        try {
+            return IDL.decode(types, msg);
+        } catch (e) {
+            throw new InterfaceMismatchError(`Error decoding "${method}": ${e.message}`)
+        }
+    }();
     // Handle optional
     switch (returnValues.length) {
         case 0:
@@ -244,9 +292,21 @@ function decodeArgumentValues(
     const service = Object.fromEntries(
         (idl as any)._fields, // Accessing a private field in this class 😬
     );
-    const types = service[method].argTypes;
+    const types = function () {
+        try {
+            return service[method].argTypes;
+        } catch {
+            throw new InterfaceMismatchError(`"${method}" does not exist on interface: ${JSON.stringify(Object.keys(service), null, 2)}`)
+        }
+    }()
     // Handle optional
-    const argValues = IDL.decode(types, args);
+    const argValues = function () {
+        try {
+            return IDL.decode(types, args);
+        } catch (e) {
+            throw new InterfaceMismatchError(`Error decoding "${method}": ${e.message}`)
+        }
+    }()
     switch (argValues.length) {
         case 0:
             return null;
@@ -261,7 +321,7 @@ function decodeArgumentValues(
 // External Sandbox API //
 /////////////////////////
 
-export function sandboxEvalInterface(
+export async function sandboxEvalInterface(
     canisterId: string,
     javascriptAsString: string,
 ): Promise<'ok'> {
@@ -271,24 +331,34 @@ export function sandboxEvalInterface(
     }).then((r) => r.data);
 }
 
-export function sandboxDecodeCandidArgs(
+export async function sandboxDecodeCandidArgs(
     canisterId: string,
     method: string,
     data: ArrayBuffer,
 ): Promise<any> {
-    return sandboxRequest<SandboxResponsedecodeCandidArgs>({
-        type: 'decodeCandidArgs',
-        data: { canisterId, method, data },
-    }).then((r) => r.data);
+    try {
+        const response = await sandboxRequest<SandboxResponsedecodeCandidArgs>({
+            type: 'decodeCandidArgs',
+            data: { canisterId, method, data },
+        });
+        return response.data
+    } catch (e) {
+        throw new CandidInterfaceError(e.message);
+    }
 }
 
-export function sandboxDecodeCandidVals(
+export async function sandboxDecodeCandidVals(
     canisterId: string,
     method: string,
     data: ArrayBuffer,
 ): Promise<any> {
-    return sandboxRequest<SandboxResponsedecodeCandidVals>({
-        type: 'decodeCandidVals',
-        data: { canisterId, method, data },
-    }).then((r) => r.data);
+    try {
+        const response = await  sandboxRequest<SandboxResponsedecodeCandidVals>({
+            type: 'decodeCandidVals',
+            data: { canisterId, method, data },
+        })
+        return response.data
+    } catch (e) {
+        throw new CandidInterfaceError(e.message)
+    }
 }

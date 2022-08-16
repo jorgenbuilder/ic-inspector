@@ -141,13 +141,11 @@ function getMessageRepositoryUpdate(
         messageId in messages
             ? getMessageEntryUpdate(messages[messageId], update, asyncData)
             : newMessageEntry(request, response, asyncData.canister);
-
+    
     if (isResponseComplete(response)) {
-        console.groupCollapsed(
-            `Completed message stub (${message.canister.identifier}: ${message.method.name})`,
-        );
-        console.debug(dumpStub(message));
-        console.groupEnd();
+        console.groupCollapsed(`Completed message stub (${message.canister.identifier}: ${message.method.name})`)
+        console.debug(dumpStub(message))
+        console.groupEnd()
     }
 
     return { ...messages, [messageId]: message };
@@ -428,5 +426,3 @@ export function getMessageReply(
         'Unreachable: message reply must be one of null, replied, rejected.',
     );
 }
-
-export function validateMessage(message: MessageEntry) {}

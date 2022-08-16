@@ -5,11 +5,16 @@ import {
     sandboxDecodeCandidVals,
     sandboxEvalInterface,
 } from './sandbox';
-import { IDL } from '@dfinity/candid';
+import { decodeNoInterface } from './candid-no-interface';
 
 const interfaces: { [key: string]: 'ok' } = {};
 
-class InterfaceDoesntExistError extends Error {}
+// TODO: Clean up these error classes. We only user the parent, because introspecting error classes between sandbox and origin would require de/serialization that I don't feel like dealing with.
+export class CandidInterfaceError extends Error {}
+
+export class CanisterExposesNoInterfaceError extends CandidInterfaceError {}
+
+export class InterfaceMismatchError extends CandidInterfaceError {}
 
 export interface CandidDecodeResult {
     result: any;
@@ -24,7 +29,7 @@ async function getCanisterIDL(canisterId: string): Promise<'ok'> {
     if (!(canisterId in interfaces)) {
         const i = await importCandidInterface(canisterId);
         if (!i) {
-            throw new InterfaceDoesntExistError(
+            throw new CanisterExposesNoInterfaceError(
                 `Could not retrieve IDL for canister ${canisterId}`,
             );
         }
@@ -75,9 +80,7 @@ async function convertCandidToJavascript(
  * If an interface cannot be retrieved for a canister, we can do a partial decode without one.
  */
 function decodeCandidWithoutInterface(data: ArrayBuffer): any {
-    const response = IDL.decode([IDL.Unknown], data);
-    console.debug(decodeCandidWithoutInterface.name, { data, response });
-    return response;
+    return decodeNoInterface(data)
 }
 
 /**
@@ -95,7 +98,7 @@ export async function decodeCandidArgs(
             withInterface: true,
         };
     } catch (e) {
-        if (e instanceof InterfaceDoesntExistError) {
+        if (e instanceof CandidInterfaceError) {
             return {
                 result: await decodeCandidWithoutInterface(data),
                 withInterface: false,
@@ -120,7 +123,7 @@ export async function decodeCandidVals(
             withInterface: true,
         };
     } catch (e) {
-        if (e instanceof InterfaceDoesntExistError) {
+        if (e instanceof CandidInterfaceError) {
             return {
                 result: await decodeCandidWithoutInterface(data),
                 withInterface: false,

@@ -1,0 +1,872 @@
+{
+    "caller": {
+      "identifier": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae",
+      "isAnonymous": false
+    },
+    "canister": {
+      "identifier": "h2bch-3yaaa-aaaab-qaama-cai",
+      "subnet": "pae4o-o6dxf-xki7q-ezclx-znyd6-fnk6w-vkv5z-5lfwh-xym2i-otrrw-fqe",
+      "moduleHash": "d4c8ed2b427e9bf35bec2243e6fab5a7ed7a2d528bb601e959ceb7efc8b0ba34",
+      "controllers": [
+        "g6mnv-cyaaa-aaaab-qaaka-cai"
+      ]
+    },
+    "meta": {
+      "originalRequestId": "9eccbcd50f5ec628ee14d49b8692e8fda9ee83a229df2f2d4c20185a568199c2",
+      "type": "query",
+      "status": "replied",
+      "consensus": false,
+      "verified": null,
+      "boundary": {
+        "_stub": true,
+        "_url": true,
+        "val": "https://ic0.app/api/v2/canister/h2bch-3yaaa-aaaab-qaama-cai/query"
+      }
+    },
+    "method": {
+      "name": "list_highlighed_portals",
+      "query": true
+    },
+    "timing": {
+      "timestamp": "2022-08-16T03:47:15.909Z",
+      "requestCount": 1
+    },
+    "requests": {
+      "9eccbcd50f5ec628ee14d49b8692e8fda9ee83a229df2f2d4c20185a568199c2": {
+        "caller": {
+          "identifier": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae",
+          "isAnonymous": false
+        },
+        "method": {
+          "name": "list_highlighed_portals",
+          "query": true
+        },
+        "canister": {
+          "identifier": "h2bch-3yaaa-aaaab-qaama-cai",
+          "subnet": "pae4o-o6dxf-xki7q-ezclx-znyd6-fnk6w-vkv5z-5lfwh-xym2i-otrrw-fqe",
+          "moduleHash": "d4c8ed2b427e9bf35bec2243e6fab5a7ed7a2d528bb601e959ceb7efc8b0ba34",
+          "controllers": [
+            "g6mnv-cyaaa-aaaab-qaaka-cai"
+          ]
+        },
+        "meta": {
+          "originalRequestId": "9eccbcd50f5ec628ee14d49b8692e8fda9ee83a229df2f2d4c20185a568199c2",
+          "requestId": "9eccbcd50f5ec628ee14d49b8692e8fda9ee83a229df2f2d4c20185a568199c2",
+          "type": "query",
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://ic0.app/api/v2/canister/h2bch-3yaaa-aaaab-qaama-cai/query"
+          }
+        },
+        "timing": {
+          "timestamp": "2022-08-16T03:47:15.909Z"
+        },
+        "request": {
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://ic0.app/api/v2/canister/h2bch-3yaaa-aaaab-qaama-cai/query"
+          },
+          "message": "9eccbcd50f5ec628ee14d49b8692e8fda9ee83a229df2f2d4c20185a568199c2",
+          "requestId": "9eccbcd50f5ec628ee14d49b8692e8fda9ee83a229df2f2d4c20185a568199c2",
+          "sender": {
+            "_stub": true,
+            "_principal": true,
+            "val": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae"
+          },
+          "requestType": "query",
+          "ingressExpiry": {
+            "_stub": true,
+            "_bigint": true,
+            "val": "1660621872122000000"
+          },
+          "canisterId": "h2bch-3yaaa-aaaab-qaama-cai",
+          "method": "list_highlighed_portals",
+          "args": {
+            "result": [],
+            "withInterface": false
+          }
+        },
+        "response": {
+          "status": "replied",
+          "reply": {
+            "result": [
+              [
+                {
+                  "_187747554_": [
+                    {
+                      "_503048910_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1"
+                      },
+                      "_1984616049_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "0"
+                      }
+                    },
+                    {
+                      "_503048910_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "18"
+                      },
+                      "_1984616049_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1"
+                      }
+                    },
+                    {
+                      "_503048910_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "9"
+                      },
+                      "_1984616049_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "2"
+                      }
+                    },
+                    {
+                      "_503048910_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "10"
+                      },
+                      "_1984616049_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "3"
+                      }
+                    },
+                    {
+                      "_503048910_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1449"
+                      },
+                      "_1984616049_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "4"
+                      }
+                    },
+                    {
+                      "_503048910_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "103796"
+                      },
+                      "_1984616049_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "5"
+                      }
+                    },
+                    {
+                      "_503048910_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "2108"
+                      },
+                      "_1984616049_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "6"
+                      }
+                    },
+                    {
+                      "_503048910_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "5139"
+                      },
+                      "_1984616049_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "7"
+                      }
+                    }
+                  ],
+                  "_2208685127_": [
+                    {
+                      "_23515_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1"
+                      },
+                      "_36427836_": false,
+                      "_50521214_": false,
+                      "_91645067_": false,
+                      "_947296307_": {
+                        "_23515_": {
+                          "_stub": true,
+                          "_principal": true,
+                          "val": "slrjv-o4wlb-7mjt3-rjegb-psx7i-5ndvk-qkesi-ks3c3-mplfb-ort5m-bqe"
+                        },
+                        "_4896968_": "DSCVR person.",
+                        "_357270062_": true,
+                        "_381635694_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "2"
+                        },
+                        "_552306198_": "rckprtr",
+                        "_1010338175_": [
+                          {
+                            "_1213811397_": "https://3cjkh-tqaaa-aaaam-qan6a-cai.raw.ic0.app/?tokenid=klda5-7akor-uwiaa-aaaaa-deadp-qaqca-aaaai-q&type=thumbnail",
+                            "_1479739102_": true
+                          }
+                        ],
+                        "_1311134999_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "1975975000000"
+                        },
+                        "_1779848746_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "1620354027425716992"
+                        },
+                        "_2169702505_": "",
+                        "_3407360661_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "2292"
+                        },
+                        "_3407558673_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "48"
+                        }
+                      },
+                      "_1169897582_": [],
+                      "_1224700491_": "DSCVR",
+                      "_1247079664_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1952"
+                      },
+                      "_1280697131_": "dscvr",
+                      "_1595738364_": "Primary hub for all things DSCVR",
+                      "_1779848746_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1620354056028905984"
+                      },
+                      "_1907094701_": false,
+                      "_2169702505_": "https://ipfs.dscvr.one/b2801e07-5fcb-486b-8149-9ee1b66f840b-bucket/l5u7qro5crij96sxkkn.jpeg",
+                      "_2411117479_": {
+                        "_stub": true,
+                        "_principal": true,
+                        "val": "slrjv-o4wlb-7mjt3-rjegb-psx7i-5ndvk-qkesi-ks3c3-mplfb-ort5m-bqe"
+                      },
+                      "_3525422570_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "16761"
+                      },
+                      "_3887155721_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "23770"
+                      },
+                      "_3963183773_": false
+                    },
+                    {
+                      "_23515_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "18"
+                      },
+                      "_36427836_": false,
+                      "_50521214_": false,
+                      "_91645067_": false,
+                      "_947296307_": {
+                        "_23515_": {
+                          "_stub": true,
+                          "_principal": true,
+                          "val": "slrjv-o4wlb-7mjt3-rjegb-psx7i-5ndvk-qkesi-ks3c3-mplfb-ort5m-bqe"
+                        },
+                        "_4896968_": "DSCVR person.",
+                        "_357270062_": true,
+                        "_381635694_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "2"
+                        },
+                        "_552306198_": "rckprtr",
+                        "_1010338175_": [
+                          {
+                            "_1213811397_": "https://3cjkh-tqaaa-aaaam-qan6a-cai.raw.ic0.app/?tokenid=klda5-7akor-uwiaa-aaaaa-deadp-qaqca-aaaai-q&type=thumbnail",
+                            "_1479739102_": true
+                          }
+                        ],
+                        "_1311134999_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "1975975000000"
+                        },
+                        "_1779848746_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "1620354027425716992"
+                        },
+                        "_2169702505_": "",
+                        "_3407360661_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "2292"
+                        },
+                        "_3407558673_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "48"
+                        }
+                      },
+                      "_1169897582_": [],
+                      "_1224700491_": "General",
+                      "_1247079664_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1952"
+                      },
+                      "_1280697131_": "general",
+                      "_1595738364_": "Open discussion! Whats on your mind?",
+                      "_1779848746_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1620700780572174592"
+                      },
+                      "_1907094701_": false,
+                      "_2169702505_": "https://ipfs.dscvr.one/b2801e07-5fcb-486b-8149-9ee1b66f840b-bucket/l5u7q5nh586ayx21u8.jpeg",
+                      "_2411117479_": {
+                        "_stub": true,
+                        "_principal": true,
+                        "val": "slrjv-o4wlb-7mjt3-rjegb-psx7i-5ndvk-qkesi-ks3c3-mplfb-ort5m-bqe"
+                      },
+                      "_3525422570_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "10618"
+                      },
+                      "_3887155721_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "24568"
+                      },
+                      "_3963183773_": false
+                    },
+                    {
+                      "_23515_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "9"
+                      },
+                      "_36427836_": false,
+                      "_50521214_": false,
+                      "_91645067_": false,
+                      "_947296307_": {
+                        "_23515_": {
+                          "_stub": true,
+                          "_principal": true,
+                          "val": "slrjv-o4wlb-7mjt3-rjegb-psx7i-5ndvk-qkesi-ks3c3-mplfb-ort5m-bqe"
+                        },
+                        "_4896968_": "DSCVR person.",
+                        "_357270062_": true,
+                        "_381635694_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "2"
+                        },
+                        "_552306198_": "rckprtr",
+                        "_1010338175_": [
+                          {
+                            "_1213811397_": "https://3cjkh-tqaaa-aaaam-qan6a-cai.raw.ic0.app/?tokenid=klda5-7akor-uwiaa-aaaaa-deadp-qaqca-aaaai-q&type=thumbnail",
+                            "_1479739102_": true
+                          }
+                        ],
+                        "_1311134999_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "1975975000000"
+                        },
+                        "_1779848746_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "1620354027425716992"
+                        },
+                        "_2169702505_": "",
+                        "_3407360661_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "2292"
+                        },
+                        "_3407558673_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "48"
+                        }
+                      },
+                      "_1169897582_": [],
+                      "_1224700491_": "Feature Requests",
+                      "_1247079664_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1952"
+                      },
+                      "_1280697131_": "feature-requests",
+                      "_1595738364_": "What features would you like added to DSCVR?  What other decentralized platforms should we integrate with?",
+                      "_1779848746_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1620515551412872960"
+                      },
+                      "_1907094701_": false,
+                      "_2169702505_": "https://ipfs.dscvr.one/b2801e07-5fcb-486b-8149-9ee1b66f840b-bucket/l5u7rg2jifbn8rtjlvh.jpeg",
+                      "_2411117479_": {
+                        "_stub": true,
+                        "_principal": true,
+                        "val": "slrjv-o4wlb-7mjt3-rjegb-psx7i-5ndvk-qkesi-ks3c3-mplfb-ort5m-bqe"
+                      },
+                      "_3525422570_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "7275"
+                      },
+                      "_3887155721_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1268"
+                      },
+                      "_3963183773_": false
+                    },
+                    {
+                      "_23515_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "10"
+                      },
+                      "_36427836_": false,
+                      "_50521214_": false,
+                      "_91645067_": false,
+                      "_947296307_": {
+                        "_23515_": {
+                          "_stub": true,
+                          "_principal": true,
+                          "val": "slrjv-o4wlb-7mjt3-rjegb-psx7i-5ndvk-qkesi-ks3c3-mplfb-ort5m-bqe"
+                        },
+                        "_4896968_": "DSCVR person.",
+                        "_357270062_": true,
+                        "_381635694_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "2"
+                        },
+                        "_552306198_": "rckprtr",
+                        "_1010338175_": [
+                          {
+                            "_1213811397_": "https://3cjkh-tqaaa-aaaam-qan6a-cai.raw.ic0.app/?tokenid=klda5-7akor-uwiaa-aaaaa-deadp-qaqca-aaaai-q&type=thumbnail",
+                            "_1479739102_": true
+                          }
+                        ],
+                        "_1311134999_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "1975975000000"
+                        },
+                        "_1779848746_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "1620354027425716992"
+                        },
+                        "_2169702505_": "",
+                        "_3407360661_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "2292"
+                        },
+                        "_3407558673_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "48"
+                        }
+                      },
+                      "_1169897582_": [],
+                      "_1224700491_": "Bugs",
+                      "_1247079664_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1952"
+                      },
+                      "_1280697131_": "bugs",
+                      "_1595738364_": "What bugs have you discovered?  What are issues you experiencing?  Please make a post for any issue you discover.",
+                      "_1779848746_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1620515587812462080"
+                      },
+                      "_1907094701_": false,
+                      "_2169702505_": "https://ipfs.dscvr.one/b2801e07-5fcb-486b-8149-9ee1b66f840b-bucket/l5u7sa6ywva9khmfjsc.jpeg",
+                      "_2411117479_": {
+                        "_stub": true,
+                        "_principal": true,
+                        "val": "slrjv-o4wlb-7mjt3-rjegb-psx7i-5ndvk-qkesi-ks3c3-mplfb-ort5m-bqe"
+                      },
+                      "_3525422570_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "6724"
+                      },
+                      "_3887155721_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1334"
+                      },
+                      "_3963183773_": false
+                    },
+                    {
+                      "_23515_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1449"
+                      },
+                      "_36427836_": false,
+                      "_50521214_": false,
+                      "_91645067_": false,
+                      "_947296307_": {
+                        "_23515_": {
+                          "_stub": true,
+                          "_principal": true,
+                          "val": "eiefz-ie3aj-h5tda-4dj53-fr4jl-udk75-qp4ow-b42uz-occy5-v4obg-xae"
+                        },
+                        "_4896968_": "https://usertest.icp.page/",
+                        "_357270062_": true,
+                        "_381635694_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "0"
+                        },
+                        "_552306198_": "usertest",
+                        "_1010338175_": [
+                          {
+                            "_1213811397_": "https://m2erx-lqaaa-aaaaf-qackq-cai.raw.ic0.app/nft/4",
+                            "_1479739102_": false
+                          }
+                        ],
+                        "_1311134999_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "454444725000"
+                        },
+                        "_1779848746_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "1620904458131763968"
+                        },
+                        "_2169702505_": "",
+                        "_3407360661_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "484"
+                        },
+                        "_3407558673_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "43"
+                        }
+                      },
+                      "_1169897582_": [],
+                      "_1224700491_": "Art",
+                      "_1247079664_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1952"
+                      },
+                      "_1280697131_": "art",
+                      "_1595738364_": "Dedicated to Art in general",
+                      "_1779848746_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1620933088724828672"
+                      },
+                      "_1907094701_": false,
+                      "_2169702505_": "https://ipfs.dscvr.one/b2801e07-5fcb-486b-8149-9ee1b66f840b-bucket/l5sws1od0n9emi61kot.jpeg",
+                      "_2411117479_": {
+                        "_stub": true,
+                        "_principal": true,
+                        "val": "eiefz-ie3aj-h5tda-4dj53-fr4jl-udk75-qp4ow-b42uz-occy5-v4obg-xae"
+                      },
+                      "_3525422570_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "8761"
+                      },
+                      "_3887155721_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "10791"
+                      },
+                      "_3963183773_": false
+                    },
+                    {
+                      "_23515_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "103796"
+                      },
+                      "_36427836_": false,
+                      "_50521214_": false,
+                      "_91645067_": false,
+                      "_947296307_": {
+                        "_23515_": {
+                          "_stub": true,
+                          "_principal": true,
+                          "val": "un7mm-mig3p-7h6jp-ahpyi-3pp3q-u3blc-nbiyn-2dry4-4ajlo-uuchb-vae"
+                        },
+                        "_4896968_": "Working on Epic NFTs, Spider DAO, creator NFTs, PoH",
+                        "_357270062_": false,
+                        "_381635694_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "0"
+                        },
+                        "_552306198_": "bob",
+                        "_1010338175_": [
+                          {
+                            "_1213811397_": "https://uwroj-kaaaa-aaaaj-qabxa-cai.raw.ic0.app/?tokenid=uwroj-kaaaa-aaaaj-qabxa-cai",
+                            "_1479739102_": false
+                          }
+                        ],
+                        "_1311134999_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "107944675000"
+                        },
+                        "_1779848746_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "1621549706297787136"
+                        },
+                        "_2169702505_": "",
+                        "_3407360661_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "404"
+                        },
+                        "_3407558673_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "0"
+                        }
+                      },
+                      "_1169897582_": [],
+                      "_1224700491_": "IC Breaking News",
+                      "_1247079664_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1952"
+                      },
+                      "_1280697131_": "ic-breaking-news",
+                      "_1595738364_": "The best place to stay up to date on the latest news about the Internet Computer.",
+                      "_1779848746_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1626151321034251520"
+                      },
+                      "_1907094701_": false,
+                      "_2169702505_": "https://ipfs.dscvr.one/b2801e07-5fcb-486b-8149-9ee1b66f840b-bucket/l5u7talrvyjgeyl2n39.jpeg",
+                      "_2411117479_": {
+                        "_stub": true,
+                        "_principal": true,
+                        "val": "un7mm-mig3p-7h6jp-ahpyi-3pp3q-u3blc-nbiyn-2dry4-4ajlo-uuchb-vae"
+                      },
+                      "_3525422570_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "7859"
+                      },
+                      "_3887155721_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "3242"
+                      },
+                      "_3963183773_": false
+                    },
+                    {
+                      "_23515_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "2108"
+                      },
+                      "_36427836_": false,
+                      "_50521214_": false,
+                      "_91645067_": false,
+                      "_947296307_": {
+                        "_23515_": {
+                          "_stub": true,
+                          "_principal": true,
+                          "val": "w6qsj-yfqgf-w2ngt-wgsq3-2pdak-gou75-qg4zk-4pjva-xrei3-sh7xy-6ae"
+                        },
+                        "_4896968_": "",
+                        "_357270062_": false,
+                        "_381635694_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "0"
+                        },
+                        "_552306198_": "mcgibblers",
+                        "_1010338175_": [],
+                        "_1311134999_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "105340875000"
+                        },
+                        "_1779848746_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "1620951705758328320"
+                        },
+                        "_2169702505_": "",
+                        "_3407360661_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "79"
+                        },
+                        "_3407558673_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "0"
+                        }
+                      },
+                      "_1169897582_": [],
+                      "_1224700491_": "Memes",
+                      "_1247079664_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1952"
+                      },
+                      "_1280697131_": "memes",
+                      "_1595738364_": "Everything and anything that has to do with Memes. SUBMIT YOUR MEMES FOR MEME OF THE WEEK!",
+                      "_1779848746_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1621012396111205888"
+                      },
+                      "_1907094701_": false,
+                      "_2169702505_": "https://ipfs.dscvr.one/b2801e07-5fcb-486b-8149-9ee1b66f840b-bucket/l5u7ssw22n5wyuqrnqk.jpeg",
+                      "_2411117479_": {
+                        "_stub": true,
+                        "_principal": true,
+                        "val": "w6qsj-yfqgf-w2ngt-wgsq3-2pdak-gou75-qg4zk-4pjva-xrei3-sh7xy-6ae"
+                      },
+                      "_3525422570_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "6975"
+                      },
+                      "_3887155721_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "5014"
+                      },
+                      "_3963183773_": false
+                    },
+                    {
+                      "_23515_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "5139"
+                      },
+                      "_36427836_": false,
+                      "_50521214_": false,
+                      "_91645067_": false,
+                      "_947296307_": {
+                        "_23515_": {
+                          "_stub": true,
+                          "_principal": true,
+                          "val": "5vtif-uocgk-p3tqc-ghfte-jdesa-zdsdc-kctk4-sey3n-cytmf-hgekr-lqe"
+                        },
+                        "_4896968_": "",
+                        "_357270062_": true,
+                        "_381635694_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "0"
+                        },
+                        "_552306198_": "007",
+                        "_1010338175_": [
+                          {
+                            "_1213811397_": "https://rw623-hyaaa-aaaah-qctcq-cai.raw.ic0.app/?tokenid=el2nm-jykor-uwiaa-aaaaa-b4auy-uaqca-aaaai-q",
+                            "_1479739102_": true
+                          }
+                        ],
+                        "_1311134999_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "9679275000"
+                        },
+                        "_1779848746_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "1620982844575696384"
+                        },
+                        "_2169702505_": "",
+                        "_3407360661_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "17"
+                        },
+                        "_3407558673_": {
+                          "_stub": true,
+                          "_bigint": true,
+                          "val": "0"
+                        }
+                      },
+                      "_1169897582_": [],
+                      "_1224700491_": "NFT",
+                      "_1247079664_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1952"
+                      },
+                      "_1280697131_": "nft",
+                      "_1595738364_": "All about them jpegs. Showcase NFTs you want people to talk about.",
+                      "_1779848746_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1621424431862475264"
+                      },
+                      "_1907094701_": false,
+                      "_2169702505_": "https://ipfs.dscvr.one/b2801e07-5fcb-486b-8149-9ee1b66f840b-bucket/l5u7xlzhaurqpjsgrrs.jpeg",
+                      "_2411117479_": {
+                        "_stub": true,
+                        "_principal": true,
+                        "val": "5vtif-uocgk-p3tqc-ghfte-jdesa-zdsdc-kctk4-sey3n-cytmf-hgekr-lqe"
+                      },
+                      "_3525422570_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "1105"
+                      },
+                      "_3887155721_": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "655"
+                      },
+                      "_3963183773_": false
+                    }
+                  ]
+                }
+              ]
+            ],
+            "withInterface": false
+          }
+        }
+      }
+    }
+  }
