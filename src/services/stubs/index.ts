@@ -1,5 +1,5 @@
-import { readStub } from '../../services/common';
-import { MessageEntry } from '../logs';
+import { readStub } from '../common';
+import { MessageEntry } from '../logging';
 
 import { default as metascore_getGames } from './metascore.getGames.json';
 import { default as metascore_getPlayerCount } from './metascore.getPlayerCount.json';
@@ -34,5 +34,53 @@ export const Stubs = {
 export function randomMessage(): MessageEntry {
     const all = Object.values(Stubs);
     const log = all[Math.floor(all.length * Math.random())];
-    return readStub(JSON.stringify(log));
+    return replaceRequestIds(readStub(JSON.stringify(log)));
+}
+
+function replaceRequestIds(stub: any) {
+    function findIds(stub: any, ids: string[] = []) {
+        for (const key in stub) {
+            if (['originalRequestId', 'requestId', 'message'].includes(key)) {
+                ids.push(stub[key]);
+            } else if (typeof stub[key] === 'object') {
+                findIds(stub[key], ids);
+            }
+        }
+        return new Set(ids);
+    }
+    function replaceIds(
+        stub: any,
+        ids: Set<string>,
+        map: { [key: string]: string } = {},
+    ) {
+        for (const key in stub) {
+            let [k, v] = [key, stub[key]];
+            if (ids.has(v)) {
+                if (!(v in map)) {
+                    map[v] = mockRequestId();
+                }
+                stub[key] = map[v];
+            }
+            if (ids.has(k)) {
+                if (!(k in map)) {
+                    map[k] = mockRequestId();
+                }
+                stub[map[k]] = stub[k];
+                delete stub[k];
+                k = map[k];
+            }
+            if (typeof v === 'object') {
+                replaceIds(stub[k], ids, map);
+            }
+        }
+        return stub;
+    }
+    return replaceIds(stub, findIds(stub));
+}
+
+export function mockRequestId() {
+    return Array(64)
+        .fill(null)
+        .map((x) => Math.floor(Math.random() * 16).toString(16))
+        .join('');
 }
