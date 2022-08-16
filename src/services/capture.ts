@@ -361,20 +361,14 @@ export async function captureInternetComputerMessageFromNetworkEvent(
 > {
     if (!shouldCapture(event)) return;
 
-    console.groupCollapsed('Network Event');
     console.debug('Full network event stub', event);
 
-    console.groupCollapsed('Request');
     const request = await decodeRequest(event);
     console.debug(decodeRequest.name, request);
-    console.groupEnd();
 
-    console.groupCollapsed('Response');
     const response = await decodeResponse(event, request);
     console.debug(decodeResponse.name, response);
-    console.groupEnd();
 
-    console.groupEnd();
 
     return { request, response };
 }
