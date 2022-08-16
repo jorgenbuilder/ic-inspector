@@ -55,7 +55,7 @@ async function importCandidInterface(
  * Attempts to retrieve the candid interface for a given canister. Relies on `canister.__get_candid_interface_tmp_hack`, which works for Motoko canisters, but not Rust canisters.
  * @returns Candid interface in text format
  */
-async function fetchCandidInterface(
+export async function fetchCandidInterface(
     canisterId: string,
 ): Promise<string | undefined> {
     try {
@@ -80,7 +80,7 @@ async function convertCandidToJavascript(
  * If an interface cannot be retrieved for a canister, we can do a partial decode without one.
  */
 function decodeCandidWithoutInterface(data: ArrayBuffer): any {
-    return decodeNoInterface(data)
+    return decodeNoInterface(data);
 }
 
 /**

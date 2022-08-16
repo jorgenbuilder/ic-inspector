@@ -369,6 +369,5 @@ export async function captureInternetComputerMessageFromNetworkEvent(
     const response = await decodeResponse(event, request);
     console.debug(decodeResponse.name, response);
 
-
     return { request, response };
 }

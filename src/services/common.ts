@@ -65,8 +65,8 @@ export function dumpStub(object: any): string {
             return {
                 _stub: true,
                 _url: true,
-                val: value.toString()
-            }
+                val: value.toString(),
+            };
         }
         return value;
     }
@@ -86,7 +86,7 @@ export function readStub(stub: string): any {
                 return Principal.fromText(value.val);
             }
             if (value._url) {
-                return new URL(value.val)
+                return new URL(value.val);
             }
         }
         return value;

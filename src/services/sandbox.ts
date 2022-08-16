@@ -95,7 +95,7 @@ interface SandboxError {
     error: Error;
 }
 
-type SandboxResult = SandboxResponse | SandboxError
+type SandboxResult = SandboxResponse | SandboxError;
 
 /**
  * Bind a handler to receive a response from the sandbox.
@@ -110,7 +110,7 @@ async function sandboxRecieveResponse<T>(requestId: string) {
                         response: event.data.response,
                     });
                 } else {
-                    rej(event.data.error)
+                    rej(event.data.error);
                     console.debug(sandboxRecieveResponse.name, {
                         error: event.data.error,
                     });
@@ -152,14 +152,16 @@ function sandboxPostResponse(
 function sandboxPostError(
     source: MessageEventSource,
     requestId: string,
-    error: Error
+    error: Error,
 ) {
     console.debug(sandboxPostError.name, {
-        source, requestId, error
-    })
-    source.postMessage({ requestId, error} as SandboxError, {
-        targetOrigin: '*'
-    })
+        source,
+        requestId,
+        error,
+    });
+    source.postMessage({ requestId, error } as SandboxError, {
+        targetOrigin: '*',
+    });
 }
 
 /**
@@ -194,7 +196,7 @@ export function sandboxHandleMessage(
         }
     } catch (e) {
         // Catch, serialize, and post errors to the origin, because we can't catch errors across execution environments.
-        sandboxPostError(message.source, message.data.requestId, e)
+        sandboxPostError(message.source, message.data.requestId, e);
     }
 }
 
@@ -225,7 +227,7 @@ function sandboxHandledecodeCandidArgs(
             'Missing interface definition. Make sure to call sandboxHandleEvalInterface first.',
         );
     }
-    console.debug('sandboxHandledecodeCandidArgs', { idl, request});
+    console.debug('sandboxHandledecodeCandidArgs', { idl, request });
     return decodeArgumentValues(idl, request.data.method, request.data.data);
 }
 
@@ -241,7 +243,7 @@ function sandboxHandledecodeCandidVals(
             'Missing interface definition. Make sure to call sandboxHandleEvalInterface first.',
         );
     }
-    console.debug('sandboxHandledecodeCandidVals', {idl, request});
+    console.debug('sandboxHandledecodeCandidVals', { idl, request });
     return decodeReturnValue(idl, request.data.method, request.data.data);
 }
 
@@ -256,20 +258,28 @@ function decodeReturnValue(
     const service = Object.fromEntries(
         (idl as any)._fields, // Accessing a private field in this class 😬
     );
-    const types = function () {
+    const types = (function () {
         try {
             return service[method].retTypes;
         } catch {
-            throw new InterfaceMismatchError(`"${method}" does not exist on interface: ${JSON.stringify(Object.keys(service), null, 2)}`)
+            throw new InterfaceMismatchError(
+                `"${method}" does not exist on interface: ${JSON.stringify(
+                    Object.keys(service),
+                    null,
+                    2,
+                )}`,
+            );
         }
-    }();
-    const returnValues = function () {
+    })();
+    const returnValues = (function () {
         try {
             return IDL.decode(types, msg);
         } catch (e) {
-            throw new InterfaceMismatchError(`Error decoding "${method}": ${e.message}`)
+            throw new InterfaceMismatchError(
+                `Error decoding "${method}": ${e.message}`,
+            );
         }
-    }();
+    })();
     // Handle optional
     switch (returnValues.length) {
         case 0:
@@ -292,21 +302,29 @@ function decodeArgumentValues(
     const service = Object.fromEntries(
         (idl as any)._fields, // Accessing a private field in this class 😬
     );
-    const types = function () {
+    const types = (function () {
         try {
             return service[method].argTypes;
         } catch {
-            throw new InterfaceMismatchError(`"${method}" does not exist on interface: ${JSON.stringify(Object.keys(service), null, 2)}`)
+            throw new InterfaceMismatchError(
+                `"${method}" does not exist on interface: ${JSON.stringify(
+                    Object.keys(service),
+                    null,
+                    2,
+                )}`,
+            );
         }
-    }()
+    })();
     // Handle optional
-    const argValues = function () {
+    const argValues = (function () {
         try {
             return IDL.decode(types, args);
         } catch (e) {
-            throw new InterfaceMismatchError(`Error decoding "${method}": ${e.message}`)
+            throw new InterfaceMismatchError(
+                `Error decoding "${method}": ${e.message}`,
+            );
         }
-    }()
+    })();
     switch (argValues.length) {
         case 0:
             return null;
@@ -341,7 +359,7 @@ export async function sandboxDecodeCandidArgs(
             type: 'decodeCandidArgs',
             data: { canisterId, method, data },
         });
-        return response.data
+        return response.data;
     } catch (e) {
         throw new CandidInterfaceError(e.message);
     }
@@ -353,12 +371,12 @@ export async function sandboxDecodeCandidVals(
     data: ArrayBuffer,
 ): Promise<any> {
     try {
-        const response = await  sandboxRequest<SandboxResponsedecodeCandidVals>({
+        const response = await sandboxRequest<SandboxResponsedecodeCandidVals>({
             type: 'decodeCandidVals',
             data: { canisterId, method, data },
-        })
-        return response.data
+        });
+        return response.data;
     } catch (e) {
-        throw new CandidInterfaceError(e.message)
+        throw new CandidInterfaceError(e.message);
     }
 }

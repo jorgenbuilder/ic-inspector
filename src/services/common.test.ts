@@ -24,7 +24,7 @@ test('stub utils handle bigints', () => {
 });
 
 test('stub utils handle URLs', () => {
-    const value = new URL("https://google.ca");
+    const value = new URL('https://google.ca');
     const object = { value };
     const processed = readStub(dumpStub(object));
     expect(processed.value.host === value.host).toBeTruthy();
