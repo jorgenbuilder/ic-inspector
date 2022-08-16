@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { DetailsPane } from './details';
-import { randomLog } from '../repositories/factories/logs';
+import { randomMessage } from '../repositories/stubs';
 
 export default {
     title: 'Components/Details Pane',
@@ -19,6 +19,6 @@ const Template: ComponentStory<typeof DetailsPane> = (args) => {
 export const WithEvent = Template.bind({});
 
 WithEvent.args = {
-    message: randomLog(),
+    message: randomMessage(),
     clear: () => null,
 };

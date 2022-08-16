@@ -1,0 +1,560 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/MessageEntry",
+  "definitions": {
+      "MessageEntry": {
+          "type": "object",
+          "properties": {
+              "meta": {
+                  "type": "object",
+                  "properties": {
+                      "originalRequestId": {
+                          "$ref": "#/definitions/MessageId"
+                      },
+                      "type": {
+                          "type": "string",
+                          "enum": [
+                              "update",
+                              "query"
+                          ]
+                      },
+                      "status": {
+                          "$ref": "#/definitions/MessageStatus"
+                      },
+                      "consensus": {
+                          "type": "boolean"
+                      },
+                      "verified": {
+                          "type": "null"
+                      },
+                      "boundary": {
+                        "$ref": "#/definitions/URL"
+                      }
+                  },
+                  "required": [
+                      "originalRequestId",
+                      "type",
+                      "status",
+                      "consensus",
+                      "verified",
+                      "boundary"
+                  ],
+                  "additionalProperties": false
+              },
+              "canister": {
+                  "type": "object",
+                  "properties": {
+                      "identifier": {
+                          "type": "string"
+                      },
+                      "name": {
+                          "type": "string"
+                      },
+                      "url": {
+                          "type": "string"
+                      },
+                      "description": {
+                          "type": "string"
+                      },
+                      "logoUrl": {
+                          "type": "string"
+                      },
+                      "subnet": {
+                          "type": "string"
+                      },
+                      "moduleHash": {
+                          "type": "string"
+                      },
+                      "controllers": {
+                          "type": "array",
+                          "items": {
+                              "type": "string"
+                          }
+                      }
+                  },
+                  "required": [
+                      "identifier",
+                      "subnet",
+                      "moduleHash",
+                      "controllers"
+                  ],
+                  "additionalProperties": false
+              },
+              "method": {
+                  "type": "object",
+                  "properties": {
+                      "name": {
+                          "type": "string"
+                      },
+                      "query": {
+                          "type": "boolean"
+                      }
+                  },
+                  "required": [
+                      "name",
+                      "query"
+                  ],
+                  "additionalProperties": false
+              },
+              "caller": {
+                  "type": "object",
+                  "properties": {
+                      "identifier": {
+                          "type": "string"
+                      },
+                      "isAnonymous": {
+                          "type": "boolean"
+                      }
+                  },
+                  "required": [
+                      "identifier",
+                      "isAnonymous"
+                  ],
+                  "additionalProperties": false
+              },
+              "timing": {
+                  "type": "object",
+                  "properties": {
+                      "timestamp": {
+                          "type": "string"
+                      },
+                      "durationMs": {
+                          "type": "number"
+                      },
+                      "requestCount": {
+                          "type": "number"
+                      }
+                  },
+                  "required": [
+                      "timestamp",
+                      "requestCount"
+                  ],
+                  "additionalProperties": false
+              },
+              "requests": {
+                  "type": "object",
+                  "patternProperties": {
+                      "^[a-fA-F0-9]+$": {
+                      "type": "object",
+                      "properties": {
+                          "meta": {
+                              "type": "object",
+                              "properties": {
+                                  "requestId": {
+                                      "type": "string"
+                                  },
+                                  "originalRequestId": {
+                                      "$ref": "#/definitions/MessageId"
+                                  },
+                                  "type": {
+                                      "$ref": "#/definitions/RequestType"
+                                  },
+                                  "boundary": {
+                                    "$ref": "#/definitions/URL"
+                                  }
+                              },
+                              "required": [
+                                  "requestId",
+                                  "originalRequestId",
+                                  "type",
+                                  "boundary"
+                              ],
+                              "additionalProperties": false
+                          },
+                          "caller": {
+                              "type": "object",
+                              "properties": {
+                                  "identifier": {
+                                      "type": "string"
+                                  },
+                                  "isAnonymous": {
+                                      "type": "boolean"
+                                  }
+                              },
+                              "required": [
+                                  "identifier",
+                                  "isAnonymous"
+                              ],
+                              "additionalProperties": false
+                          },
+                          "canister": {
+                              "type": "object",
+                              "properties": {
+                                  "identifier": {
+                                      "type": "string"
+                                  },
+                                  "name": {
+                                      "type": "string"
+                                  },
+                                  "url": {
+                                      "type": "string"
+                                  },
+                                  "description": {
+                                      "type": "string"
+                                  },
+                                  "logoUrl": {
+                                      "type": "string"
+                                  },
+                                  "subnet": {
+                                      "type": "string"
+                                  },
+                                  "moduleHash": {
+                                      "type": "string"
+                                  },
+                                  "controllers": {
+                                      "type": "array",
+                                      "items": {
+                                          "type": "string"
+                                      }
+                                  }
+                              },
+                              "required": [
+                                  "identifier",
+                                  "subnet",
+                                  "moduleHash",
+                                  "controllers"
+                              ],
+                              "additionalProperties": false
+                          },
+                          "method": {
+                              "type": "object",
+                              "properties": {
+                                  "name": {
+                                      "type": "string"
+                                  },
+                                  "query": {
+                                      "type": "boolean"
+                                  }
+                              },
+                              "required": [
+                                  "name",
+                                  "query"
+                              ],
+                              "additionalProperties": false
+                          },
+                          "timing": {
+                              "type": "object",
+                              "properties": {
+                                  "timestamp": {
+                                      "type": "string"
+                                  },
+                                  "durationMs": {
+                                      "type": "number"
+                                  }
+                              },
+                              "required": [
+                                  "timestamp"
+                              ],
+                              "additionalProperties": false
+                          },
+                          "request": {
+                              "$ref": "#/definitions/DecodedRequest"
+                          },
+                          "response": {
+                              "$ref": "#/definitions/DecodedResponse"
+                          }
+                      },
+                      "required": [
+                          "meta",
+                          "caller",
+                          "canister",
+                          "method",
+                          "timing",
+                          "request",
+                          "response"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+              }
+          },
+          "required": [
+              "meta",
+              "canister",
+              "method",
+              "caller",
+              "timing",
+              "requests"
+          ],
+          "additionalProperties": false
+      },
+      "MessageId": {
+          "type": "string"
+      },
+      "MessageStatus": {
+          "type": "string",
+          "enum": [
+              "pending",
+              "replied",
+              "rejected"
+          ]
+      },
+      "RequestType": {
+          "type": "string",
+          "enum": [
+              "query",
+              "call",
+              "read_state"
+          ]
+      },
+      "DecodedRequest": {
+          "anyOf": [
+              {
+                  "type": "object",
+                  "properties": {
+                      "message": {
+                          "type": "string"
+                      },
+                      "requestId": {
+                          "type": "string"
+                      },
+                      "canisterId": {
+                          "type": "string"
+                      },
+                      "method": {
+                          "type": "string"
+                      },
+                      "sender": {
+                          "$ref": "#/definitions/Principal"
+                      },
+                      "requestType": {
+                          "$ref": "#/definitions/RequestType"
+                      },
+                      "ingressExpiry": {
+                          "$ref": "#/definitions/Expiry"
+                      },
+                      "boundary": {
+                        "$ref": "#/definitions/URL"
+                      },
+                      "paths": {
+                          "type": "array",
+                          "items": {
+                              "type": "array",
+                              "items": {
+                                  "type": "object",
+                                  "patternProperties": {
+                                      "[0-9]+": {
+                                          "type": "number"
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "required": [
+                      "boundary",
+                      "canisterId",
+                      "ingressExpiry",
+                      "message",
+                      "method",
+                      "paths",
+                      "requestId",
+                      "requestType",
+                      "sender"
+                  ],
+                  "additionalProperties": false
+              },
+              {
+                  "$ref": "#/definitions/DecodedReadRequest"
+              }
+          ]
+      },
+      "Principal": {
+          "type": "object",
+          "properties": {
+            "_stub": { "type": "boolean" },
+            "_principal": { "type": "boolean" },
+            "val": { "type": "string" }
+          },
+          "required": [ "_stub", "_principal", "val"]
+        },
+      "Expiry": {
+          "type": "object",
+          "properties": {
+            "_stub": { "type": "boolean" },
+            "_bigint": { "type": "boolean" },
+            "val": { "type": "string" }
+          },
+          "required": [ "_stub", "_bigint", "val" ]
+        },
+      "URL": {
+          "type": "object",
+          "properties": {
+            "_stub": { "type": "boolean" },
+            "_url": { "type": "boolean" },
+            "val": { "type": "string" }
+          },
+          "required": [ "_stub", "_url", "val" ]
+        },
+      "DecodedReadRequest": {
+          "type": "object",
+          "properties": {
+              "message": {
+                  "type": "string"
+              },
+              "requestId": {
+                  "type": "string"
+              },
+              "canisterId": {
+                  "type": "string"
+              },
+              "method": {
+                  "type": "string"
+              },
+              "sender": {
+                  "$ref": "#/definitions/Principal"
+              },
+              "requestType": {
+                  "$ref": "#/definitions/RequestType"
+              },
+              "ingressExpiry": {
+                  "$ref": "#/definitions/Expiry"
+              },
+              "boundary": {
+                "$ref": "#/definitions/URL"
+              },
+              "args": {
+                  "type": "object",
+                  "properties": {
+                      "result": {},
+                      "withInterface": {
+                          "type": "boolean"
+                      }
+                  },
+                  "required": [
+                      "result",
+                      "withInterface"
+                  ],
+                  "additionalProperties": false
+              }
+          },
+          "required": [
+              "args",
+              "boundary",
+              "canisterId",
+              "ingressExpiry",
+              "message",
+              "method",
+              "requestId",
+              "requestType",
+              "sender"
+          ],
+          "additionalProperties": false
+      },
+      "DecodedResponse": {
+          "anyOf": [
+              {
+                  "type": "object",
+                  "properties": {
+                      "status": {
+                          "$ref": "#/definitions/QueryResponseStatus"
+                      }
+                  },
+                  "required": [
+                      "status"
+                  ],
+                  "additionalProperties": false
+              },
+              {
+                  "type": "object",
+                  "properties": {
+                      "status": {
+                          "$ref": "#/definitions/QueryResponseStatus"
+                      },
+                      "reply": {
+                          "$ref": "#/definitions/CandidDecodeResult"
+                      }
+                  },
+                  "required": [
+                      "reply",
+                      "status"
+                  ],
+                  "additionalProperties": false
+              },
+              {
+                  "type": "object",
+                  "properties": {
+                      "status": {
+                          "$ref": "#/definitions/RequestStatusResponseStatus"
+                      }
+                  },
+                  "required": [
+                      "status"
+                  ],
+                  "additionalProperties": false
+              },
+              {
+                  "type": "object",
+                  "properties": {
+                      "status": {
+                          "$ref": "#/definitions/RequestStatusResponseStatus"
+                      },
+                      "reply": {
+                          "$ref": "#/definitions/CandidDecodeResult"
+                      }
+                  },
+                  "required": [
+                      "reply",
+                      "status"
+                  ],
+                  "additionalProperties": false
+              },
+              {
+                  "$ref": "#/definitions/RejectedResponse"
+              }
+          ]
+      },
+      "QueryResponseStatus": {
+          "type": "string",
+          "enum": [
+              "replied",
+              "rejected"
+          ]
+      },
+      "CandidDecodeResult": {
+          "type": "object",
+          "properties": {
+              "result": {},
+              "withInterface": {
+                  "type": "boolean"
+              }
+          },
+          "required": [
+              "result",
+              "withInterface"
+          ],
+          "additionalProperties": false
+      },
+      "RequestStatusResponseStatus": {
+          "type": "string",
+          "enum": [
+              "received",
+              "processing",
+              "replied",
+              "rejected",
+              "unknown",
+              "done"
+          ]
+      },
+      "RejectedResponse": {
+          "type": "object",
+          "properties": {
+              "status": {
+                  "$ref": "#/definitions/QueryResponseStatus"
+              },
+              "message": {
+                  "type": "string"
+              },
+              "code": {
+                  "type": "number"
+              }
+          },
+          "required": [
+              "code",
+              "message",
+              "status"
+          ],
+          "additionalProperties": false
+      }
+  }
+}

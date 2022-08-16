@@ -1,0 +1,325 @@
+{
+    "canister": {
+      "identifier": "tzvxm-jqaaa-aaaaj-qabga-cai",
+      "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
+      "moduleHash": "5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04",
+      "controllers": [
+        "tmsgb-iyaaa-aaaaj-qabfq-cai"
+      ]
+    },
+    "caller": {
+      "identifier": "2vxsx-fae",
+      "isAnonymous": true
+    },
+    "method": {
+      "name": "getPlayerCount",
+      "query": false
+    },
+    "timing": {
+      "timestamp": "2022-08-15T21:05:12.874Z",
+      "requestCount": 3,
+      "durationMs": 3130
+    },
+    "meta": {
+      "originalRequestId": "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd",
+      "type": "update",
+      "status": "replied",
+      "consensus": true,
+      "verified": null,
+      "boundary": {
+        "_stub": true,
+        "_url": true,
+        "val": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state"
+      }
+    },
+    "requests": {
+      "4d071b3c9035256b52c270b02bb6c5baa710581278dc7bba16f0b473f9369fa5": {
+        "caller": {
+          "identifier": "2vxsx-fae",
+          "isAnonymous": true
+        },
+        "method": {
+          "name": "getPlayerCount",
+          "query": false
+        },
+        "canister": {
+          "identifier": "tzvxm-jqaaa-aaaaj-qabga-cai",
+          "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
+          "moduleHash": "5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04",
+          "controllers": [
+            "tmsgb-iyaaa-aaaaj-qabfq-cai"
+          ]
+        },
+        "meta": {
+          "originalRequestId": "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd",
+          "requestId": "4d071b3c9035256b52c270b02bb6c5baa710581278dc7bba16f0b473f9369fa5",
+          "type": "read_state",
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state"
+          }
+        },
+        "timing": {
+          "timestamp": "2022-08-15T21:05:12.874Z"
+        },
+        "request": {
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state"
+          },
+          "message": "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd",
+          "requestId": "4d071b3c9035256b52c270b02bb6c5baa710581278dc7bba16f0b473f9369fa5",
+          "canisterId": "tzvxm-jqaaa-aaaaj-qabga-cai",
+          "method": "getPlayerCount",
+          "sender": {
+            "_stub": true,
+            "_principal": true,
+            "val": "2vxsx-fae"
+          },
+          "requestType": "read_state",
+          "ingressExpiry": {
+            "_stub": true,
+            "_bigint": true,
+            "val": "1660597750612000000"
+          },
+          "paths": [
+            [
+              {
+                "0": 114,
+                "1": 101,
+                "2": 113,
+                "3": 117,
+                "4": 101,
+                "5": 115,
+                "6": 116,
+                "7": 95,
+                "8": 115,
+                "9": 116,
+                "10": 97,
+                "11": 116,
+                "12": 117,
+                "13": 115
+              },
+              {
+                "0": 221,
+                "1": 78,
+                "2": 182,
+                "3": 123,
+                "4": 119,
+                "5": 131,
+                "6": 133,
+                "7": 120,
+                "8": 107,
+                "9": 208,
+                "10": 106,
+                "11": 141,
+                "12": 154,
+                "13": 92,
+                "14": 133,
+                "15": 234,
+                "16": 126,
+                "17": 124,
+                "18": 252,
+                "19": 135,
+                "20": 21,
+                "21": 81,
+                "22": 228,
+                "23": 221,
+                "24": 234,
+                "25": 2,
+                "26": 11,
+                "27": 209,
+                "28": 196,
+                "29": 55,
+                "30": 156,
+                "31": 205
+              }
+            ]
+          ]
+        },
+        "response": {
+          "status": "unknown"
+        }
+      },
+      "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd": {
+        "caller": {
+          "identifier": "2vxsx-fae",
+          "isAnonymous": true
+        },
+        "method": {
+          "name": "getPlayerCount",
+          "query": false
+        },
+        "canister": {
+          "identifier": "tzvxm-jqaaa-aaaaj-qabga-cai",
+          "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
+          "moduleHash": "5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04",
+          "controllers": [
+            "tmsgb-iyaaa-aaaaj-qabfq-cai"
+          ]
+        },
+        "meta": {
+          "originalRequestId": "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd",
+          "requestId": "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd",
+          "type": "call",
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/call"
+          }
+        },
+        "timing": {
+          "timestamp": "2022-08-15T21:05:13.577Z"
+        },
+        "request": {
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/call"
+          },
+          "message": "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd",
+          "requestId": "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd",
+          "sender": {
+            "_stub": true,
+            "_principal": true,
+            "val": "2vxsx-fae"
+          },
+          "requestType": "call",
+          "ingressExpiry": {
+            "_stub": true,
+            "_bigint": true,
+            "val": "1660597749791000000"
+          },
+          "canisterId": "tzvxm-jqaaa-aaaaj-qabga-cai",
+          "method": "getPlayerCount",
+          "args": {
+            "result": null,
+            "withInterface": true
+          }
+        },
+        "response": {
+          "status": "unknown"
+        }
+      },
+      "01fa995b0a46d23d4e51727fbd24af820bdce0be2449f66d8d9096fa82c3f0c8": {
+        "caller": {
+          "identifier": "2vxsx-fae",
+          "isAnonymous": true
+        },
+        "method": {
+          "name": "getPlayerCount",
+          "query": false
+        },
+        "canister": {
+          "identifier": "tzvxm-jqaaa-aaaaj-qabga-cai",
+          "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
+          "moduleHash": "5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04",
+          "controllers": [
+            "tmsgb-iyaaa-aaaaj-qabfq-cai"
+          ]
+        },
+        "meta": {
+          "originalRequestId": "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd",
+          "requestId": "01fa995b0a46d23d4e51727fbd24af820bdce0be2449f66d8d9096fa82c3f0c8",
+          "type": "read_state",
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state"
+          }
+        },
+        "timing": {
+          "timestamp": "2022-08-15T21:05:16.004Z"
+        },
+        "request": {
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state"
+          },
+          "message": "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd",
+          "requestId": "01fa995b0a46d23d4e51727fbd24af820bdce0be2449f66d8d9096fa82c3f0c8",
+          "canisterId": "tzvxm-jqaaa-aaaaj-qabga-cai",
+          "method": "getPlayerCount",
+          "sender": {
+            "_stub": true,
+            "_principal": true,
+            "val": "2vxsx-fae"
+          },
+          "requestType": "read_state",
+          "ingressExpiry": {
+            "_stub": true,
+            "_bigint": true,
+            "val": "1660597753852000000"
+          },
+          "paths": [
+            [
+              {
+                "0": 114,
+                "1": 101,
+                "2": 113,
+                "3": 117,
+                "4": 101,
+                "5": 115,
+                "6": 116,
+                "7": 95,
+                "8": 115,
+                "9": 116,
+                "10": 97,
+                "11": 116,
+                "12": 117,
+                "13": 115
+              },
+              {
+                "0": 221,
+                "1": 78,
+                "2": 182,
+                "3": 123,
+                "4": 119,
+                "5": 131,
+                "6": 133,
+                "7": 120,
+                "8": 107,
+                "9": 208,
+                "10": 106,
+                "11": 141,
+                "12": 154,
+                "13": 92,
+                "14": 133,
+                "15": 234,
+                "16": 126,
+                "17": 124,
+                "18": 252,
+                "19": 135,
+                "20": 21,
+                "21": 81,
+                "22": 228,
+                "23": 221,
+                "24": 234,
+                "25": 2,
+                "26": 11,
+                "27": 209,
+                "28": 196,
+                "29": 55,
+                "30": 156,
+                "31": 205
+              }
+            ]
+          ]
+        },
+        "response": {
+          "status": "replied",
+          "reply": {
+            "result": {
+              "_stub": true,
+              "_bigint": true,
+              "val": "2"
+            },
+            "withInterface": true
+          }
+        }
+      }
+    }
+}

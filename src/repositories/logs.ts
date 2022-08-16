@@ -8,7 +8,7 @@ import {
     RejectedResponse,
     RequestType,
 } from '../services/capture';
-import { mapOptional } from '../services/common';
+import { dumpStub, mapOptional } from '../services/common';
 import { getDabCanisterData } from '../services/dab';
 
 type RequestId = string;
@@ -17,11 +17,11 @@ type MessageType = 'update' | 'query';
 export type MessageStatus = 'pending' | 'replied' | 'rejected';
 
 export interface MessageRepository {
-    [key: MessageId]: MessageEntry;
+    [key: string]: MessageEntry;
 }
 
 interface RequestRepository {
-    [key: RequestId]: RequestEntry;
+    [key: string]: RequestEntry;
 }
 
 export interface MessageEntry {
@@ -141,6 +141,14 @@ function getMessageRepositoryUpdate(
         messageId in messages
             ? getMessageEntryUpdate(messages[messageId], update, asyncData)
             : newMessageEntry(request, response, asyncData.canister);
+
+    if (isResponseComplete(response)) {
+        console.groupCollapsed(
+            `Completed message stub (${message.canister.identifier}: ${message.method.name})`,
+        );
+        console.debug(dumpStub(message));
+        console.groupEnd();
+    }
 
     return { ...messages, [messageId]: message };
 }
@@ -420,3 +428,5 @@ export function getMessageReply(
         'Unreachable: message reply must be one of null, replied, rejected.',
     );
 }
+
+export function validateMessage(message: MessageEntry) {}
