@@ -4,7 +4,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { captureInternetComputerMessageFromNetworkEvent } from '../../services/capture';
-import logRepository, { MessageId } from '../../repositories/logs';
+import logRepository, { MessageId } from '../../services/logging';
 import { useStore } from 'zustand';
 import { Root } from '../../ui/root';
 
@@ -42,7 +42,7 @@ function App() {
             capturing={capturing}
             handleCaptureToggle={() => setCapturing(!capturing)}
             handleClear={clear}
-            handleFocus={(m: MessageId) => focus(m)}
+            handleFocus={(m?: MessageId) => focus(m)}
         />
     );
 }

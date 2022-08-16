@@ -4,7 +4,7 @@ import {
     getMessageReply,
     getMessageRequest,
     MessageEntry,
-} from '../repositories/logs';
+} from '../services/logging';
 import { serialize } from '../services/common';
 import Styles from './details.module.css';
 
@@ -33,7 +33,7 @@ export function DetailsPane(props: {
     return (
         <div className={Styles.details}>
             <div className={Styles.detailsHead}>
-                <div onClick={props.clear} className="close icon"></div>
+                <div onClick={() => props.clear()} className="close icon"></div>
                 <div className={Styles.tabs}>
                     {tabs.map(([title]) => (
                         <div
@@ -62,7 +62,7 @@ function Overview(props: { message: MessageEntry }) {
             <Section title="Method">
                 <dl>
                     <dt>Type</dt>
-                    <dd>{message.method.query ? 'Query' : 'Update'}</dd>
+                    <dd>{message.method.query ? 'query' : 'update'}</dd>
                     <dt>Name</dt>
                     <dd>{message.method.name}</dd>
                     {/* <dt>Arg Types</dt>
@@ -86,6 +86,20 @@ function Overview(props: { message: MessageEntry }) {
                     </dd>
                     <dt>Identifier</dt>
                     <dd>{message.canister.identifier}</dd>
+                    <dt>Interface</dt>
+                    <dd>
+                        {message.canister.hasCandid ? (
+                            <a
+                                href={`https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.ic0.app/?id=${message.canister.identifier}`}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                Candid UI
+                            </a>
+                        ) : (
+                            `Could not determine`
+                        )}
+                    </dd>
                     <dt>Subnet</dt>
                     <dd>
                         <a
@@ -141,6 +155,31 @@ function Overview(props: { message: MessageEntry }) {
                     <dd>{message.meta.consensus}</dd>
                 </dl>
             </Section>
+            <Section title="Agent Requests">
+                <dl>
+                    {Object.values(message.requests)
+                        .sort(
+                            (a, b) =>
+                                b.timing.timestamp.getTime() -
+                                a.timing.timestamp.getTime(),
+                        )
+                        .map((request) => (
+                            <>
+                                <dt>
+                                    {request.timing.timestamp.toLocaleTimeString()}
+                                </dt>
+                                <dd>
+                                    <pre>{request.request.requestId}</pre>{' '}
+                                    {request.meta.type}
+                                </dd>
+                            </>
+                        ))}
+                    <dt>{(message.timing.durationMs || '?') + 'ms'}</dt>
+                    <dd>
+                        <em>total time</em>
+                    </dd>
+                </dl>
+            </Section>
         </div>
     );
 }
@@ -193,7 +232,7 @@ function Section(props: { children: React.ReactNode; title: string }) {
                 <div className={Styles.carat}>▴</div>
                 <div className={Styles.title}>{props.title}</div>
             </div>
-            <div className={Styles.body}>{props.children}</div>
+            {open && <div className={Styles.body}>{props.children}</div>}
         </div>
     );
 }

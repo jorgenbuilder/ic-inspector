@@ -4,7 +4,7 @@ import {
     MessageId,
     MessageRepository,
     MessageStatus,
-} from '../repositories/logs';
+} from '../services/logging';
 import { Column, useGlobalFilter, useTable } from 'react-table';
 import { DetailsPane } from './details';
 
@@ -24,7 +24,7 @@ export function Root(props: {
     capturing: boolean;
     handleClear: () => void;
     handleCaptureToggle: () => void;
-    handleFocus: (message: MessageId) => void;
+    handleFocus: (message?: MessageId) => void;
 }) {
     const {
         messages,
@@ -190,7 +190,8 @@ export function Root(props: {
                         <tfoot>
                             <tr>
                                 <td colSpan={6}>
-                                    {messages.length || 0} Messages
+                                    {Object.values(messages).length || 0}{' '}
+                                    Messages
                                 </td>
                             </tr>
                         </tfoot>
@@ -199,7 +200,7 @@ export function Root(props: {
                 {focusedMessage && (
                     <DetailsPane
                         message={focusedMessage}
-                        clear={() => focus()}
+                        clear={() => handleFocus()}
                     />
                 )}
             </div>
