@@ -1,94 +1,94 @@
 :root {
-    --color-chrome-0: rgb(36 36 36);
-    --color-chrome-1: rgb(41 41 41);
-    --color-chrome-2: rgb(41 42 45);
-    --color-chrome-3: rgb(75, 75, 75);
-    --color-chrome-4: rgb(145 145 145);
-    --color-chrome-5: rgb(154, 160, 166);
-    --color-chrome-6: white;
+    --chrome-0: rgb(36 36 36);
+    --chrome-1: rgb(41 41 41);
+    --chrome-2: rgb(41 42 45);
+    --chrome-3: rgb(75, 75, 75);
+    --chrome-4: rgb(145 145 145);
+    --chrome-5: rgb(154, 160, 166);
+    --chrome-6: white;
 }
 
 @media (prefers-color-scheme: light) {
     :root {
-        --color-chrome-0: rgb(242, 242, 242);
-        --color-chrome-1: rgb(202, 205, 215);
-        --color-chrome-2: rgb(192, 197, 213);
-        --color-chrome-3: rgb(177, 177, 177);
-        --color-chrome-4: rgb(163, 163, 163);
-        --color-chrome-5: rgb(81, 85, 89);
-        --color-chrome-6: black;
+        --chrome-0: rgb(242, 242, 242);
+        --chrome-1: rgb(202, 205, 215);
+        --chrome-2: rgb(192, 197, 213);
+        --chrome-3: rgb(177, 177, 177);
+        --chrome-4: rgb(163, 163, 163);
+        --chrome-5: rgb(81, 85, 89);
+        --chrome-6: black;
     }
 }
 
 a, a:link, a:visited {
-    color: var(--color-chrome-6);
+    color: var(--chrome-6);
 }
 
 @media (prefers-color-scheme: dark) {
     body {
-        background-color: var(--color-chrome-0);
-        color: var(--color-chrome-5);
+        background-color: var(--chrome-0);
+        color: var(--chrome-5);
     }
     thead {
-        background: var(--color-chrome-2);
-        box-shadow: 0 1px 0 var(--color-chrome-3);
+        background: var(--chrome-2);
+        box-shadow: 0 1px 0 var(--chrome-3);
     }
 
     tfoot {
-        background-color: var(--color-chrome-2);
-        border-top: 1px solid var(--color-chrome-3);
+        background-color: var(--chrome-2);
+        border-top: 1px solid var(--chrome-3);
     }
 
     td:not(:last-child),
     th:not(:last-child) {
-        border-right: 1px solid var(--color-chrome-3);
+        border-right: 1px solid var(--chrome-3);
     }
 
     tbody tr {
-        background: var(--color-chrome-0);
+        background: var(--chrome-0);
     }
 
     tbody tr:nth-child(odd) {
-        background: var(--color-chrome-1);
+        background: var(--chrome-1);
     }
 
     tbody td:first-child:hover {
-        color: var(--color-chrome-5);
+        color: var(--chrome-5);
     }
 
     .controls {
-        background: var(--color-chrome-2);
-        box-shadow: 0 1px 0 var(--color-chrome-3);
+        background: var(--chrome-2);
+        box-shadow: 0 1px 0 var(--chrome-3);
     }
 
     .icon {
-        background-color: var(--color-chrome-5);
+        background-color: var(--chrome-5);
     }
 
     .icon:hover {
-        background-color: var(--color-chrome-5);
+        background-color: var(--chrome-5);
     }
 
     .filter {
-        background: var(--color-chrome-1);
-        color: var(--color-chrome-5);
+        background: var(--chrome-1);
+        color: var(--chrome-5);
     }
 
     .clear {
-        --override-icon-mask-background-color: var(--color-chrome-4);
+        --override-icon-mask-background-color: var(--chrome-4);
     }
 
     .close {
-        --override-icon-mask-background-color: var(--color-chrome-4);
+        --override-icon-mask-background-color: var(--chrome-4);
     }
 
     .side-by-side .table-container {
-        border-right: 1px solid var(--color-chrome-3);
+        border-right: 1px solid var(--chrome-3);
     }
 
     .details-pane__head {
-        background: var(--color-chrome-2);
-        box-shadow: 0 1px 0 var(--color-chrome-3);
+        background: var(--chrome-2);
+        box-shadow: 0 1px 0 var(--chrome-3);
     }
 }
 

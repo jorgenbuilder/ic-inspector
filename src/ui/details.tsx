@@ -78,7 +78,11 @@ function Overview(props: { message: MessageEntry }) {
                         {message.canister.logoUrl && (
                             <img src={message.canister.logoUrl} />
                         )}
-                        {message.canister.name}
+                        {message.canister.name || (
+                            <span className={Styles.dabWarning}>
+                                Not registered with DAB
+                            </span>
+                        )}
                     </dd>
                     <dt>Identifier</dt>
                     <dd>{message.canister.identifier}</dd>
@@ -94,7 +98,13 @@ function Overview(props: { message: MessageEntry }) {
                         </a>
                     </dd>
                     <dt>Description</dt>
-                    <dd>{message.canister.description}</dd>
+                    <dd>
+                        {message.canister.description || (
+                            <span className={Styles.dabWarning}>
+                                Not registered with DAB
+                            </span>
+                        )}
+                    </dd>
                     <dt>Controllers</dt>
                     <dd>{message.canister.controllers.join(', ')}</dd>
                     <dt>Module Hash</dt>
