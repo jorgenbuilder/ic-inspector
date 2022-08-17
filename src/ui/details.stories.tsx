@@ -12,13 +12,10 @@ export default {
     },
 } as ComponentMeta<typeof DetailsPane>;
 
-const Template: ComponentStory<typeof DetailsPane> = (args) => {
-    return <DetailsPane {...args} />;
+const Template: ComponentStory<typeof DetailsPane> = () => {
+    const message = randomMessage()
+    console.log(message)
+    return <DetailsPane clear={() => null} message={message} />;
 };
 
-export const WithEvent = Template.bind({});
-
-WithEvent.args = {
-    message: randomMessage(),
-    clear: () => null,
-};
+export const Standard = Template.bind({});

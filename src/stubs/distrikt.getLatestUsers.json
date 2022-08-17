@@ -35,7 +35,11 @@
       "query": true
     },
     "timing": {
-      "timestamp": "2022-08-16T04:13:45.586Z",
+      "timestamp": {
+"_stub": true,
+"_date": true,
+"val": "2022-08-16T04:13:45.586Z"
+},
       "requestCount": 1
     },
     "requests": {
@@ -74,7 +78,11 @@
           }
         },
         "timing": {
-          "timestamp": "2022-08-16T04:13:45.586Z"
+          "timestamp": {
+"_stub": true,
+"_date": true,
+"val": "2022-08-16T04:13:45.586Z"
+}
         },
         "request": {
           "boundary": {

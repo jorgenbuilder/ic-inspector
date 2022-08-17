@@ -3,7 +3,7 @@
  */
 
 import { Principal } from '@dfinity/principal';
-import { dumpStub, readStub } from './common';
+import { dumpStub, readStub } from '../stubs';
 
 test('stub utils handle principals', () => {
     const asText =

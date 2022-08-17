@@ -16,7 +16,11 @@
       "query": false
     },
     "timing": {
-      "timestamp": "2022-08-15T21:05:12.874Z",
+      "timestamp": {
+"_stub": true,
+"_date": true,
+"val": "2022-08-15T21:05:12.874Z"
+},
       "requestCount": 3,
       "durationMs": 3130
     },
@@ -61,7 +65,11 @@
           }
         },
         "timing": {
-          "timestamp": "2022-08-15T21:05:12.874Z"
+          "timestamp": {
+"_stub": true,
+"_date": true,
+"val": "2022-08-15T21:05:12.874Z"
+}
         },
         "request": {
           "boundary": {
@@ -171,7 +179,11 @@
           }
         },
         "timing": {
-          "timestamp": "2022-08-15T21:05:13.577Z"
+          "timestamp": {
+"_stub": true,
+"_date": true,
+"val": "2022-08-15T21:05:13.577Z"
+}
         },
         "request": {
           "boundary": {
@@ -231,7 +243,11 @@
           }
         },
         "timing": {
-          "timestamp": "2022-08-15T21:05:16.004Z"
+          "timestamp": {
+"_stub": true,
+"_date": true,
+"val": "2022-08-15T21:05:16.004Z"
+}
         },
         "request": {
           "boundary": {
