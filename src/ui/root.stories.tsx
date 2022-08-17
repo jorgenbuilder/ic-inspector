@@ -18,7 +18,6 @@ export default {
 function timeIterateMessageRequests(requests: RequestRepository, callback: (request: RequestEntry) => void) {
     async function iterate (values: RequestEntry[]) {
         const request = values.shift();
-        console.log("iterate", values, request?.meta.requestId)
         if (request) {
             callback(request);
             await new Promise(res => setTimeout(res, Math.random() * 3000))

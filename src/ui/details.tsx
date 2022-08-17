@@ -165,10 +165,10 @@ function Overview(props: { message: MessageEntry }) {
                         )
                         .map((request) => (
                             <>
-                                <dt>
+                                <dt key={`${request.meta.requestId}t`}>
                                     {request.timing.timestamp.toLocaleTimeString()}
                                 </dt>
-                                <dd>
+                                <dd key={`${request.meta.requestId}d`}>
                                     <pre>{request.request.requestId}</pre>{' '}
                                     {request.meta.type}
                                 </dd>
