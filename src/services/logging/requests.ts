@@ -8,7 +8,7 @@ export interface RequestRepository {
     [key: string]: RequestEntry;
 }
 
-interface RequestEntry {
+export interface RequestEntry {
     meta: RequestMetaData;
     caller: CallerData;
     canister: CanisterData;

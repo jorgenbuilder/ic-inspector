@@ -160,8 +160,8 @@ function Overview(props: { message: MessageEntry }) {
                     {Object.values(message.requests)
                         .sort(
                             (a, b) =>
-                                b.timing.timestamp.getTime() -
-                                a.timing.timestamp.getTime(),
+                                a.timing.timestamp.getTime() -
+                                b.timing.timestamp.getTime(),
                         )
                         .map((request) => (
                             <>

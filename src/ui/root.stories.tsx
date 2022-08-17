@@ -4,6 +4,7 @@ import { Root } from './root';
 import { useStore } from 'zustand';
 import { logstore, MessageId } from '../services/logging';
 import { randomMessage } from '../stubs';
+import { RequestEntry, RequestRepository } from '../services/logging/requests';
 
 export default {
     title: 'Components/Root',
@@ -14,6 +15,19 @@ export default {
     },
 } as ComponentMeta<typeof Root>;
 
+function timeIterateMessageRequests(requests: RequestRepository, callback: (request: RequestEntry) => void) {
+    async function iterate (values: RequestEntry[]) {
+        const request = values.shift();
+        console.log("iterate", values, request?.meta.requestId)
+        if (request) {
+            callback(request);
+            await new Promise(res => setTimeout(res, Math.random() * 3000))
+            values.length && iterate(values);
+        }
+    }
+    iterate(Object.values(requests).sort((a, b) => a.request.requestType === 'call' ? - 1 : a.timing.timestamp.getTime() - b.timing.timestamp.getTime()))
+}
+
 const Template: ComponentStory<typeof Root> = (args) => {
     const { focusedMessage, clear, focus, log, messages } =
         useStore(logstore);
@@ -22,7 +36,7 @@ const Template: ComponentStory<typeof Root> = (args) => {
     React.useEffect(() => {
         for (let i = 5; i > 0; i--) {
             const message = randomMessage();
-            Object.values(message.requests).forEach(({ request, response }) =>
+            timeIterateMessageRequests(message.requests, ({ request, response }) =>
                 log(request, response),
             );
         }
