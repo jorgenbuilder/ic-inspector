@@ -116,7 +116,12 @@
                   "type": "object",
                   "properties": {
                       "timestamp": {
-                          "type": "string"
+                            "type": "object",
+                            "properties": {
+                                "_stub": {"type": "boolean" },
+                                "_date": { "type": "boolean" },
+                                "val": { "type": "string" }
+                            }
                       },
                       "durationMs": {
                           "type": "number"
@@ -236,7 +241,12 @@
                               "type": "object",
                               "properties": {
                                   "timestamp": {
-                                      "type": "string"
+                                        "type": "object",
+                                        "properties": {
+                                            "_stub": {"type": "boolean" },
+                                            "_date": { "type": "boolean" },
+                                            "val": { "type": "string" }
+                                        }
                                   },
                                   "durationMs": {
                                       "type": "number"

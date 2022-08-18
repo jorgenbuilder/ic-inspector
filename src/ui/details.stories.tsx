@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { DetailsPane } from './details';
-import { randomMessage } from '../stubs';
+import { randomMessage } from '../stubs/messages';
 
 export default {
     title: 'Components/Details Pane',

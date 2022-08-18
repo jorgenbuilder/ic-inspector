@@ -1,21 +1,31 @@
 /**
  * @jest-environment jsdom
  */
-import Ajv from 'ajv';
-import Schema from './message.schema.json';
-import { mockRequestId, Stubs } from '.';
 
-const validate = new Ajv().compile(Schema);
+import { Principal } from '@dfinity/principal';
+import { dumpStub, readStub } from '.';
 
-test('Stubs are valid', () => {
-    Object.entries(Stubs).forEach(([key, stub]) => {
-        const valid = validate(stub);
-        if (!valid) console.error(`Error with stub: ${key}`, validate.errors);
-        expect(valid).toBeTruthy();
-    });
+test('stub utils handle principals', () => {
+    const asText =
+        'k6ut3-4axpf-t6vak-hoh4w-2zroe-mmglc-nl7ab-vrl5w-mmvsf-i4liy-dqe';
+    const principal = Principal.fromText(asText);
+    const object = {
+        prop: { principal },
+    };
+    const processed = readStub(dumpStub(object));
+    expect(processed.prop.principal.toText()).toBe(asText);
 });
 
-test('mock requestid', () => {
-    const id = mockRequestId();
-    expect(/[0-9A-Fa-f]{64}/g.test(id)).toBeTruthy();
+test('stub utils handle bigints', () => {
+    const value = BigInt(100);
+    const object = { value };
+    const processed = readStub(dumpStub(object));
+    expect(processed.value === value).toBeTruthy();
+});
+
+test('stub utils handle URLs', () => {
+    const value = new URL('https://google.ca');
+    const object = { value };
+    const processed = readStub(dumpStub(object));
+    expect(processed.value.host === value.host).toBeTruthy();
 });

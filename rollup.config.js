@@ -14,6 +14,7 @@ import zip from 'rollup-plugin-zip';
 import replace from '@rollup/plugin-replace';
 import { wasm } from '@rollup/plugin-wasm';
 import postcss from 'rollup-plugin-postcss'
+import json from '@rollup/plugin-json';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -26,6 +27,7 @@ export default {
         // sourcemap: 'inline'
     },
     plugins: [
+        json(),
         postcss({
             modules: true,
         }),

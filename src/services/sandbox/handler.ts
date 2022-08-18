@@ -87,16 +87,16 @@ function sandboxPostResponse(
     requestId: string,
     response: SandboxResponse['response'],
 ) {
-    if (!(source instanceof Window)) {
-        throw new Error("Unreachable: origin should be a window");
-    }
     console.debug(sandboxPostResponse.name, {
         source,
         requestId,
         response,
         sandboxRepository,
     });
-    source.postMessage({ requestId, response } as SandboxResponse, '*');
+    (source as Window).postMessage({ requestId, response } as SandboxResponse, '*');
+    if (!(source instanceof Window)) {
+        console.warn("Non window source", typeof source, source)
+    }
 }
 
 /**
@@ -107,15 +107,15 @@ function sandboxPostError(
     requestId: string,
     error: Error,
 ) {
-    if (!(source instanceof Window)) {
-        throw new Error("Unreachable: origin should be a window");
-    }
     console.debug(sandboxPostError.name, {
         source,
         requestId,
         error,
     });
-    source.postMessage({ requestId, error } as SandboxError, '*');
+    (source as Window).postMessage({ requestId, error } as SandboxError, '*');
+    if (!(source instanceof Window)) {
+        console.warn("Non window source", typeof source, source)
+    }
 }
 
 /**

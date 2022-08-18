@@ -3,8 +3,8 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Root } from './root';
 import { useStore } from 'zustand';
 import { logstore, MessageId } from '../services/logging';
-import { randomMessage } from '../stubs';
 import { RequestEntry, RequestRepository } from '../services/logging/requests';
+import { randomMessage } from '../stubs/messages';
 
 export default {
     title: 'Components/Root',
