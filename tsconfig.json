@@ -1,15 +1,17 @@
 {
-  "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "jsx": "react",
-    "lib": ["dom", "es2019"],
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "strict": true,
-    "target": "es2018",
-    "skipLibCheck": true
-  }
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "jsx": "react",
+        "lib": ["dom", "es2019"],
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "strict": true,
+        "target": "es2018",
+        "skipLibCheck": true,
+        "plugins": [{ "name": "typescript-plugin-css-modules" }],
+        "resolveJsonModule": true
+    }
 }

@@ -1,0 +1,128 @@
+{
+    "caller": {
+      "identifier": "mr2uc-ob4zm-yik2z-vbsny-qsj2h-2np4i-drw75-7seho-a6jjx-5stsu-fqe",
+      "isAnonymous": false
+    },
+    "canister": {
+      "identifier": "cea4l-ryaaa-aaaae-aaa6a-cai",
+      "subnet": "shefu-t3kr5-t5q3w-mqmdq-jabyv-vyvtf-cyyey-3kmo4-toyln-emubw-4qe",
+      "moduleHash": "cfbc6e42e626947d7cf5b7976d58422c0cdf3e5c04c4d1e31384343cb0b6145f",
+      "controllers": [
+        "hy3go-2qaaa-aaaae-aaabq-cai",
+        "ins6m-vyaaa-aaaag-qabuq-cai",
+        "xo4am-ryaaa-aaaai-qh4va-cai",
+        "ho5nh-4iaaa-aaaaj-aaipa-cai",
+        "vi77x-kqaaa-aaaak-aadyq-cai",
+        "zheur-rqaaa-aaaal-qanoq-cai",
+        "ljmf3-4iaaa-aaaan-qaafq-cai",
+        "auw2h-nsumg-eq552-wz7u7-ckc2l-teo22-wjsea-gsprn-kk6ln-rofyd-bqe"
+      ]
+    },
+    "meta": {
+      "originalRequestId": "4f998d94762dba73a8e43f11e0759b7e64541b427cc4a1a9249704d1f765c67c",
+      "type": "query",
+      "status": "replied",
+      "consensus": false,
+      "verified": null,
+      "boundary": {
+        "_stub": true,
+        "_url": true,
+        "val": "https://boundary.ic0.app/api/v2/canister/cea4l-ryaaa-aaaae-aaa6a-cai/query"
+      }
+    },
+    "method": {
+      "name": "getSelfUserId",
+      "query": true
+    },
+    "timing": {
+      "timestamp": {
+"_stub": true,
+"_date": true,
+"val": "2022-08-16T04:13:42.466Z"
+},
+      "requestCount": 1
+    },
+    "requests": {
+      "4f998d94762dba73a8e43f11e0759b7e64541b427cc4a1a9249704d1f765c67c": {
+        "caller": {
+          "identifier": "mr2uc-ob4zm-yik2z-vbsny-qsj2h-2np4i-drw75-7seho-a6jjx-5stsu-fqe",
+          "isAnonymous": false
+        },
+        "method": {
+          "name": "getSelfUserId",
+          "query": true
+        },
+        "canister": {
+          "identifier": "cea4l-ryaaa-aaaae-aaa6a-cai",
+          "subnet": "shefu-t3kr5-t5q3w-mqmdq-jabyv-vyvtf-cyyey-3kmo4-toyln-emubw-4qe",
+          "moduleHash": "cfbc6e42e626947d7cf5b7976d58422c0cdf3e5c04c4d1e31384343cb0b6145f",
+          "controllers": [
+            "hy3go-2qaaa-aaaae-aaabq-cai",
+            "ins6m-vyaaa-aaaag-qabuq-cai",
+            "xo4am-ryaaa-aaaai-qh4va-cai",
+            "ho5nh-4iaaa-aaaaj-aaipa-cai",
+            "vi77x-kqaaa-aaaak-aadyq-cai",
+            "zheur-rqaaa-aaaal-qanoq-cai",
+            "ljmf3-4iaaa-aaaan-qaafq-cai",
+            "auw2h-nsumg-eq552-wz7u7-ckc2l-teo22-wjsea-gsprn-kk6ln-rofyd-bqe"
+          ]
+        },
+        "meta": {
+          "originalRequestId": "4f998d94762dba73a8e43f11e0759b7e64541b427cc4a1a9249704d1f765c67c",
+          "requestId": "4f998d94762dba73a8e43f11e0759b7e64541b427cc4a1a9249704d1f765c67c",
+          "type": "query",
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://boundary.ic0.app/api/v2/canister/cea4l-ryaaa-aaaae-aaa6a-cai/query"
+          }
+        },
+        "timing": {
+          "timestamp": {
+"_stub": true,
+"_date": true,
+"val": "2022-08-16T04:13:42.466Z"
+}
+        },
+        "request": {
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://boundary.ic0.app/api/v2/canister/cea4l-ryaaa-aaaae-aaa6a-cai/query"
+          },
+          "message": "4f998d94762dba73a8e43f11e0759b7e64541b427cc4a1a9249704d1f765c67c",
+          "requestId": "4f998d94762dba73a8e43f11e0759b7e64541b427cc4a1a9249704d1f765c67c",
+          "sender": {
+            "_stub": true,
+            "_principal": true,
+            "val": "mr2uc-ob4zm-yik2z-vbsny-qsj2h-2np4i-drw75-7seho-a6jjx-5stsu-fqe"
+          },
+          "requestType": "query",
+          "ingressExpiry": {
+            "_stub": true,
+            "_bigint": true,
+            "val": "1660623460055000000"
+          },
+          "canisterId": "cea4l-ryaaa-aaaae-aaa6a-cai",
+          "method": "getSelfUserId",
+          "args": {
+            "result": [],
+            "withInterface": false
+          }
+        },
+        "response": {
+          "status": "replied",
+          "reply": {
+            "result": [
+              {
+                "_stub": true,
+                "_bigint": true,
+                "val": "37921049911771137"
+              }
+            ],
+            "withInterface": false
+          }
+        }
+      }
+    }
+  }

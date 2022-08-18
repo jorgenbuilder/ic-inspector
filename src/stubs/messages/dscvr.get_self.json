@@ -1,0 +1,152 @@
+{
+    "caller": {
+      "identifier": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae",
+      "isAnonymous": false
+    },
+    "canister": {
+      "identifier": "h2bch-3yaaa-aaaab-qaama-cai",
+      "subnet": "pae4o-o6dxf-xki7q-ezclx-znyd6-fnk6w-vkv5z-5lfwh-xym2i-otrrw-fqe",
+      "moduleHash": "d4c8ed2b427e9bf35bec2243e6fab5a7ed7a2d528bb601e959ceb7efc8b0ba34",
+      "controllers": [
+        "g6mnv-cyaaa-aaaab-qaaka-cai"
+      ]
+    },
+    "meta": {
+      "originalRequestId": "77a4c1083ca9d3932b3c0dce20cbd729427fd40125802cd5fcdf1d1e8635909d",
+      "type": "query",
+      "status": "replied",
+      "consensus": false,
+      "verified": null,
+      "boundary": {
+        "_stub": true,
+        "_url": true,
+        "val": "https://ic0.app/api/v2/canister/h2bch-3yaaa-aaaab-qaama-cai/query"
+      }
+    },
+    "method": {
+      "name": "get_self",
+      "query": true
+    },
+    "timing": {
+      "timestamp": {
+"_stub": true,
+"_date": true,
+"val": "2022-08-16T03:47:15.853Z"
+},
+      "requestCount": 1
+    },
+    "requests": {
+      "77a4c1083ca9d3932b3c0dce20cbd729427fd40125802cd5fcdf1d1e8635909d": {
+        "caller": {
+          "identifier": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae",
+          "isAnonymous": false
+        },
+        "method": {
+          "name": "get_self",
+          "query": true
+        },
+        "canister": {
+          "identifier": "h2bch-3yaaa-aaaab-qaama-cai",
+          "subnet": "pae4o-o6dxf-xki7q-ezclx-znyd6-fnk6w-vkv5z-5lfwh-xym2i-otrrw-fqe",
+          "moduleHash": "d4c8ed2b427e9bf35bec2243e6fab5a7ed7a2d528bb601e959ceb7efc8b0ba34",
+          "controllers": [
+            "g6mnv-cyaaa-aaaab-qaaka-cai"
+          ]
+        },
+        "meta": {
+          "originalRequestId": "77a4c1083ca9d3932b3c0dce20cbd729427fd40125802cd5fcdf1d1e8635909d",
+          "requestId": "77a4c1083ca9d3932b3c0dce20cbd729427fd40125802cd5fcdf1d1e8635909d",
+          "type": "query",
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://ic0.app/api/v2/canister/h2bch-3yaaa-aaaab-qaama-cai/query"
+          }
+        },
+        "timing": {
+          "timestamp": {
+"_stub": true,
+"_date": true,
+"val": "2022-08-16T03:47:15.853Z"
+}
+        },
+        "request": {
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://ic0.app/api/v2/canister/h2bch-3yaaa-aaaab-qaama-cai/query"
+          },
+          "message": "77a4c1083ca9d3932b3c0dce20cbd729427fd40125802cd5fcdf1d1e8635909d",
+          "requestId": "77a4c1083ca9d3932b3c0dce20cbd729427fd40125802cd5fcdf1d1e8635909d",
+          "sender": {
+            "_stub": true,
+            "_principal": true,
+            "val": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae"
+          },
+          "requestType": "query",
+          "ingressExpiry": {
+            "_stub": true,
+            "_bigint": true,
+            "val": "1660621871152000000"
+          },
+          "canisterId": "h2bch-3yaaa-aaaab-qaama-cai",
+          "method": "get_self",
+          "args": {
+            "result": [],
+            "withInterface": false
+          }
+        },
+        "response": {
+          "status": "replied",
+          "reply": {
+            "result": [
+              {
+                "_100394802_": "happy",
+                "_142895325_": [
+                  {
+                    "_23515_": {
+                      "_stub": true,
+                      "_principal": true,
+                      "val": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae"
+                    },
+                    "_4896968_": "",
+                    "_357270062_": false,
+                    "_381635694_": {
+                      "_stub": true,
+                      "_bigint": true,
+                      "val": "0"
+                    },
+                    "_552306198_": "jbdr",
+                    "_1010338175_": [],
+                    "_1311134999_": {
+                      "_stub": true,
+                      "_bigint": true,
+                      "val": "0"
+                    },
+                    "_1779848746_": {
+                      "_stub": true,
+                      "_bigint": true,
+                      "val": "1660380696341855921"
+                    },
+                    "_2169702505_": "",
+                    "_2425577243_": false,
+                    "_3048521879_": {
+                      "_1869947023_": {
+                        "_stub": true,
+                        "_principal": true,
+                        "val": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae"
+                      },
+                      "_2478603148_": false
+                    }
+                  }
+                ],
+                "_1365803947_": [],
+                "_2584819143_": ""
+              }
+            ],
+            "withInterface": false
+          }
+        }
+      }
+    }
+  }

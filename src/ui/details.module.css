@@ -1,0 +1,97 @@
+.details {
+    /* display: none; */
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+    height: calc(100vh - 50px);
+    overflow-y: scroll;
+}
+
+.detailsHead {
+    height: 24px;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    border-bottom: 1px solid var(--chrome-3);
+    background-color: var(--chrome-2);
+}
+
+.detailsBody {
+    padding: 5px;
+}
+
+.tabs {
+    display: flex;
+}
+
+.tab {
+    padding: 0 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--chrome-2);
+    border-bottom: none;
+    border-top: none;
+}
+
+.tab.active {
+    background-color: var(--chrome-0);
+    box-shadow: 0 1px 0 var(--chrome-0);
+    border-color: var(--chrome-3);
+}
+
+.section {
+    border-bottom: 1px solid var(--chrome-color-2);
+    clear: left;
+}
+
+.section pre {
+    margin: 0;
+    display: inline;
+}
+
+.section dl {
+    overflow: hidden;
+}
+
+.section dt {
+    float: left;
+    clear: left;
+    width: 150px;
+}
+
+.section dd {
+    float: left;
+    margin: 0;
+    white-space: nowrap;
+    max-width: calc(100% - 150px);
+    overflow-x: auto;
+}
+
+.section .header {
+    display: flex;
+    gap: 5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.section.open .carat {
+    transform: rotate(180deg);
+}
+
+.section .carat {
+}
+
+.section .title {
+}
+
+.section .body {
+    padding: 0 20px;
+}
+
+.dabWarning {
+    color: var(--chrome-3);
+    font-style: italic;
+}

@@ -1,0 +1,137 @@
+{
+  "caller": {
+    "identifier": "2vxsx-fae",
+    "isAnonymous": true
+  },
+  "canister": {
+    "identifier": "tzvxm-jqaaa-aaaaj-qabga-cai",
+    "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
+    "moduleHash": "5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04",
+    "controllers": [
+      "tmsgb-iyaaa-aaaaj-qabfq-cai"
+    ]
+  },
+  "meta": {
+    "originalRequestId": "c688dc38f346ae40f6ed5f8a8b13c0fbd6876b3f215ed95563738a3c6bc5795b",
+    "type": "query",
+    "status": "replied",
+    "consensus": false,
+    "verified": null,
+    "boundary": {
+      "_stub": true,
+      "_url": true,
+      "val": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/query"
+    }
+  },
+  "method": {
+    "name": "getGames",
+    "query": true
+  },
+  "timing": {
+    "timestamp": {
+"_stub": true,
+"_date": true,
+"val": "2022-08-16T16:29:42.087Z"
+},
+    "requestCount": 1
+  },
+  "requests": {
+    "c688dc38f346ae40f6ed5f8a8b13c0fbd6876b3f215ed95563738a3c6bc5795b": {
+      "caller": {
+        "identifier": "2vxsx-fae",
+        "isAnonymous": true
+      },
+      "method": {
+        "name": "getGames",
+        "query": true
+      },
+      "canister": {
+        "identifier": "tzvxm-jqaaa-aaaaj-qabga-cai",
+        "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
+        "moduleHash": "5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04",
+        "controllers": [
+          "tmsgb-iyaaa-aaaaj-qabfq-cai"
+        ]
+      },
+      "meta": {
+        "originalRequestId": "c688dc38f346ae40f6ed5f8a8b13c0fbd6876b3f215ed95563738a3c6bc5795b",
+        "requestId": "c688dc38f346ae40f6ed5f8a8b13c0fbd6876b3f215ed95563738a3c6bc5795b",
+        "type": "query",
+        "boundary": {
+          "_stub": true,
+          "_url": true,
+          "val": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/query"
+        }
+      },
+      "timing": {
+        "timestamp": {
+"_stub": true,
+"_date": true,
+"val": "2022-08-16T16:29:42.087Z"
+}
+      },
+      "request": {
+        "boundary": {
+          "_stub": true,
+          "_url": true,
+          "val": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/query"
+        },
+        "message": "c688dc38f346ae40f6ed5f8a8b13c0fbd6876b3f215ed95563738a3c6bc5795b",
+        "requestId": "c688dc38f346ae40f6ed5f8a8b13c0fbd6876b3f215ed95563738a3c6bc5795b",
+        "sender": {
+          "_stub": true,
+          "_principal": true,
+          "val": "2vxsx-fae"
+        },
+        "requestType": "query",
+        "ingressExpiry": {
+          "_stub": true,
+          "_bigint": true,
+          "val": "1660667619244000000"
+        },
+        "canisterId": "tzvxm-jqaaa-aaaaj-qabga-cai",
+        "method": "getGames",
+        "args": {
+          "result": null,
+          "withInterface": true
+        }
+      },
+      "response": {
+        "status": "replied",
+        "reply": {
+          "result": [
+            [
+              {
+                "_stub": true,
+                "_principal": true,
+                "val": "qxd6u-vqaaa-aaaah-qbpcq-cai"
+              },
+              {
+                "name": "Reversi",
+                "playUrl": "https://q6avi-dyaaa-aaaah-qbpda-cai.raw.ic0.app/",
+                "flavorText": [
+                  "A multiplayer reversi game."
+                ]
+              }
+            ],
+            [
+              {
+                "_stub": true,
+                "_principal": true,
+                "val": "c6dch-iiaaa-aaaah-qacxq-cai"
+              },
+              {
+                "name": "Dots",
+                "playUrl": "https://2kvgp-zyaaa-aaaai-aappq-cai.raw.ic0.app/",
+                "flavorText": [
+                  "Eehm... just snake? And a few dots here and there."
+                ]
+              }
+            ]
+          ],
+          "withInterface": true
+        }
+      }
+    }
+  }
+}

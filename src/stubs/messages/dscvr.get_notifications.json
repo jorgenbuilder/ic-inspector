@@ -1,0 +1,119 @@
+{
+    "caller": {
+      "identifier": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae",
+      "isAnonymous": false
+    },
+    "canister": {
+      "identifier": "h2bch-3yaaa-aaaab-qaama-cai",
+      "subnet": "pae4o-o6dxf-xki7q-ezclx-znyd6-fnk6w-vkv5z-5lfwh-xym2i-otrrw-fqe",
+      "moduleHash": "d4c8ed2b427e9bf35bec2243e6fab5a7ed7a2d528bb601e959ceb7efc8b0ba34",
+      "controllers": [
+        "g6mnv-cyaaa-aaaab-qaaka-cai"
+      ]
+    },
+    "meta": {
+      "originalRequestId": "83e1de3108521e73059e0d9ae1d54d77a08cfb18fd64be38c5503fee589a931d",
+      "type": "query",
+      "status": "replied",
+      "consensus": false,
+      "verified": null,
+      "boundary": {
+        "_stub": true,
+        "_url": true,
+        "val": "https://ic0.app/api/v2/canister/h2bch-3yaaa-aaaab-qaama-cai/query"
+      }
+    },
+    "method": {
+      "name": "get_notifications",
+      "query": true
+    },
+    "timing": {
+      "timestamp": {
+"_stub": true,
+"_date": true,
+"val": "2022-08-16T03:47:16.047Z"
+},
+      "requestCount": 1
+    },
+    "requests": {
+      "83e1de3108521e73059e0d9ae1d54d77a08cfb18fd64be38c5503fee589a931d": {
+        "caller": {
+          "identifier": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae",
+          "isAnonymous": false
+        },
+        "method": {
+          "name": "get_notifications",
+          "query": true
+        },
+        "canister": {
+          "identifier": "h2bch-3yaaa-aaaab-qaama-cai",
+          "subnet": "pae4o-o6dxf-xki7q-ezclx-znyd6-fnk6w-vkv5z-5lfwh-xym2i-otrrw-fqe",
+          "moduleHash": "d4c8ed2b427e9bf35bec2243e6fab5a7ed7a2d528bb601e959ceb7efc8b0ba34",
+          "controllers": [
+            "g6mnv-cyaaa-aaaab-qaaka-cai"
+          ]
+        },
+        "meta": {
+          "originalRequestId": "83e1de3108521e73059e0d9ae1d54d77a08cfb18fd64be38c5503fee589a931d",
+          "requestId": "83e1de3108521e73059e0d9ae1d54d77a08cfb18fd64be38c5503fee589a931d",
+          "type": "query",
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://ic0.app/api/v2/canister/h2bch-3yaaa-aaaab-qaama-cai/query"
+          }
+        },
+        "timing": {
+          "timestamp": {
+"_stub": true,
+"_date": true,
+"val": "2022-08-16T03:47:16.047Z"
+}
+        },
+        "request": {
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://ic0.app/api/v2/canister/h2bch-3yaaa-aaaab-qaama-cai/query"
+          },
+          "message": "83e1de3108521e73059e0d9ae1d54d77a08cfb18fd64be38c5503fee589a931d",
+          "requestId": "83e1de3108521e73059e0d9ae1d54d77a08cfb18fd64be38c5503fee589a931d",
+          "sender": {
+            "_stub": true,
+            "_principal": true,
+            "val": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae"
+          },
+          "requestType": "query",
+          "ingressExpiry": {
+            "_stub": true,
+            "_bigint": true,
+            "val": "1660621872185000000"
+          },
+          "canisterId": "h2bch-3yaaa-aaaab-qaama-cai",
+          "method": "get_notifications",
+          "args": {
+            "result": [
+              true
+            ],
+            "withInterface": false
+          }
+        },
+        "response": {
+          "status": "replied",
+          "reply": {
+            "result": [
+              {
+                "_764221224_": [],
+                "_1311134999_": {
+                  "_stub": true,
+                  "_bigint": true,
+                  "val": "0"
+                }
+              }
+            ],
+            "withInterface": false
+          }
+        }
+      }
+    }
+  }
