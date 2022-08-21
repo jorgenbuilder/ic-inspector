@@ -15,10 +15,12 @@ jobs:
             - uses: actions/setup-node@v1
               with:
                   node-version: 14
+            - name: Install
+              run: npm ci
+            - name: Test
+              run: npm t
             - name: Build
-              run: |
-                  npm ci
-                  npm run release
+              run: npm run release
             - name: Upload & release
               uses: mnao305/chrome-extension-upload@3.0.0
               with:
