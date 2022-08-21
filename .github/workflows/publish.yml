@@ -18,7 +18,7 @@ jobs:
             - name: Build
               run: |
                   npm ci
-                  npm run build
+                  npm run release
             - name: Upload & release
               uses: mnao305/chrome-extension-upload@3.0.0
               with:
