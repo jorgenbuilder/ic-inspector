@@ -142,11 +142,11 @@ function Overview(props: { message: MessageEntry }) {
                         {(function () {
                             switch (message.meta.status) {
                                 case 'pending':
-                                    return '🔵';
+                                    return '🔵 ';
                                 case 'replied':
-                                    return '🟢';
+                                    return '🟢 ';
                                 case 'rejected':
-                                    return '🔴';
+                                    return '🔴 ';
                             }
                         })()}
                         {message.meta.status}
@@ -241,16 +241,17 @@ function PrettyJson(props: { value: any; candidWarning: boolean }) {
     const { value, candidWarning } = props;
     return (
         <div>
-            {candidWarning && (
+            {candidWarning && <>
                 <div>
                     ⚠️ Could not determine candid interface for this canister,
                     so this is a partial decode.
                 </div>
-            )}
+                <br />
+            </>}
             {value && typeof value === 'object' ? (
                 <ReactJson
                     style={{ backgroundColor: 'transparent' }}
-                    theme="hopscotch"
+                    theme={matchMedia('(prefers-color-scheme: light)').matches ? "shapeshifter:inverted" : "shapeshifter"}
                     src={serialize(value)}
                 />
             ) : (

@@ -10,12 +10,12 @@
 
 @media (prefers-color-scheme: light) {
     :root {
-        --chrome-0: rgb(242, 242, 242);
-        --chrome-1: rgb(202, 205, 215);
-        --chrome-2: rgb(192, 197, 213);
-        --chrome-3: rgb(177, 177, 177);
-        --chrome-4: rgb(163, 163, 163);
-        --chrome-5: rgb(81, 85, 89);
+        --chrome-0: rgb(255, 255, 255);
+        --chrome-1: rgb(245, 245, 245);
+        --chrome-2: rgb(241, 243, 244);
+        --chrome-3: rgb(203, 205, 209);
+        --chrome-4: rgb(110, 110, 110);
+        /* --chrome-5: rgb(81, 85, 89); */
         --chrome-6: black;
     }
 }
@@ -86,38 +86,38 @@ a, a:link, a:visited {
         border-right: 1px solid var(--chrome-3);
     }
 
-    .details-pane__head {
-        background: var(--chrome-2);
-        box-shadow: 0 1px 0 var(--chrome-3);
+    :root {
+        color-scheme: dark;
     }
 }
 
 @media (prefers-color-scheme: light) {
     body {
-        background-color: rgb(242, 242, 242);
+        background-color: var(--chrome-0);
         color: black;
     }
+
     thead {
-        background: rgb(202, 205, 215);
-        box-shadow: 0 1px 0 rgb(163, 163, 163);
+        background: var(--chrome-2);
+        box-shadow: 0 1px 0 var(--chrome-3);
     }
 
     tfoot {
-        background-color: rgb(192, 197, 213);
-        border-top: 1px solid rgb(177, 177, 177);
+        background-color: var(--chrome-2);
+        border-top: 1px solid var(--chrome-3);
     }
 
-    td:not(:last-child),
-    th:not(:last-child) {
-        border-right: 1px solid rgb(201, 201, 201);
+    td,
+    th {
+        box-shadow: inset 1px 0 0 var(--chrome-3);
     }
 
     tbody tr {
-        background: rgb(245, 245, 245);
+        background: var(--chrome-0);
     }
 
     tbody tr:nth-child(odd) {
-        background: rgb(224, 224, 224);
+        background: var(--chrome-1);
     }
 
     tbody td:first-child:hover {
@@ -125,12 +125,13 @@ a, a:link, a:visited {
     }
 
     .controls {
-        background: rgb(199, 204, 219);
-        box-shadow: 0 1px 0 rgb(183, 183, 183);
+        background: var(--chrome-2);
+        box-shadow: 0 1px 0 var(--chrome-3);
     }
 
     .icon {
-        background-color: rgb(81, 85, 89);
+        background-color: var(--chrome-4);
+        --override-icon-mask-background-color: var(--chrome-4);
     }
 
     .icon:hover {
@@ -138,25 +139,12 @@ a, a:link, a:visited {
     }
 
     .filter {
-        background: rgb(221, 221, 221);
-        color: rgb(80, 84, 87);
-    }
-
-    .clear {
-        --override-icon-mask-background-color: rgb(106, 106, 106);
-    }
-
-    .close {
-        --override-icon-mask-background-color: rgb(106, 106, 106);
+        background: var(--chrome-0);
+        color: var(--chrome-4);
     }
 
     .side-by-side .table-container {
-        border-right: 1px solid rgb(195, 195, 195);
-    }
-
-    .details-pane__head {
-        background: rgb(190, 195, 210);
-        box-shadow: 0 1px 0 rgb(192, 191, 191);
+        border-right: 1px solid var(--chrome-3);
     }
 }
 
@@ -187,6 +175,10 @@ table {
 thead {
     position: sticky;
     top: 0px;
+}
+
+th {
+    font-weight: 400;
 }
 
 tfoot {
