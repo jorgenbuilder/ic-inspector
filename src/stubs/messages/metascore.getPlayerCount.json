@@ -1,341 +1,361 @@
 {
-    "canister": {
-      "identifier": "tzvxm-jqaaa-aaaaj-qabga-cai",
-      "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
-      "moduleHash": "5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04",
-      "controllers": [
-        "tmsgb-iyaaa-aaaaj-qabfq-cai"
-      ]
+  "canister": {
+    "identifier": "rl4ub-oqaaa-aaaah-qbi3a-cai",
+    "subnet": "pjljw-kztyl-46ud4-ofrj6-nzkhm-3n4nt-wi3jt-ypmav-ijqkt-gjf66-uae",
+    "moduleHash": "23101bcce85ba9832a1382fee9c2be0ad368f99252beec761448fe0a4611a469",
+    "controllers": [
+      "5djsk-caaaa-aaaah-qaa6a-cai"
+    ],
+    "name": "Metascore",
+    "url": "https://t6ury-eiaaa-aaaaj-qabgq-cai.raw.ic0.app/",
+    "description": "Leaderboards and prizes for the DSCVR Season 2 Gaming Hackathon.",
+    "logoUrl": "https://storageapi2.fleek.co/fleek-team-bucket/canister-logos/metascore.svg",
+    "hasCandid": true
+  },
+  "caller": {
+    "identifier": "2vxsx-fae",
+    "isAnonymous": true
+  },
+  "method": {
+    "name": "getPlayerCount",
+    "query": false
+  },
+  "timing": {
+    "timestamp": {
+      "_stub": true,
+      "_date": true,
+      "value": "2022-09-01T22:37:04.701Z"
     },
-    "caller": {
-      "identifier": "2vxsx-fae",
-      "isAnonymous": true
-    },
-    "method": {
-      "name": "getPlayerCount",
-      "query": false
-    },
-    "timing": {
-      "timestamp": {
-"_stub": true,
-"_date": true,
-"val": "2022-08-15T21:05:12.874Z"
-},
-      "requestCount": 3,
-      "durationMs": 3130
-    },
-    "meta": {
-      "originalRequestId": "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd",
-      "type": "update",
-      "status": "replied",
-      "consensus": true,
-      "verified": null,
-      "boundary": {
-        "_stub": true,
-        "_url": true,
-        "val": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state"
+    "requestCount": 5,
+    "durationMs": 1594
+  },
+  "meta": {
+    "originalRequestId": "0bed635b8c24d1df5bf5655bcb086a1f0f5bb95ea17c25589d3ca05e7c0baeda",
+    "type": "update",
+    "status": "replied",
+    "consensus": true,
+    "verified": null,
+    "boundary": {
+      "_stub": true,
+      "_url": true,
+      "val": "https://raw.ic0.app/api/v2/canister/rl4ub-oqaaa-aaaah-qbi3a-cai/read_state"
+    }
+  },
+  "requests": {
+    "cfea28adade7fc75450084e8e81a1f5e25fa0211b2f8676784e717c5a1f1ce99": {
+      "caller": {
+        "identifier": "2vxsx-fae",
+        "isAnonymous": true
+      },
+      "method": {
+        "name": "getPlayerCount",
+        "query": false
+      },
+      "canister": {
+        "identifier": "rl4ub-oqaaa-aaaah-qbi3a-cai",
+        "subnet": "pjljw-kztyl-46ud4-ofrj6-nzkhm-3n4nt-wi3jt-ypmav-ijqkt-gjf66-uae",
+        "moduleHash": "23101bcce85ba9832a1382fee9c2be0ad368f99252beec761448fe0a4611a469",
+        "controllers": [
+          "5djsk-caaaa-aaaah-qaa6a-cai"
+        ],
+        "name": "Metascore",
+        "url": "https://t6ury-eiaaa-aaaaj-qabgq-cai.raw.ic0.app/",
+        "description": "Leaderboards and prizes for the DSCVR Season 2 Gaming Hackathon.",
+        "logoUrl": "https://storageapi2.fleek.co/fleek-team-bucket/canister-logos/metascore.svg",
+        "hasCandid": true
+      },
+      "meta": {
+        "originalRequestId": "0bed635b8c24d1df5bf5655bcb086a1f0f5bb95ea17c25589d3ca05e7c0baeda",
+        "requestId": "cfea28adade7fc75450084e8e81a1f5e25fa0211b2f8676784e717c5a1f1ce99",
+        "type": "read_state",
+        "boundary": {
+          "_stub": true,
+          "_url": true,
+          "val": "https://raw.ic0.app/api/v2/canister/rl4ub-oqaaa-aaaah-qbi3a-cai/read_state"
+        }
+      },
+      "timing": {
+        "timestamp": {
+          "_stub": true,
+          "_date": true,
+          "value": "2022-09-01T22:37:05.611Z"
+        }
+      },
+      "request": {
+        "boundary": {
+          "_stub": true,
+          "_url": true,
+          "val": "https://raw.ic0.app/api/v2/canister/rl4ub-oqaaa-aaaah-qbi3a-cai/read_state"
+        },
+        "message": "0bed635b8c24d1df5bf5655bcb086a1f0f5bb95ea17c25589d3ca05e7c0baeda",
+        "requestId": "cfea28adade7fc75450084e8e81a1f5e25fa0211b2f8676784e717c5a1f1ce99",
+        "canisterId": "rl4ub-oqaaa-aaaah-qbi3a-cai",
+        "method": "getPlayerCount",
+        "sender": {
+          "_stub": true,
+          "_principal": true,
+          "val": "2vxsx-fae"
+        },
+        "requestType": "read_state",
+        "ingressExpiry": {
+          "_stub": true,
+          "_bigint": true,
+          "val": "1662072061032000000"
+        },
+        "paths": [
+          [
+            {
+              "0": 114,
+              "1": 101,
+              "2": 113,
+              "3": 117,
+              "4": 101,
+              "5": 115,
+              "6": 116,
+              "7": 95,
+              "8": 115,
+              "9": 116,
+              "10": 97,
+              "11": 116,
+              "12": 117,
+              "13": 115
+            },
+            {
+              "0": 11,
+              "1": 237,
+              "2": 99,
+              "3": 91,
+              "4": 140,
+              "5": 36,
+              "6": 209,
+              "7": 223,
+              "8": 91,
+              "9": 245,
+              "10": 101,
+              "11": 91,
+              "12": 203,
+              "13": 8,
+              "14": 106,
+              "15": 31,
+              "16": 15,
+              "17": 91,
+              "18": 185,
+              "19": 94,
+              "20": 161,
+              "21": 124,
+              "22": 37,
+              "23": 88,
+              "24": 157,
+              "25": 60,
+              "26": 160,
+              "27": 94,
+              "28": 124,
+              "29": 11,
+              "30": 174,
+              "31": 218
+            }
+          ]
+        ]
+      },
+      "response": {
+        "status": "unknown"
       }
     },
-    "requests": {
-      "4d071b3c9035256b52c270b02bb6c5baa710581278dc7bba16f0b473f9369fa5": {
-        "caller": {
-          "identifier": "2vxsx-fae",
-          "isAnonymous": true
-        },
-        "method": {
-          "name": "getPlayerCount",
-          "query": false
-        },
-        "canister": {
-          "identifier": "tzvxm-jqaaa-aaaaj-qabga-cai",
-          "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
-          "moduleHash": "5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04",
-          "controllers": [
-            "tmsgb-iyaaa-aaaaj-qabfq-cai"
-          ]
-        },
-        "meta": {
-          "originalRequestId": "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd",
-          "requestId": "4d071b3c9035256b52c270b02bb6c5baa710581278dc7bba16f0b473f9369fa5",
-          "type": "read_state",
-          "boundary": {
-            "_stub": true,
-            "_url": true,
-            "val": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state"
-          }
-        },
-        "timing": {
-          "timestamp": {
-"_stub": true,
-"_date": true,
-"val": "2022-08-15T21:05:12.874Z"
-}
-        },
-        "request": {
-          "boundary": {
-            "_stub": true,
-            "_url": true,
-            "val": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state"
-          },
-          "message": "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd",
-          "requestId": "4d071b3c9035256b52c270b02bb6c5baa710581278dc7bba16f0b473f9369fa5",
-          "canisterId": "tzvxm-jqaaa-aaaaj-qabga-cai",
-          "method": "getPlayerCount",
-          "sender": {
-            "_stub": true,
-            "_principal": true,
-            "val": "2vxsx-fae"
-          },
-          "requestType": "read_state",
-          "ingressExpiry": {
-            "_stub": true,
-            "_bigint": true,
-            "val": "1660597750612000000"
-          },
-          "paths": [
-            [
-              {
-                "0": 114,
-                "1": 101,
-                "2": 113,
-                "3": 117,
-                "4": 101,
-                "5": 115,
-                "6": 116,
-                "7": 95,
-                "8": 115,
-                "9": 116,
-                "10": 97,
-                "11": 116,
-                "12": 117,
-                "13": 115
-              },
-              {
-                "0": 221,
-                "1": 78,
-                "2": 182,
-                "3": 123,
-                "4": 119,
-                "5": 131,
-                "6": 133,
-                "7": 120,
-                "8": 107,
-                "9": 208,
-                "10": 106,
-                "11": 141,
-                "12": 154,
-                "13": 92,
-                "14": 133,
-                "15": 234,
-                "16": 126,
-                "17": 124,
-                "18": 252,
-                "19": 135,
-                "20": 21,
-                "21": 81,
-                "22": 228,
-                "23": 221,
-                "24": 234,
-                "25": 2,
-                "26": 11,
-                "27": 209,
-                "28": 196,
-                "29": 55,
-                "30": 156,
-                "31": 205
-              }
-            ]
-          ]
-        },
-        "response": {
-          "status": "unknown"
+    "0bed635b8c24d1df5bf5655bcb086a1f0f5bb95ea17c25589d3ca05e7c0baeda": {
+      "caller": {
+        "identifier": "2vxsx-fae",
+        "isAnonymous": true
+      },
+      "method": {
+        "name": "getPlayerCount",
+        "query": false
+      },
+      "canister": {
+        "identifier": "rl4ub-oqaaa-aaaah-qbi3a-cai",
+        "subnet": "pjljw-kztyl-46ud4-ofrj6-nzkhm-3n4nt-wi3jt-ypmav-ijqkt-gjf66-uae",
+        "moduleHash": "23101bcce85ba9832a1382fee9c2be0ad368f99252beec761448fe0a4611a469",
+        "controllers": [
+          "5djsk-caaaa-aaaah-qaa6a-cai"
+        ],
+        "name": "Metascore",
+        "url": "https://t6ury-eiaaa-aaaaj-qabgq-cai.raw.ic0.app/",
+        "description": "Leaderboards and prizes for the DSCVR Season 2 Gaming Hackathon.",
+        "logoUrl": "https://storageapi2.fleek.co/fleek-team-bucket/canister-logos/metascore.svg",
+        "hasCandid": true
+      },
+      "meta": {
+        "originalRequestId": "0bed635b8c24d1df5bf5655bcb086a1f0f5bb95ea17c25589d3ca05e7c0baeda",
+        "requestId": "0bed635b8c24d1df5bf5655bcb086a1f0f5bb95ea17c25589d3ca05e7c0baeda",
+        "type": "call",
+        "boundary": {
+          "_stub": true,
+          "_url": true,
+          "val": "https://raw.ic0.app/api/v2/canister/rl4ub-oqaaa-aaaah-qbi3a-cai/call"
         }
       },
-      "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd": {
-        "caller": {
-          "identifier": "2vxsx-fae",
-          "isAnonymous": true
-        },
-        "method": {
-          "name": "getPlayerCount",
-          "query": false
-        },
-        "canister": {
-          "identifier": "tzvxm-jqaaa-aaaaj-qabga-cai",
-          "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
-          "moduleHash": "5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04",
-          "controllers": [
-            "tmsgb-iyaaa-aaaaj-qabfq-cai"
-          ]
-        },
-        "meta": {
-          "originalRequestId": "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd",
-          "requestId": "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd",
-          "type": "call",
-          "boundary": {
-            "_stub": true,
-            "_url": true,
-            "val": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/call"
-          }
-        },
-        "timing": {
-          "timestamp": {
-"_stub": true,
-"_date": true,
-"val": "2022-08-15T21:05:13.577Z"
-}
-        },
-        "request": {
-          "boundary": {
-            "_stub": true,
-            "_url": true,
-            "val": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/call"
-          },
-          "message": "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd",
-          "requestId": "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd",
-          "sender": {
-            "_stub": true,
-            "_principal": true,
-            "val": "2vxsx-fae"
-          },
-          "requestType": "call",
-          "ingressExpiry": {
-            "_stub": true,
-            "_bigint": true,
-            "val": "1660597749791000000"
-          },
-          "canisterId": "tzvxm-jqaaa-aaaaj-qabga-cai",
-          "method": "getPlayerCount",
-          "args": {
-            "result": null,
-            "withInterface": true
-          }
-        },
-        "response": {
-          "status": "unknown"
+      "timing": {
+        "timestamp": {
+          "_stub": true,
+          "_date": true,
+          "value": "2022-09-01T22:37:05.592Z"
         }
       },
-      "01fa995b0a46d23d4e51727fbd24af820bdce0be2449f66d8d9096fa82c3f0c8": {
-        "caller": {
-          "identifier": "2vxsx-fae",
-          "isAnonymous": true
+      "request": {
+        "boundary": {
+          "_stub": true,
+          "_url": true,
+          "val": "https://raw.ic0.app/api/v2/canister/rl4ub-oqaaa-aaaah-qbi3a-cai/call"
         },
-        "method": {
-          "name": "getPlayerCount",
-          "query": false
+        "message": "0bed635b8c24d1df5bf5655bcb086a1f0f5bb95ea17c25589d3ca05e7c0baeda",
+        "requestId": "0bed635b8c24d1df5bf5655bcb086a1f0f5bb95ea17c25589d3ca05e7c0baeda",
+        "sender": {
+          "_stub": true,
+          "_principal": true,
+          "val": "2vxsx-fae"
         },
-        "canister": {
-          "identifier": "tzvxm-jqaaa-aaaaj-qabga-cai",
-          "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
-          "moduleHash": "5ac0453ff6787f7c5670e8bb55b5ddeb54ae6cec07ac1e9a95aee86b44988c04",
-          "controllers": [
-            "tmsgb-iyaaa-aaaaj-qabfq-cai"
-          ]
+        "requestType": "call",
+        "ingressExpiry": {
+          "_stub": true,
+          "_bigint": true,
+          "val": "1662072060092000000"
         },
-        "meta": {
-          "originalRequestId": "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd",
-          "requestId": "01fa995b0a46d23d4e51727fbd24af820bdce0be2449f66d8d9096fa82c3f0c8",
-          "type": "read_state",
-          "boundary": {
-            "_stub": true,
-            "_url": true,
-            "val": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state"
-          }
+        "canisterId": "rl4ub-oqaaa-aaaah-qbi3a-cai",
+        "method": "getPlayerCount",
+        "args": {
+          "result": null,
+          "withInterface": true
+        }
+      },
+      "response": {
+        "status": "unknown"
+      }
+    },
+    "b7eacec827671211db94141e41b6d914cea398ddd45fcfcf1fe42a288f5589e4": {
+      "caller": {
+        "identifier": "2vxsx-fae",
+        "isAnonymous": true
+      },
+      "method": {
+        "name": "getPlayerCount",
+        "query": false
+      },
+      "canister": {
+        "identifier": "rl4ub-oqaaa-aaaah-qbi3a-cai",
+        "subnet": "pjljw-kztyl-46ud4-ofrj6-nzkhm-3n4nt-wi3jt-ypmav-ijqkt-gjf66-uae",
+        "moduleHash": "23101bcce85ba9832a1382fee9c2be0ad368f99252beec761448fe0a4611a469",
+        "controllers": [
+          "5djsk-caaaa-aaaah-qaa6a-cai"
+        ],
+        "name": "Metascore",
+        "url": "https://t6ury-eiaaa-aaaaj-qabgq-cai.raw.ic0.app/",
+        "description": "Leaderboards and prizes for the DSCVR Season 2 Gaming Hackathon.",
+        "logoUrl": "https://storageapi2.fleek.co/fleek-team-bucket/canister-logos/metascore.svg",
+        "hasCandid": true
+      },
+      "meta": {
+        "originalRequestId": "0bed635b8c24d1df5bf5655bcb086a1f0f5bb95ea17c25589d3ca05e7c0baeda",
+        "requestId": "b7eacec827671211db94141e41b6d914cea398ddd45fcfcf1fe42a288f5589e4",
+        "type": "read_state",
+        "boundary": {
+          "_stub": true,
+          "_url": true,
+          "val": "https://raw.ic0.app/api/v2/canister/rl4ub-oqaaa-aaaah-qbi3a-cai/read_state"
+        }
+      },
+      "timing": {
+        "timestamp": {
+          "_stub": true,
+          "_date": true,
+          "value": "2022-09-01T22:37:06.295Z"
+        }
+      },
+      "request": {
+        "boundary": {
+          "_stub": true,
+          "_url": true,
+          "val": "https://raw.ic0.app/api/v2/canister/rl4ub-oqaaa-aaaah-qbi3a-cai/read_state"
         },
-        "timing": {
-          "timestamp": {
-"_stub": true,
-"_date": true,
-"val": "2022-08-15T21:05:16.004Z"
-}
+        "message": "0bed635b8c24d1df5bf5655bcb086a1f0f5bb95ea17c25589d3ca05e7c0baeda",
+        "requestId": "b7eacec827671211db94141e41b6d914cea398ddd45fcfcf1fe42a288f5589e4",
+        "canisterId": "rl4ub-oqaaa-aaaah-qbi3a-cai",
+        "method": "getPlayerCount",
+        "sender": {
+          "_stub": true,
+          "_principal": true,
+          "val": "2vxsx-fae"
         },
-        "request": {
-          "boundary": {
-            "_stub": true,
-            "_url": true,
-            "val": "https://raw.ic0.app/api/v2/canister/tzvxm-jqaaa-aaaaj-qabga-cai/read_state"
-          },
-          "message": "dd4eb67b778385786bd06a8d9a5c85ea7e7cfc871551e4ddea020bd1c4379ccd",
-          "requestId": "01fa995b0a46d23d4e51727fbd24af820bdce0be2449f66d8d9096fa82c3f0c8",
-          "canisterId": "tzvxm-jqaaa-aaaaj-qabga-cai",
-          "method": "getPlayerCount",
-          "sender": {
-            "_stub": true,
-            "_principal": true,
-            "val": "2vxsx-fae"
-          },
-          "requestType": "read_state",
-          "ingressExpiry": {
-            "_stub": true,
-            "_bigint": true,
-            "val": "1660597753852000000"
-          },
-          "paths": [
-            [
-              {
-                "0": 114,
-                "1": 101,
-                "2": 113,
-                "3": 117,
-                "4": 101,
-                "5": 115,
-                "6": 116,
-                "7": 95,
-                "8": 115,
-                "9": 116,
-                "10": 97,
-                "11": 116,
-                "12": 117,
-                "13": 115
-              },
-              {
-                "0": 221,
-                "1": 78,
-                "2": 182,
-                "3": 123,
-                "4": 119,
-                "5": 131,
-                "6": 133,
-                "7": 120,
-                "8": 107,
-                "9": 208,
-                "10": 106,
-                "11": 141,
-                "12": 154,
-                "13": 92,
-                "14": 133,
-                "15": 234,
-                "16": 126,
-                "17": 124,
-                "18": 252,
-                "19": 135,
-                "20": 21,
-                "21": 81,
-                "22": 228,
-                "23": 221,
-                "24": 234,
-                "25": 2,
-                "26": 11,
-                "27": 209,
-                "28": 196,
-                "29": 55,
-                "30": 156,
-                "31": 205
-              }
-            ]
-          ]
+        "requestType": "read_state",
+        "ingressExpiry": {
+          "_stub": true,
+          "_bigint": true,
+          "val": "1662072064985000000"
         },
-        "response": {
-          "status": "replied",
-          "reply": {
-            "result": {
-              "_stub": true,
-              "_bigint": true,
-              "val": "2"
+        "paths": [
+          [
+            {
+              "0": 114,
+              "1": 101,
+              "2": 113,
+              "3": 117,
+              "4": 101,
+              "5": 115,
+              "6": 116,
+              "7": 95,
+              "8": 115,
+              "9": 116,
+              "10": 97,
+              "11": 116,
+              "12": 117,
+              "13": 115
             },
-            "withInterface": true
-          }
+            {
+              "0": 11,
+              "1": 237,
+              "2": 99,
+              "3": 91,
+              "4": 140,
+              "5": 36,
+              "6": 209,
+              "7": 223,
+              "8": 91,
+              "9": 245,
+              "10": 101,
+              "11": 91,
+              "12": 203,
+              "13": 8,
+              "14": 106,
+              "15": 31,
+              "16": 15,
+              "17": 91,
+              "18": 185,
+              "19": 94,
+              "20": 161,
+              "21": 124,
+              "22": 37,
+              "23": 88,
+              "24": 157,
+              "25": 60,
+              "26": 160,
+              "27": 94,
+              "28": 124,
+              "29": 11,
+              "30": 174,
+              "31": 218
+            }
+          ]
+        ]
+      },
+      "response": {
+        "status": "replied",
+        "reply": {
+          "result": {
+            "_stub": true,
+            "_bigint": true,
+            "val": "1"
+          },
+          "withInterface": true
         }
       }
     }
+  }
 }

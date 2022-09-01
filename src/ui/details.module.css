@@ -68,6 +68,10 @@
     white-space: nowrap;
     max-width: calc(100% - 150px);
     overflow-x: auto;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
 }
 
 .section .header {

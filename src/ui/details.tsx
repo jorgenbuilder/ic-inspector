@@ -76,7 +76,7 @@ function Overview(props: { message: MessageEntry }) {
                     <dt>Registered Name</dt>
                     <dd>
                         {message.canister.logoUrl && (
-                            <img src={message.canister.logoUrl} />
+                            <img src={message.canister.logoUrl} width="16" className={Styles.canisterIcon} />
                         )}
                         {message.canister.name || (
                             <span className={Styles.dabWarning}>
