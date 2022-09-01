@@ -103,7 +103,7 @@ function Overview(props: { message: MessageEntry }) {
                     <dt>Subnet</dt>
                     <dd>
                         <a
-                            href={`https://dashboard.internetcomputer.org/subnet/{message.canister.subnet}`}
+                            href={`https://dashboard.internetcomputer.org/subnet/${message.canister.subnet}`}
                             target="_blank"
                             rel="noreferrer"
                         >
