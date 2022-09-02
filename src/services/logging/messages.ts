@@ -13,6 +13,7 @@ import {
     isResponseComplete,
     getCallerData,
     getMethodData,
+    LOG_MAX,
 } from './common';
 import { newRequestEntry, RequestId, RequestRepository } from './requests';
 
@@ -73,7 +74,13 @@ export function getMessageRepositoryUpdate(
         console.groupEnd();
     }
 
-    return { ...messages, [messageId]: message };
+    const result = { ...messages, [messageId]: message };
+    const ordered = Object.entries(result).sort((a, b) => a[1].timing.timestamp.getTime() - b[1].timing.timestamp.getTime());
+    while (Object.values(result).length > LOG_MAX) {
+        delete result[ordered.shift()?.[0] as string];
+    }
+
+    return result;
 }
 
 function newMessageEntry(

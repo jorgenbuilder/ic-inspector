@@ -7,6 +7,7 @@ import {
 } from '../services/logging';
 import { Column, useGlobalFilter, useTable } from 'react-table';
 import { DetailsPane } from './details';
+import { increaseLogMax, LOG_MAX } from '../services/logging/common';
 
 interface Row {
     message: string;
@@ -191,7 +192,7 @@ export function Root(props: {
                             <tr>
                                 <td colSpan={6}>
                                     {Object.values(messages).length || 0}{' '}
-                                    Messages
+                                    Messages {Object.values(messages).length >= LOG_MAX ? <>(max, trimming old messages <a style={{ cursor: 'pointer' }} onClick={increaseLogMax}>increase</a>)</> : ''}
                                 </td>
                             </tr>
                         </tfoot>

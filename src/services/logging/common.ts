@@ -1,8 +1,10 @@
 import { Principal } from '@dfinity/principal';
 import { fetchCandidInterface } from '../candid';
 import { DecodedRequest, DecodedResponse } from '../capture';
-import { mapOptional } from '../common';
 import { getDabCanisterData } from '../dab';
+
+export let LOG_MAX = 100;
+export const increaseLogMax = () => (LOG_MAX += 50);
 
 export interface CallerData {
     identifier: string;
