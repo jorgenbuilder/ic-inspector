@@ -1,4 +1,4 @@
-import { toHexString } from 'ictool'
+import { toHexString } from 'ictool';
 import { decode as cborDecode } from 'cbor-x';
 import { ReadRequest, CallRequest, Expiry, requestIdOf } from '@dfinity/agent';
 import { Principal } from '@dfinity/principal';
@@ -33,7 +33,6 @@ export interface DecodedReadRequest extends AbstractDecodedRequest {
 
 export type DecodedRequest = DecodedCallRequest | DecodedReadRequest;
 
-
 // A read_state requests doesn't include critical information about the original call request, so we track this data in memory.
 export const messageDetails: {
     [key: string]: {
@@ -45,7 +44,7 @@ export const messageDetails: {
 /**
  * Decode the body of an internet computer request.
  */
- export async function decodeRequest(
+export async function decodeRequest(
     event: chrome.devtools.network.Request,
 ): Promise<DecodedRequest> {
     if (!event.request.postData?.text) {

@@ -162,4 +162,4 @@ export const init = ({ IDL }) => {\
         assigned_user_number_range: IDL.Tuple(IDL.Nat64, IDL.Nat64),\
     });\
     return [IDL.Opt(InternetIdentityInit)];\
-};"
+};";

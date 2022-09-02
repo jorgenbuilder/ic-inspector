@@ -1,6 +1,6 @@
 import { chrome } from 'jest-chrome';
 import { TextEncoder, TextDecoder } from 'util';
-import "whatwg-fetch"
+import 'whatwg-fetch';
 
 // @ts-expect-error we need to set this to use browser polyfill
 chrome.runtime.id = 'test id';

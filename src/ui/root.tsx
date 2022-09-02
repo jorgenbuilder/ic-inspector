@@ -41,7 +41,7 @@ export function Root(props: {
             Object.entries(messages).map(([messageId, log]) => ({
                 message: messageId,
                 name: log.method.name,
-                canister: log.canister.identifier,
+                canister: log.canister.name || log.canister.identifier,
                 type: log.meta.type,
                 status: log.meta.status,
                 timestamp: log.timing.timestamp,

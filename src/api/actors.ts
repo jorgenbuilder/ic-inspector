@@ -6,8 +6,12 @@ import type { All } from './idl/all.d';
 import { idlFactory as allIDL } from './idl/all';
 import type { CandidUI } from './idl/candid-ui.d';
 import { idlFactory as candidIDL } from './idl/candid-ui';
-import CanisterRegistry from './idl/canister-registry.did.d';
-import { idlFactory as dabIDL } from './idl/canister-registry.did';
+import DABCanisters from './idl/dab-canisters.did.d';
+import { idlFactory as dabCanistersIDL } from './idl/dab-canisters.did';
+import DABTokens from './idl/dab-tokens.did.d';
+import { idlFactory as dabTokensIDL } from './idl/dab-tokens.did';
+import DABNFTs from './idl/dab-nfts.did.d';
+import { idlFactory as dabNFTsIDL } from './idl/dab-nfts.did';
 
 /////////////
 // Config //
@@ -15,7 +19,9 @@ import { idlFactory as dabIDL } from './idl/canister-registry.did';
 
 const canisters: { [key: string]: string } = {
     candidUI: 'a4gq6-oaaaa-aaaab-qaa4q-cai',
-    dab: 'curr3-vaaaa-aaaah-abbdq-cai',
+    dabCanisters: 'curr3-vaaaa-aaaah-abbdq-cai',
+    dabTokens: 'qwt65-nyaaa-aaaah-qcl4q-cai',
+    dabNFTs: 'aipdg-waaaa-aaaah-aaq5q-cai',
 };
 
 const host = 'https://ic0.app';
@@ -34,7 +40,12 @@ agentLocal.fetchRootKey();
 ///////////
 
 export const candidUI = actor<CandidUI>(canisters.candidUI, candidIDL);
-export const dab = actor<CanisterRegistry>(canisters.dab, dabIDL);
+export const dabCanisters = actor<DABCanisters>(
+    canisters.dabCanisters,
+    dabCanistersIDL,
+);
+export const dabTokens = actor<DABTokens>(canisters.dabTokens, dabTokensIDL);
+export const dabNFTs = actor<DABNFTs>(canisters.dabNFTs, dabNFTsIDL);
 export const canister = generic<All>(allIDL);
 
 //////////

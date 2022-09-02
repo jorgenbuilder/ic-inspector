@@ -1,6 +1,6 @@
-import { IDL } from "@dfinity/candid";
-import { CandidInterfaceError, InterfaceMismatchError } from "../candid";
-import { sandboxRepository, sandboxRequest } from "./handler";
+import { IDL } from '@dfinity/candid';
+import { CandidInterfaceError, InterfaceMismatchError } from '../candid';
+import { sandboxRepository, sandboxRequest } from './handler';
 
 export interface SandboxResponseDecodeCandidArgs {
     type: 'decodeCandidArgs';

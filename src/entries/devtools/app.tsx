@@ -11,8 +11,7 @@ import { Root } from '../../ui/root';
 (window as any).global = window;
 
 function App() {
-    const { messages, log, focusedMessage, clear, focus } =
-        useStore(logstore);
+    const { messages, log, focusedMessage, clear, focus } = useStore(logstore);
     const [capturing, setCapturing] = React.useState<boolean>(true);
 
     const captureRequest = React.useMemo(() => {

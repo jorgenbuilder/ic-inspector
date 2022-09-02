@@ -1,9 +1,9 @@
-import { Principal } from "@dfinity/principal";
+import { Principal } from '@dfinity/principal';
 
 /**
  * Output an object as a stub string, to be reimported for testing.
  */
- export function dumpStub(object: any): string {
+export function dumpStub(object: any): string {
     function replacer(this: any, key: string, value: any) {
         if (typeof value === 'bigint') {
             return {
@@ -28,7 +28,7 @@ import { Principal } from "@dfinity/principal";
                 _stub: true,
                 _date: true,
                 value: value,
-            }
+            };
         }
         return value;
     }

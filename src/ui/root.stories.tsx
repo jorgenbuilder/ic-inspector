@@ -15,28 +15,37 @@ export default {
     },
 } as ComponentMeta<typeof Root>;
 
-function timeIterateMessageRequests(requests: RequestRepository, callback: (request: RequestEntry) => void) {
-    async function iterate (values: RequestEntry[]) {
+function timeIterateMessageRequests(
+    requests: RequestRepository,
+    callback: (request: RequestEntry) => void,
+) {
+    async function iterate(values: RequestEntry[]) {
         const request = values.shift();
         if (request) {
             callback(request);
-            await new Promise(res => setTimeout(res, Math.random() * 3000))
+            await new Promise((res) => setTimeout(res, Math.random() * 3000));
             values.length && iterate(values);
         }
     }
-    iterate(Object.values(requests).sort((a, b) => a.request.requestType === 'call' ? - 1 : a.timing.timestamp.getTime() - b.timing.timestamp.getTime()))
+    iterate(
+        Object.values(requests).sort((a, b) =>
+            a.request.requestType === 'call'
+                ? -1
+                : a.timing.timestamp.getTime() - b.timing.timestamp.getTime(),
+        ),
+    );
 }
 
 const Template: ComponentStory<typeof Root> = (args) => {
-    const { focusedMessage, clear, focus, log, messages } =
-        useStore(logstore);
+    const { focusedMessage, clear, focus, log, messages } = useStore(logstore);
     const [capturing, setCapturing] = React.useState(true);
 
     React.useEffect(() => {
         for (let i = 5; i > 0; i--) {
             const message = randomMessage();
-            timeIterateMessageRequests(message.requests, ({ request, response }) =>
-                log(request, response),
+            timeIterateMessageRequests(
+                message.requests,
+                ({ request, response }) => log(request, response),
             );
         }
     }, []);

@@ -1,0 +1,743 @@
+{
+    "caller": {
+      "identifier": "2vxsx-fae",
+      "isAnonymous": true
+    },
+    "canister": {
+      "identifier": "nges7-giaaa-aaaaj-qaiya-cai",
+      "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
+      "moduleHash": "616dabba028294dc903b7c184a3fc3efe5d5cc1060864ec9d5375ce2d0cec761",
+      "controllers": [
+        "tmsgb-iyaaa-aaaaj-qabfq-cai",
+        "k2syn-nenrg-67lse-cn2pm-srhsr-c3rsj-tfatg-63ga5-pz25g-x56ob-2ae"
+      ],
+      "hasCandid": true
+    },
+    "meta": {
+      "originalRequestId": "ba480240a685e1124275072c6d30cf7ecc4105011072751d33522c1ab60640d0",
+      "type": "query",
+      "status": "replied",
+      "consensus": false,
+      "verified": null,
+      "boundary": {
+        "_stub": true,
+        "_url": true,
+        "val": "https://ic0.app/api/v2/canister/nges7-giaaa-aaaaj-qaiya-cai/query"
+      }
+    },
+    "method": {
+      "name": "listings",
+      "query": true
+    },
+    "timing": {
+      "timestamp": {
+        "_stub": true,
+        "_date": true,
+        "value": "2022-09-01T23:50:06.306Z"
+      },
+      "requestCount": 1
+    },
+    "requests": {
+      "ba480240a685e1124275072c6d30cf7ecc4105011072751d33522c1ab60640d0": {
+        "caller": {
+          "identifier": "2vxsx-fae",
+          "isAnonymous": true
+        },
+        "method": {
+          "name": "listings",
+          "query": true
+        },
+        "canister": {
+          "identifier": "nges7-giaaa-aaaaj-qaiya-cai",
+          "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
+          "moduleHash": "616dabba028294dc903b7c184a3fc3efe5d5cc1060864ec9d5375ce2d0cec761",
+          "controllers": [
+            "tmsgb-iyaaa-aaaaj-qabfq-cai",
+            "k2syn-nenrg-67lse-cn2pm-srhsr-c3rsj-tfatg-63ga5-pz25g-x56ob-2ae"
+          ],
+          "hasCandid": true
+        },
+        "meta": {
+          "originalRequestId": "ba480240a685e1124275072c6d30cf7ecc4105011072751d33522c1ab60640d0",
+          "requestId": "ba480240a685e1124275072c6d30cf7ecc4105011072751d33522c1ab60640d0",
+          "type": "query",
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://ic0.app/api/v2/canister/nges7-giaaa-aaaaj-qaiya-cai/query"
+          }
+        },
+        "timing": {
+          "timestamp": {
+            "_stub": true,
+            "_date": true,
+            "value": "2022-09-01T23:50:06.306Z"
+          }
+        },
+        "request": {
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://ic0.app/api/v2/canister/nges7-giaaa-aaaaj-qaiya-cai/query"
+          },
+          "message": "ba480240a685e1124275072c6d30cf7ecc4105011072751d33522c1ab60640d0",
+          "requestId": "ba480240a685e1124275072c6d30cf7ecc4105011072751d33522c1ab60640d0",
+          "sender": {
+            "_stub": true,
+            "_principal": true,
+            "val": "2vxsx-fae"
+          },
+          "requestType": "query",
+          "ingressExpiry": {
+            "_stub": true,
+            "_bigint": true,
+            "val": "1662076440986000000"
+          },
+          "canisterId": "nges7-giaaa-aaaaj-qaiya-cai",
+          "method": "listings",
+          "args": {
+            "result": null,
+            "withInterface": true
+          }
+        },
+        "response": {
+          "status": "replied",
+          "reply": {
+            "result": [
+              [
+                59,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "v5omz-5jss6-tqsth-6r5ju-2ukje-csjbu-c4yz7-q7iec-6jiua-kxaau-yae"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "500000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                116,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "du3xt-pshsf-hyeko-alvjn-e57qt-2lnh2-j62eb-j2wyx-7mhtu-gdy2g-fqe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "2500000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                60,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "anfmp-m3jit-532lu-qrzse-3xyjx-dfej5-jhlgs-tmn4z-umwsr-f35wu-sae"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "500000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                63,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "vkdhi-vlxfv-56jyt-tcyxp-qlhlk-4lnpb-k2r4q-uctef-ppvdr-iphm5-zqe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "1979000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                7,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "oozj5-niwuj-ch6zf-ol2ew-wlrj2-3xbey-qiwg6-fy64t-drk5a-bjnaw-7ae"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "8800000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                67,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "hd2rm-fxem5-d2rxz-sii4r-ke2jj-flq3b-la5zv-ptoto-3immx-gr7fx-wqe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "100000000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                69,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "du3xt-pshsf-hyeko-alvjn-e57qt-2lnh2-j62eb-j2wyx-7mhtu-gdy2g-fqe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "800000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                70,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "u7osd-jghyu-5ns76-qq6k5-yzjxr-hxfj4-tq4gj-n6fd7-7fvfu-ob3o6-uqe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "8500000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                14,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "in2wg-2q727-cv2ro-ocfnq-cz65f-goek4-2pgls-pegk3-fvli6-b34v4-gqe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "495000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                74,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "vkdhi-vlxfv-56jyt-tcyxp-qlhlk-4lnpb-k2r4q-uctef-ppvdr-iphm5-zqe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "1400000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                18,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "in2wg-2q727-cv2ro-ocfnq-cz65f-goek4-2pgls-pegk3-fvli6-b34v4-gqe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "490000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                19,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "iifg3-eza5z-thudf-u7coa-oqzag-nudnz-rs25x-3rlbc-cdp7n-jqsl7-rae"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "4000000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                20,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "rp2s4-4pcja-d3ss4-ay5sj-wl4k2-ckzjg-lhjnk-225nd-vqm7i-c5xyr-5qe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "20000000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                76,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "yeyv5-qcru2-o4auq-wk5dd-owy5t-wzyhh-qhxo4-abmla-ojzhe-nd4yz-uae"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "5000000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                21,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "3koij-epinf-36gxf-shgd6-p3u72-2baly-siaqo-rzvfn-uekjv-n35oh-jqe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "5900000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                79,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "piozw-3vcor-snxoh-uoisl-qmvah-yswet-uz47g-vw275-6l2ix-oktie-pae"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "3000000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                23,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "du3xt-pshsf-hyeko-alvjn-e57qt-2lnh2-j62eb-j2wyx-7mhtu-gdy2g-fqe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "500000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                83,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "qhhiw-ysout-s5ukn-zl7vb-rj6ia-blyv7-sumsi-pkv67-mdoiy-lgzle-wqe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "16800000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                86,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "du3xt-pshsf-hyeko-alvjn-e57qt-2lnh2-j62eb-j2wyx-7mhtu-gdy2g-fqe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "1200000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                33,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "6mzq2-uw5om-rchnh-4kuuv-2wj5g-hlma5-daa4o-e54xh-nxtya-beqr2-nqe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "750000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                41,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "ug42e-3kvuv-7566m-56m65-a54xo-3z6to-rthh6-u74sf-52hpr-3gdnq-nae"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "500000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                98,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "fincp-4wyh3-cuugi-fgyvt-4q2va-blwja-whb4e-37lhh-mcyy3-vjf2e-kqe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "3500000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                46,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "ewi4d-jt5dc-m2izi-qspgh-bygjv-tecbp-mllv3-sd6ti-4frch-rxl6r-rae"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "5500000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                103,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "qzbdz-mtxb4-orry7-pvi45-w3e47-sclbg-xqr6z-zld6i-ertsb-xth33-eqe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "1500000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                50,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "dgkdl-g2zpd-anquf-7m7jg-vclxx-hznbu-m4zox-bl6z2-wo6oi-hel22-3qe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "200000000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                108,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "qhhiw-ysout-s5ukn-zl7vb-rj6ia-blyv7-sumsi-pkv67-mdoiy-lgzle-wqe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "8800000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                109,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "pqu6g-yfhfr-lcuxn-k6mqr-ljq6j-c5ra4-yhipm-kimwc-7opqz-qncbd-dqe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "11000000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                53,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "du3xt-pshsf-hyeko-alvjn-e57qt-2lnh2-j62eb-j2wyx-7mhtu-gdy2g-fqe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "800000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                110,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "qhhiw-ysout-s5ukn-zl7vb-rj6ia-blyv7-sumsi-pkv67-mdoiy-lgzle-wqe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "16800000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ],
+              [
+                111,
+                {
+                  "locked": [],
+                  "seller": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "l3om7-lwmjf-kxjbk-lrmyj-jrrzf-aoqov-it3lb-ihflm-3fkbc-cc7p4-6qe"
+                  },
+                  "price": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "22200000000"
+                  }
+                },
+                {
+                  "nonfungible": {
+                    "metadata": []
+                  }
+                }
+              ]
+            ],
+            "withInterface": true
+          }
+        }
+      }
+    }
+  }

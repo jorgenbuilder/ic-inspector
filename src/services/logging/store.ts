@@ -1,7 +1,12 @@
 import create from 'zustand';
 import { DecodedRequest, DecodedResponse } from '../capture';
 import { getCanisterData } from './common';
-import { MessageRepository, MessageEntry, MessageId, getMessageRepositoryUpdate } from './messages';
+import {
+    MessageRepository,
+    MessageEntry,
+    MessageId,
+    getMessageRepositoryUpdate,
+} from './messages';
 
 export default create<{
     messages: MessageRepository;

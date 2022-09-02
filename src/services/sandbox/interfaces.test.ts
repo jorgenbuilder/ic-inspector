@@ -1,7 +1,11 @@
-import { sandboxHandleEvalInterface, SandboxRequestEvalInterface, stripIdl } from './interfaces'
-import { Stubs } from '../../stubs/interfaces'
+import {
+    sandboxHandleEvalInterface,
+    SandboxRequestEvalInterface,
+    stripIdl,
+} from './interfaces';
+import { Stubs } from '../../stubs/interfaces';
 
-test("Candid javascript interface evaluation", () => {
+test('Candid javascript interface evaluation', () => {
     for (const [name, stub] of Object.entries(Stubs)) {
         try {
             const request: SandboxRequestEvalInterface = {
@@ -9,19 +13,19 @@ test("Candid javascript interface evaluation", () => {
                 data: {
                     canisterId: name,
                     javascriptAsString: stub,
-                }
-            }
+                },
+            };
             sandboxHandleEvalInterface(request);
         } catch (e) {
-            console.error(name)
-            throw e
+            console.error(name);
+            throw e;
         }
     }
-})
+});
 
-test("stripIdl removes all exports", () => {
+test('stripIdl removes all exports', () => {
     for (const stub of Object.values(Stubs)) {
         const stripped = stripIdl(stub);
         expect(stripped).not.toContain('export');
     }
-})
+});

@@ -1,5 +1,4 @@
 import type { Principal } from '@dfinity/principal';
-import RegistryStandard from './registry_standard';
 export interface CanisterMetadata {
     thumbnail: string;
     name: string;
@@ -65,7 +64,7 @@ export declare type OperationResponse =
     | {
           Err: OperationError;
       };
-export default interface CanisterRegistry extends RegistryStandard {
+export default interface CanisterRegistry {
     add: (arg_1: CanisterMetadata) => Promise<OperationResponse>;
     get: (arg_0: Principal) => Promise<[] | [CanisterMetadata]>;
     get_all: () => Promise<Array<CanisterMetadata>>;

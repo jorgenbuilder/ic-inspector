@@ -1,6 +1,6 @@
-import { candidUI, canister } from "../../api/actors";
-import { mapOptional } from "../common";
-import { sandboxEvalInterface } from "../sandbox";
+import { candidUI, canister } from '../../api/actors';
+import { mapOptional } from '../common';
+import { sandboxEvalInterface } from '../sandbox';
 
 const interfaces: { [key: string]: 'ok' } = {};
 
@@ -10,7 +10,6 @@ export class CandidInterfaceError extends Error {}
 export class CanisterExposesNoInterfaceError extends CandidInterfaceError {}
 
 export class InterfaceMismatchError extends CandidInterfaceError {}
-
 
 /**
  * Get interface factory from memory, or attempt to import it. Throws an error if an interface factory can't be imported.

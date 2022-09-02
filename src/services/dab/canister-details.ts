@@ -1,6 +1,5 @@
 import { Principal } from '@dfinity/principal';
-import { dab } from '../../api/actors';
-import { mapOptional } from '../common';
+import { dabCanisters, dabNFTs } from '../../api/actors';
 
 // Copy pasted a bunch of dab-js code because their deps mess with my build
 export type DetailType =
@@ -74,9 +73,33 @@ const formatMetadata = (metadata: Metadata): FormattedMetadata => ({
     details: formatRegistryDetails(metadata.details),
 });
 
-export async function getDabCanisterData(canisterId: string) {
-    return dab
-        .get(Principal.fromText(canisterId))
-        .then(mapOptional)
-        .then((r) => (r ? formatMetadata(r) : r));
+let canisterDirectory = dabCanisters.get_all();
+// DAB token directory isn't working at the moment
+// let tokenDirectory = dabTokens.get_all();
+let nftDirectory = dabNFTs.get_all();
+
+export async function getDabCanisterData(canisterId: string): Promise<
+    | {
+          name: string;
+          description: string;
+          thumbnail: string;
+      }
+    | undefined
+> {
+    const canister = (await canisterDirectory).find(
+        (canister) => canister.principal_id.toText() === canisterId,
+    );
+    if (canister) return formatMetadata(canister);
+    // const token = (await tokenDirectory).find((token) => token.principal_id.toText() === canisterId);
+    // if (token) return formatMetadata(token);
+    const nft = (await nftDirectory).find(
+        (nft) => nft.principal_id.toText() === canisterId,
+    );
+    if (nft)
+        return {
+            name: nft.name,
+            description: nft.description,
+            thumbnail: nft.icon,
+        };
+    return undefined;
 }

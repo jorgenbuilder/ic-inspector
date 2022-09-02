@@ -1,8 +1,18 @@
-import { QueryResponseStatus, RequestStatusResponseStatus, Certificate, HttpAgent } from '@dfinity/agent';
+import {
+    QueryResponseStatus,
+    RequestStatusResponseStatus,
+    Certificate,
+    HttpAgent,
+} from '@dfinity/agent';
 import { decode as cborDecode } from 'cbor-x';
 import { CandidDecodeResult, decodeCandidVals } from '../candid';
 import { base64ToBytes } from '../common';
-import { DecodedRequest, DecodedReadRequest, messageDetails, DecodedCallRequest } from './request';
+import {
+    DecodedRequest,
+    DecodedReadRequest,
+    messageDetails,
+    DecodedCallRequest,
+} from './request';
 
 interface DecodedQueryResponse {
     status: QueryResponseStatus;

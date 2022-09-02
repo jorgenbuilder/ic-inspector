@@ -1,6 +1,6 @@
-import { sandboxDecodeCandidArgs, sandboxDecodeCandidVals } from "../sandbox";
-import { decodeNoInterface } from "./decode-no-interface";
-import { CandidInterfaceError, getCanisterIDL } from "./interfaces";
+import { sandboxDecodeCandidArgs, sandboxDecodeCandidVals } from '../sandbox';
+import { decodeNoInterface } from './decode-no-interface';
+import { CandidInterfaceError, getCanisterIDL } from './interfaces';
 
 export interface CandidDecodeResult {
     result: any;
@@ -10,7 +10,7 @@ export interface CandidDecodeResult {
 /**
  * Decode candid ArrayBuffer for an internet computer request.
  */
- export async function decodeCandidArgs(
+export async function decodeCandidArgs(
     canisterId: string,
     method: string,
     data: ArrayBuffer,
@@ -57,10 +57,9 @@ export async function decodeCandidVals(
     }
 }
 
-
 /**
  * If an interface cannot be retrieved for a canister, we can do a partial decode without one.
  */
- function decodeCandidWithoutInterface(data: ArrayBuffer): any {
+function decodeCandidWithoutInterface(data: ArrayBuffer): any {
     return decodeNoInterface(data);
 }

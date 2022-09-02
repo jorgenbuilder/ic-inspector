@@ -1,1 +1,1 @@
-export { getDabCanisterData } from './canister-details'
+export { getDabCanisterData } from './canister-details';

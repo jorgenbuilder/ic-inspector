@@ -1,6 +1,12 @@
-import { RequestType, DecodedRequest, DecodedResponse } from "../capture";
-import { CallerData, CanisterData, getCallerData, getMethodData, MethodData } from "./common";
-import { MessageId } from "./messages";
+import { RequestType, DecodedRequest, DecodedResponse } from '../capture';
+import {
+    CallerData,
+    CanisterData,
+    getCallerData,
+    getMethodData,
+    MethodData,
+} from './common';
+import { MessageId } from './messages';
 
 export type RequestId = string;
 

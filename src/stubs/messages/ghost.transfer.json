@@ -1,0 +1,437 @@
+{
+    "canister": {
+      "identifier": "fjbi2-fyaaa-aaaan-qanjq-cai",
+      "subnet": "cv73p-6v7zi-u67oy-7jc3h-qspsz-g5lrj-4fn7k-xrax3-thek2-sl46v-jae",
+      "moduleHash": "02ac97a0e4d789eae9944a88a02f03b1768428e7f0c356b32c956c80cf3b6b2a",
+      "controllers": [
+        "5huf2-uqaaa-aaaam-qasnq-cai",
+        "zd4yz-6wvai-n64ie-faola-ojuf4-sitqe-73qw6-6ixpf-lwdzq-fmzve-dae"
+      ],
+      "hasCandid": true
+    },
+    "caller": {
+      "identifier": "2vxsx-fae",
+      "isAnonymous": true
+    },
+    "method": {
+      "name": "transfer",
+      "query": false
+    },
+    "timing": {
+      "timestamp": {
+        "_stub": true,
+        "_date": true,
+        "value": "2022-09-01T22:32:41.500Z"
+      },
+      "requestCount": 6,
+      "durationMs": 1441
+    },
+    "meta": {
+      "originalRequestId": "d3245dca287528a453fa8741276f736d8ed26f90b64b64d97a6901f2af27db4e",
+      "type": "update",
+      "status": "replied",
+      "consensus": true,
+      "verified": null,
+      "boundary": {
+        "_stub": true,
+        "_url": true,
+        "val": "https://mainnet.dfinity.network/api/v2/canister/fjbi2-fyaaa-aaaan-qanjq-cai/read_state"
+      }
+    },
+    "requests": {
+      "d3245dca287528a453fa8741276f736d8ed26f90b64b64d97a6901f2af27db4e": {
+        "caller": {
+          "identifier": "2vxsx-fae",
+          "isAnonymous": true
+        },
+        "method": {
+          "name": "transfer",
+          "query": false
+        },
+        "canister": {
+          "identifier": "fjbi2-fyaaa-aaaan-qanjq-cai",
+          "subnet": "cv73p-6v7zi-u67oy-7jc3h-qspsz-g5lrj-4fn7k-xrax3-thek2-sl46v-jae",
+          "moduleHash": "02ac97a0e4d789eae9944a88a02f03b1768428e7f0c356b32c956c80cf3b6b2a",
+          "controllers": [
+            "5huf2-uqaaa-aaaam-qasnq-cai",
+            "zd4yz-6wvai-n64ie-faola-ojuf4-sitqe-73qw6-6ixpf-lwdzq-fmzve-dae"
+          ],
+          "hasCandid": true
+        },
+        "meta": {
+          "originalRequestId": "d3245dca287528a453fa8741276f736d8ed26f90b64b64d97a6901f2af27db4e",
+          "requestId": "d3245dca287528a453fa8741276f736d8ed26f90b64b64d97a6901f2af27db4e",
+          "type": "call",
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://mainnet.dfinity.network/api/v2/canister/fjbi2-fyaaa-aaaan-qanjq-cai/call"
+          }
+        },
+        "timing": {
+          "timestamp": {
+            "_stub": true,
+            "_date": true,
+            "value": "2022-09-01T22:32:42.657Z"
+          }
+        },
+        "request": {
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://mainnet.dfinity.network/api/v2/canister/fjbi2-fyaaa-aaaan-qanjq-cai/call"
+          },
+          "message": "d3245dca287528a453fa8741276f736d8ed26f90b64b64d97a6901f2af27db4e",
+          "requestId": "d3245dca287528a453fa8741276f736d8ed26f90b64b64d97a6901f2af27db4e",
+          "sender": {
+            "_stub": true,
+            "_principal": true,
+            "val": "2vxsx-fae"
+          },
+          "requestType": "call",
+          "ingressExpiry": {
+            "_stub": true,
+            "_bigint": true,
+            "val": "1662071785454000000"
+          },
+          "canisterId": "fjbi2-fyaaa-aaaan-qanjq-cai",
+          "method": "transfer",
+          "args": {
+            "result": {
+              "to": {
+                "address": "c95e2fbad6b845d856d47034002f226fb45f927619d43e423276b541d895b2bc"
+              },
+              "token": "",
+              "notify": false,
+              "from": {
+                "address": "1c7a48ba6a562aa9eaa2481a9049cdf0433b9738c992d698c31d8abf89cadc79"
+              },
+              "memo": {
+                "0": 68,
+                "1": 73,
+                "2": 68,
+                "3": 76,
+                "4": 2,
+                "5": 110,
+                "6": 120,
+                "7": 108,
+                "8": 3,
+                "9": 251,
+                "10": 202,
+                "11": 1,
+                "12": 104,
+                "13": 212,
+                "14": 154,
+                "15": 129,
+                "16": 131,
+                "17": 1,
+                "18": 0,
+                "19": 234,
+                "20": 202,
+                "21": 138,
+                "22": 158,
+                "23": 4,
+                "24": 104,
+                "25": 1,
+                "26": 1,
+                "27": 1,
+                "28": 29,
+                "29": 125,
+                "30": 184,
+                "31": 208,
+                "32": 30,
+                "33": 229,
+                "34": 87,
+                "35": 199,
+                "36": 142,
+                "37": 84,
+                "38": 243,
+                "39": 14,
+                "40": 182,
+                "41": 31,
+                "42": 59,
+                "43": 119,
+                "44": 35,
+                "45": 218,
+                "46": 67,
+                "47": 67,
+                "48": 186,
+                "49": 242,
+                "50": 233,
+                "51": 30,
+                "52": 88,
+                "53": 221,
+                "54": 112,
+                "55": 199,
+                "56": 168,
+                "57": 2,
+                "58": 1,
+                "59": 54,
+                "60": 28,
+                "61": 59,
+                "62": 0,
+                "63": 0,
+                "64": 0,
+                "65": 0,
+                "66": 0,
+                "67": 1,
+                "68": 1,
+                "69": 4
+              },
+              "subaccount": [],
+              "nonce": [],
+              "amount": {
+                "_stub": true,
+                "_bigint": true,
+                "val": "5000000000"
+              }
+            },
+            "withInterface": true
+          }
+        },
+        "response": {
+          "status": "unknown"
+        }
+      },
+      "3666fcacb8978ae48d80d1bac75e35b47d04d52a220dc75b62281f7a75949aba": {
+        "caller": {
+          "identifier": "2vxsx-fae",
+          "isAnonymous": true
+        },
+        "method": {
+          "name": "transfer",
+          "query": false
+        },
+        "canister": {
+          "identifier": "fjbi2-fyaaa-aaaan-qanjq-cai",
+          "subnet": "cv73p-6v7zi-u67oy-7jc3h-qspsz-g5lrj-4fn7k-xrax3-thek2-sl46v-jae",
+          "moduleHash": "02ac97a0e4d789eae9944a88a02f03b1768428e7f0c356b32c956c80cf3b6b2a",
+          "controllers": [
+            "5huf2-uqaaa-aaaam-qasnq-cai",
+            "zd4yz-6wvai-n64ie-faola-ojuf4-sitqe-73qw6-6ixpf-lwdzq-fmzve-dae"
+          ],
+          "hasCandid": true
+        },
+        "meta": {
+          "originalRequestId": "d3245dca287528a453fa8741276f736d8ed26f90b64b64d97a6901f2af27db4e",
+          "requestId": "3666fcacb8978ae48d80d1bac75e35b47d04d52a220dc75b62281f7a75949aba",
+          "type": "read_state",
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://mainnet.dfinity.network/api/v2/canister/fjbi2-fyaaa-aaaan-qanjq-cai/read_state"
+          }
+        },
+        "timing": {
+          "timestamp": {
+            "_stub": true,
+            "_date": true,
+            "value": "2022-09-01T22:32:42.313Z"
+          }
+        },
+        "request": {
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://mainnet.dfinity.network/api/v2/canister/fjbi2-fyaaa-aaaan-qanjq-cai/read_state"
+          },
+          "message": "d3245dca287528a453fa8741276f736d8ed26f90b64b64d97a6901f2af27db4e",
+          "requestId": "3666fcacb8978ae48d80d1bac75e35b47d04d52a220dc75b62281f7a75949aba",
+          "canisterId": "fjbi2-fyaaa-aaaan-qanjq-cai",
+          "method": "transfer",
+          "sender": {
+            "_stub": true,
+            "_principal": true,
+            "val": "2vxsx-fae"
+          },
+          "requestType": "read_state",
+          "ingressExpiry": {
+            "_stub": true,
+            "_bigint": true,
+            "val": "1662071786041000000"
+          },
+          "paths": [
+            [
+              {
+                "0": 114,
+                "1": 101,
+                "2": 113,
+                "3": 117,
+                "4": 101,
+                "5": 115,
+                "6": 116,
+                "7": 95,
+                "8": 115,
+                "9": 116,
+                "10": 97,
+                "11": 116,
+                "12": 117,
+                "13": 115
+              },
+              {
+                "0": 211,
+                "1": 36,
+                "2": 93,
+                "3": 202,
+                "4": 40,
+                "5": 117,
+                "6": 40,
+                "7": 164,
+                "8": 83,
+                "9": 250,
+                "10": 135,
+                "11": 65,
+                "12": 39,
+                "13": 111,
+                "14": 115,
+                "15": 109,
+                "16": 142,
+                "17": 210,
+                "18": 111,
+                "19": 144,
+                "20": 182,
+                "21": 75,
+                "22": 100,
+                "23": 217,
+                "24": 122,
+                "25": 105,
+                "26": 1,
+                "27": 242,
+                "28": 175,
+                "29": 39,
+                "30": 219,
+                "31": 78
+              }
+            ]
+          ]
+        },
+        "response": {
+          "status": "unknown"
+        }
+      },
+      "74e98743841d05108f1058e48eabf805dee1fb85225e2f16b45fdd5a69065fe5": {
+        "caller": {
+          "identifier": "2vxsx-fae",
+          "isAnonymous": true
+        },
+        "method": {
+          "name": "transfer",
+          "query": false
+        },
+        "canister": {
+          "identifier": "fjbi2-fyaaa-aaaan-qanjq-cai",
+          "subnet": "cv73p-6v7zi-u67oy-7jc3h-qspsz-g5lrj-4fn7k-xrax3-thek2-sl46v-jae",
+          "moduleHash": "02ac97a0e4d789eae9944a88a02f03b1768428e7f0c356b32c956c80cf3b6b2a",
+          "controllers": [
+            "5huf2-uqaaa-aaaam-qasnq-cai",
+            "zd4yz-6wvai-n64ie-faola-ojuf4-sitqe-73qw6-6ixpf-lwdzq-fmzve-dae"
+          ],
+          "hasCandid": true
+        },
+        "meta": {
+          "originalRequestId": "d3245dca287528a453fa8741276f736d8ed26f90b64b64d97a6901f2af27db4e",
+          "requestId": "74e98743841d05108f1058e48eabf805dee1fb85225e2f16b45fdd5a69065fe5",
+          "type": "read_state",
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://mainnet.dfinity.network/api/v2/canister/fjbi2-fyaaa-aaaan-qanjq-cai/read_state"
+          }
+        },
+        "timing": {
+          "timestamp": {
+            "_stub": true,
+            "_date": true,
+            "value": "2022-09-01T22:32:42.941Z"
+          }
+        },
+        "request": {
+          "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://mainnet.dfinity.network/api/v2/canister/fjbi2-fyaaa-aaaan-qanjq-cai/read_state"
+          },
+          "message": "d3245dca287528a453fa8741276f736d8ed26f90b64b64d97a6901f2af27db4e",
+          "requestId": "74e98743841d05108f1058e48eabf805dee1fb85225e2f16b45fdd5a69065fe5",
+          "canisterId": "fjbi2-fyaaa-aaaan-qanjq-cai",
+          "method": "transfer",
+          "sender": {
+            "_stub": true,
+            "_principal": true,
+            "val": "2vxsx-fae"
+          },
+          "requestType": "read_state",
+          "ingressExpiry": {
+            "_stub": true,
+            "_bigint": true,
+            "val": "1662071788510000000"
+          },
+          "paths": [
+            [
+              {
+                "0": 114,
+                "1": 101,
+                "2": 113,
+                "3": 117,
+                "4": 101,
+                "5": 115,
+                "6": 116,
+                "7": 95,
+                "8": 115,
+                "9": 116,
+                "10": 97,
+                "11": 116,
+                "12": 117,
+                "13": 115
+              },
+              {
+                "0": 211,
+                "1": 36,
+                "2": 93,
+                "3": 202,
+                "4": 40,
+                "5": 117,
+                "6": 40,
+                "7": 164,
+                "8": 83,
+                "9": 250,
+                "10": 135,
+                "11": 65,
+                "12": 39,
+                "13": 111,
+                "14": 115,
+                "15": 109,
+                "16": 142,
+                "17": 210,
+                "18": 111,
+                "19": 144,
+                "20": 182,
+                "21": 75,
+                "22": 100,
+                "23": 217,
+                "24": 122,
+                "25": 105,
+                "26": 1,
+                "27": 242,
+                "28": 175,
+                "29": 39,
+                "30": 219,
+                "31": 78
+              }
+            ]
+          ]
+        },
+        "response": {
+          "status": "replied",
+          "reply": {
+            "result": {
+              "err": {
+                "InsufficientBalance": null
+              }
+            },
+            "withInterface": true
+          }
+        }
+      }
+    }
+  }

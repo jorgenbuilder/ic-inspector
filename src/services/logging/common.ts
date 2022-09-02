@@ -1,8 +1,8 @@
-import { Principal } from "@dfinity/principal";
-import { fetchCandidInterface } from "../candid";
-import { DecodedRequest, DecodedResponse } from "../capture";
-import { mapOptional } from "../common";
-import { getDabCanisterData } from "../dab";
+import { Principal } from '@dfinity/principal';
+import { fetchCandidInterface } from '../candid';
+import { DecodedRequest, DecodedResponse } from '../capture';
+import { mapOptional } from '../common';
+import { getDabCanisterData } from '../dab';
 
 export interface CallerData {
     identifier: string;
@@ -28,7 +28,9 @@ export interface MethodData {
     query: boolean;
 }
 
-export async function getCanisterData(canisterId: string): Promise<CanisterData> {
+export async function getCanisterData(
+    canisterId: string,
+): Promise<CanisterData> {
     const dab = await getDabCanisterData(canisterId);
     const { subnet, moduleHash, controllers } = await getIcApiCanisterData(
         canisterId,
@@ -40,7 +42,7 @@ export async function getCanisterData(canisterId: string): Promise<CanisterData>
         moduleHash,
         controllers,
         name: dab?.name,
-        url: dab?.frontend ? mapOptional(dab.frontend) : undefined,
+        // url: dab?.frontend ? mapOptional(dab.frontend) : undefined,
         description: dab?.description,
         logoUrl: dab?.thumbnail,
         hasCandid,

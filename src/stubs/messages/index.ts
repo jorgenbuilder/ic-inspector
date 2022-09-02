@@ -13,6 +13,8 @@ import { default as dscvr_getNotification } from './dscvr.get_notifications.json
 import { default as dscvr_getSelf } from './dscvr.get_self.json';
 import { default as dscvr_listContent } from './dscvr.list_content.json';
 import { default as dscvr_listHighlightedPortals } from './dscvr.list_highlighted_portals.json';
+import { default as ghost_transfer } from './ghost.transfer.json';
+import { default as legends_listings } from './legends.listings.json';
 import { readStub } from '..';
 
 export const Stubs = {
@@ -29,6 +31,8 @@ export const Stubs = {
     distrikt_getSelfUserId,
     distrikt_isFollowing,
     distrikt_isUserTrusted,
+    ghost_transfer,
+    legends_listings,
 };
 
 export function randomMessage(): MessageEntry {

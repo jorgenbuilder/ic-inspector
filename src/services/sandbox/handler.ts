@@ -1,7 +1,18 @@
-import { IDL } from "@dfinity/candid";
+import { IDL } from '@dfinity/candid';
 import { v4 as uuid } from 'uuid';
-import { sandboxHandleDecodeCandidArgs, sandboxHandleDecodeCandidVals, SandboxRequestDecodeCandidArgs, SandboxRequestDecodeCandidVals, SandboxResponseDecodeCandidArgs, SandboxResponsedecodeCandidVals } from "./decode";
-import { SandboxRequestEvalInterface, SandboxResponseEvalInterface, sandboxHandleEvalInterface } from "./interfaces";
+import {
+    sandboxHandleDecodeCandidArgs,
+    sandboxHandleDecodeCandidVals,
+    SandboxRequestDecodeCandidArgs,
+    SandboxRequestDecodeCandidVals,
+    SandboxResponseDecodeCandidArgs,
+    SandboxResponsedecodeCandidVals,
+} from './decode';
+import {
+    SandboxRequestEvalInterface,
+    SandboxResponseEvalInterface,
+    sandboxHandleEvalInterface,
+} from './interfaces';
 
 const sandbox = document.getElementById('sandbox') as HTMLIFrameElement;
 
@@ -93,9 +104,12 @@ function sandboxPostResponse(
         response,
         sandboxRepository,
     });
-    (source as Window).postMessage({ requestId, response } as SandboxResponse, '*');
+    (source as Window).postMessage(
+        { requestId, response } as SandboxResponse,
+        '*',
+    );
     if (!(source instanceof Window)) {
-        console.warn("Non window source", typeof source, source)
+        console.warn('Non window source', typeof source, source);
     }
 }
 
@@ -114,7 +128,7 @@ function sandboxPostError(
     });
     (source as Window).postMessage({ requestId, error } as SandboxError, '*');
     if (!(source instanceof Window)) {
-        console.warn("Non window source", typeof source, source)
+        console.warn('Non window source', typeof source, source);
     }
 }
 

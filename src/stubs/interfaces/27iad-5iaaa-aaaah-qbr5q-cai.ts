@@ -317,4 +317,4 @@ export default "export const idlFactory = ({ IDL }) => {\
 };\
 export const init = ({ IDL }) => {\
     return [];\
-};"
+};";

@@ -1,8 +1,20 @@
-import { dumpStub } from "../../stubs";
-import { CandidDecodeResult } from "../candid";
-import { DecodedRequest, DecodedResponse, DecodedReadRequest, RejectedResponse } from "../capture";
-import { CanisterData, MethodData, CallerData, isResponseComplete, getCallerData, getMethodData } from "./common";
-import { newRequestEntry, RequestId, RequestRepository } from "./requests";
+import { dumpStub } from '../../stubs';
+import { CandidDecodeResult } from '../candid';
+import {
+    DecodedRequest,
+    DecodedResponse,
+    DecodedReadRequest,
+    RejectedResponse,
+} from '../capture';
+import {
+    CanisterData,
+    MethodData,
+    CallerData,
+    isResponseComplete,
+    getCallerData,
+    getMethodData,
+} from './common';
+import { newRequestEntry, RequestId, RequestRepository } from './requests';
 
 export type MessageId = RequestId;
 export type MessageType = 'update' | 'query';
