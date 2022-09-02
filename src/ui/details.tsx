@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactJson from 'react-json-view';
+import sizeof from 'object-sizeof'
 import {
     getMessageReply,
     getMessageRequest,
@@ -243,6 +244,7 @@ function Section(props: { children: React.ReactNode; title: string }) {
 
 function PrettyJson(props: { value: any; candidWarning: boolean }) {
     const { value, candidWarning } = props;
+    const size = sizeof(value);
     return (
         <div>
             {candidWarning && (
@@ -255,15 +257,20 @@ function PrettyJson(props: { value: any; candidWarning: boolean }) {
                 </>
             )}
             {value && typeof value === 'object' ? (
-                <ReactJson
-                    style={{ backgroundColor: 'transparent' }}
-                    theme={
-                        matchMedia('(prefers-color-scheme: light)').matches
-                            ? 'shapeshifter:inverted'
-                            : 'shapeshifter'
-                    }
-                    src={serialize(value)}
-                />
+                size > 50_000
+                ? <>
+                    <div>⚠️ This is a large object, rendering basic JSON (~{(size / 1000).toFixed(1)}kb)</div>
+                    <pre>{JSON.stringify(serialize(value), null, 2)}</pre>
+                </>
+                : <ReactJson
+                style={{ backgroundColor: 'transparent' }}
+                theme={
+                    matchMedia('(prefers-color-scheme: light)').matches
+                        ? 'shapeshifter:inverted'
+                        : 'shapeshifter'
+                }
+                src={serialize(value)}
+            />
             ) : (
                 <pre>{value || 'null'}</pre>
             )}
