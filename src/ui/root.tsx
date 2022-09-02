@@ -167,7 +167,7 @@ export function Root(props: {
                             {rows.map((row, j) => {
                                 prepareRow(row);
                                 return (
-                                    <tr {...row.getRowProps()}>
+                                    <tr {...row.getRowProps()} style={focusedMessage?.meta.originalRequestId === row.original.message ? { backgroundColor: 'rgb(46 99 153)', color: 'white' } : {}}>
                                         {row.cells.map((cell, i) => {
                                             return (
                                                 <td
