@@ -6,6 +6,8 @@ import { logstore, MessageId } from '../services/logging';
 import { RequestEntry, RequestRepository } from '../services/logging/requests';
 import { randomMessage } from '../stubs/messages';
 
+(window as any).DISABLE_SANDBOX = true;
+
 export default {
     title: 'Components/Root',
     component: Root,

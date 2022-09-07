@@ -1,7 +1,6 @@
-import { IDL } from '@dfinity/candid';
 import { Principal } from '@dfinity/principal';
-import { DabLookupResponse, getDabCanisterData } from '../dab/canister-details';
-import { sandboxRepository, sandboxRequest } from './handler';
+import { DabLookupResponse } from '../dab/canister-details';
+import { sandboxRequest } from './handler';
 import { dabCanisters, dabNFTs } from '../../api/actors';
 
 // Copy pasted a bunch of dab-js code because their deps mess with my build
@@ -78,6 +77,11 @@ export interface SandboxRequestDabLookup {
 export async function sandboxDabLookup(
     canisterId: string,
 ): Promise<DabLookupResponse> {
+    if ((window as any)?.DISABLE_SANDBOX)
+        return sandboxHandleDabLookup({
+            type: 'dabLookup',
+            data: { canisterId },
+        });
     return sandboxRequest<SandboxResponseDabLookup>({
         type: 'dabLookup',
         data: { canisterId },
