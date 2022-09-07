@@ -1,6 +1,6 @@
 console.info('Initializing devtools tab.');
 chrome.devtools.panels.create(
-    '∞ Decoder',
+    '∞ IC Inspector',
     'icon.png',
     'entries/devtools/index.html',
     function () {},

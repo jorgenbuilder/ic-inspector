@@ -1,7 +1,7 @@
 {
-    "name": "dfinity-decoder",
+    "name": "ic-inspector",
     "private": false,
-    "description": "Decode network responses from the Dfinity blockchain.",
+    "description": "Decode network responses from the Internet Computer blockchain.",
     "author": "Jorgen Builder",
     "engines": {
         "node": "17.5"
