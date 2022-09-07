@@ -13,6 +13,11 @@ import {
     SandboxResponseEvalInterface,
     sandboxHandleEvalInterface,
 } from './interfaces';
+import {
+    SandboxRequestDabLookup,
+    SandboxResponseDabLookup,
+    sandboxHandleDabLookup,
+} from './dab';
 
 const sandbox = document.getElementById('sandbox') as HTMLIFrameElement;
 
@@ -26,7 +31,8 @@ interface SandboxRequest {
     request:
         | SandboxRequestEvalInterface
         | SandboxRequestDecodeCandidArgs
-        | SandboxRequestDecodeCandidVals;
+        | SandboxRequestDecodeCandidVals
+        | SandboxRequestDabLookup;
     requestId: string;
 }
 
@@ -49,7 +55,8 @@ interface SandboxResponse {
     response:
         | SandboxResponseEvalInterface
         | SandboxResponseDecodeCandidArgs
-        | SandboxResponsedecodeCandidVals;
+        | SandboxResponsedecodeCandidVals
+        | SandboxResponseDabLookup;
     requestId: string;
 }
 
@@ -135,9 +142,9 @@ function sandboxPostError(
 /**
  * Route sandbox messages to handlers.
  */
-export function sandboxHandleMessage(
+export async function sandboxHandleMessage(
     message: MessageEvent<SandboxRequest>,
-): void {
+): Promise<void> {
     if (!message.source) {
         throw new Error('Unreachable: could not determine request source');
     }
@@ -161,9 +168,18 @@ export function sandboxHandleMessage(
                     data: sandboxHandleDecodeCandidVals(message.data.request),
                 });
                 break;
+            case 'dabLookup':
+                sandboxPostResponse(message.source, message.data.requestId, {
+                    type: message.data.request.type,
+                    data: await sandboxHandleDabLookup(message.data.request),
+                });
         }
     } catch (e) {
-        // Catch, serialize, and post errors to the origin, because we can't catch errors across execution environments.
-        sandboxPostError(message.source, message.data.requestId, e);
+        if (e instanceof Error) {
+            // Catch, serialize, and post errors to the origin, because we can't catch errors across execution environments.
+            sandboxPostError(message.source, message.data.requestId, e);
+        } else {
+            throw new Error('Unreachable.');
+        }
     }
 }
