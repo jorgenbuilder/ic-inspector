@@ -1,18 +1,13 @@
 {
-    "manifest_version": 3,
+    "manifest_version": 2,
     "name": "IC Inspector",
     "version": "0.0.13",
     "devtools_page": "index.html",
     "permissions": [],
     "web_accessible_resources": [
-        {
-            "resources": [
-                "assets/icons.svg",
-                "entries/devtools/index.html",
-                "entries/sandbox/index.html"
-            ],
-            "matches": ["<all_urls>"]
-        }
+        "assets/icons.svg",
+        "entries/devtools/index.html",
+        "entries/sandbox/index.html"
     ],
     "icons": {
         "16": "assets/16.png",
@@ -20,9 +15,8 @@
         "128": "assets/128.png"
     },
     "sandbox": {
-        "pages": ["entries/sandbox/index.html"]
+        "pages": ["entries/sandbox/index.html"],
+        "content_security_policy": "default-src *; sandbox allow-scripts; script-src script-src-elem 'unsafe-eval' 'unsafe-inline' 'self' https://* http://*; object-src 'self'"
     },
-    "content_security_policy": {
-        "sandbox": "sandbox allow-scripts; script-src-elem  'unsafe-eval' 'unsafe-inline' 'self' https://* http://*; object-src 'self'"
-    }
+    "content_security_policy": "default-src *; script-src script-src-elem 'unsafe-eval' 'unsafe-inline' 'self' https://* http://*; object-src 'self'"
 }
