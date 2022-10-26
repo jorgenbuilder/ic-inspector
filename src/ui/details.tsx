@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactJson from 'react-json-view';
-import sizeof from 'object-sizeof'
+import sizeof from 'object-sizeof';
 import {
     getMessageReply,
     getMessageRequest,
@@ -125,7 +125,7 @@ function Overview(props: { message: MessageEntry }) {
                         )}
                     </dd>
                     <dt>Controllers</dt>
-                    <dd>{message.canister.controllers.join(', ')}</dd>
+                    <dd>{message.canister.controllers?.join(', ')}</dd>
                     <dt>Module Hash</dt>
                     <dd>{message.canister.moduleHash}</dd>
                 </dl>
@@ -257,20 +257,25 @@ function PrettyJson(props: { value: any; candidWarning: boolean }) {
                 </>
             )}
             {value && typeof value === 'object' ? (
-                size > 50_000
-                ? <>
-                    <div>⚠️ This is a large object, rendering basic JSON (~{(size / 1000).toFixed(1)}kb)</div>
-                    <pre>{JSON.stringify(serialize(value), null, 2)}</pre>
-                </>
-                : <ReactJson
-                style={{ backgroundColor: 'transparent' }}
-                theme={
-                    matchMedia('(prefers-color-scheme: light)').matches
-                        ? 'shapeshifter:inverted'
-                        : 'shapeshifter'
-                }
-                src={serialize(value)}
-            />
+                size > 50_000 ? (
+                    <>
+                        <div>
+                            ⚠️ This is a large object, rendering basic JSON (~
+                            {(size / 1000).toFixed(1)}kb)
+                        </div>
+                        <pre>{JSON.stringify(serialize(value), null, 2)}</pre>
+                    </>
+                ) : (
+                    <ReactJson
+                        style={{ backgroundColor: 'transparent' }}
+                        theme={
+                            matchMedia('(prefers-color-scheme: light)').matches
+                                ? 'shapeshifter:inverted'
+                                : 'shapeshifter'
+                        }
+                        src={serialize(value)}
+                    />
+                )
             ) : (
                 <pre>{value || 'null'}</pre>
             )}

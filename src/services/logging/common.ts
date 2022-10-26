@@ -19,9 +19,9 @@ export interface CanisterData {
     url?: string;
     description?: string;
     logoUrl?: string;
-    subnet: string;
-    moduleHash: string;
-    controllers: string[];
+    subnet?: string;
+    moduleHash?: string;
+    controllers?: string[];
     hasCandid: boolean;
 }
 
@@ -51,7 +51,9 @@ export async function getCanisterData(
     };
 }
 
-export async function getIcApiCanisterData(canisterId: string) {
+export async function getIcApiCanisterData(
+    canisterId: string,
+): Promise<{ subnet?: string; moduleHash?: string; controllers?: string[] }> {
     const response: {
         canister_id: string;
         controllers: string[];
@@ -62,7 +64,7 @@ export async function getIcApiCanisterData(canisterId: string) {
     ).then((r) => r.json());
     for (const field of ['subnet_id', 'controllers', 'module_hash']) {
         if (!(field in response)) {
-            throw new Error(`Expected "${field}" in IC API response.`);
+            console.warn(`Expected "${field}" in IC API response.`);
         }
     }
     return {
