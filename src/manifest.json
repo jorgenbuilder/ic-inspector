@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "IC Inspector",
-    "version": "0.0.13",
+    "version": "1.0.0",
     "devtools_page": "index.html",
     "permissions": [],
     "web_accessible_resources": [
@@ -23,6 +23,6 @@
         "pages": ["entries/sandbox/index.html"]
     },
     "content_security_policy": {
-        "sandbox": "sandbox allow-scripts; script-src-elem  'unsafe-eval' 'unsafe-inline' 'self' https://* http://*; object-src 'self'"
+        "sandbox": "sandbox allow-scripts; script-src-elem 'unsafe-eval' 'unsafe-inline' 'self' https://* http://*; object-src 'self'"
     }
 }
