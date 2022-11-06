@@ -158,6 +158,14 @@ function Overview(props: { message: MessageEntry }) {
                     </dd>
                     <dt>Consensus</dt>
                     <dd>{message.meta.consensus}</dd>
+                    <dt>Response Size</dt>
+                    <dd>
+                        {message.meta.responseSize
+                            ? `${(message.meta.responseSize / 1000).toFixed(
+                                  1,
+                              )} kb`
+                            : '??'}
+                    </dd>
                 </dl>
             </Section>
             <Section title="Agent Requests">

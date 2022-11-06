@@ -1,3 +1,4 @@
+import sizeof from 'object-sizeof';
 import { dumpStub } from '../../stubs';
 import { CandidDecodeResult } from '../candid';
 import {
@@ -47,6 +48,7 @@ interface MessageMetaData {
     consensus: boolean; // I think I can do this simply based on request type === update?
     verified: null; // I need to implement certificate verification for this. Will be boolean on completion.
     boundary: URL;
+    responseSize?: number;
 }
 
 export function getMessageRepositoryUpdate(
@@ -75,7 +77,10 @@ export function getMessageRepositoryUpdate(
     }
 
     const result = { ...messages, [messageId]: message };
-    const ordered = Object.entries(result).sort((a, b) => a[1].timing.timestamp.getTime() - b[1].timing.timestamp.getTime());
+    const ordered = Object.entries(result).sort(
+        (a, b) =>
+            a[1].timing.timestamp.getTime() - b[1].timing.timestamp.getTime(),
+    );
     while (Object.values(result).length > LOG_MAX) {
         delete result[ordered.shift()?.[0] as string];
     }
@@ -114,6 +119,8 @@ function newMessageMetaData(
     const consensus = request.requestType !== 'query';
     const verified = null;
     const boundary = request.boundary;
+    const responseSize =
+        'reply' in response ? sizeof(response.reply.result) : undefined;
     return {
         originalRequestId,
         type,
@@ -121,6 +128,7 @@ function newMessageMetaData(
         consensus,
         verified,
         boundary,
+        responseSize,
     };
 }
 
