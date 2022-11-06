@@ -19,10 +19,7 @@ export async function captureInternetComputerMessageFromNetworkEvent(
     console.debug('Full network event stub', event);
 
     const request = await decodeRequest(event);
-    console.debug(decodeRequest.name, request);
-
     const response = await decodeResponse(event, request);
-    console.debug(decodeResponse.name, response);
 
     return { request, response };
 }

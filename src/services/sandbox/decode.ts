@@ -74,7 +74,6 @@ export function sandboxHandleDecodeCandidArgs(
             'Missing interface definition. Make sure to call sandboxHandleEvalInterface first.',
         );
     }
-    console.debug('sandboxHandleDecodeCandidArgs', { idl, request });
     return decodeArgumentValues(idl, request.data.method, request.data.data);
 }
 
@@ -90,7 +89,6 @@ export function sandboxHandleDecodeCandidVals(
             'Missing interface definition. Make sure to call sandboxHandleEvalInterface first.',
         );
     }
-    console.debug('sandboxHandleDecodeCandidVals', { idl, request });
     return decodeReturnValue(idl, request.data.method, request.data.data);
 }
 

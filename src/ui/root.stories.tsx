@@ -66,7 +66,6 @@ const Template: ComponentStory<typeof Root> = (args) => {
                 style={{ position: 'fixed', bottom: 38, left: 10 }}
                 onClick={() => {
                     const message = randomMessage();
-                    console.log('logging', message.method.name, message);
                     Object.values(message.requests).forEach(
                         ({ request, response }) => log(request, response),
                     );

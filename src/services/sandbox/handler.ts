@@ -45,7 +45,6 @@ export async function sandboxRequest<T>(request: SandboxRequest['request']) {
     if (!sandbox.contentWindow) {
         throw new Error('Missing sandbox window.');
     }
-    console.debug(sandboxRequest.name, { requestId, request });
     const response = sandboxRecieveResponse<T>(requestId);
     sandbox.contentWindow.postMessage({ requestId, request }, '*');
     return response;
@@ -76,14 +75,8 @@ async function sandboxRecieveResponse<T>(requestId: string) {
             if (event.data.requestId === requestId) {
                 if ('response' in event.data) {
                     res(event.data.response as unknown as T);
-                    console.debug(sandboxRecieveResponse.name, {
-                        response: event.data.response,
-                    });
                 } else {
                     rej(event.data.error);
-                    console.debug(sandboxRecieveResponse.name, {
-                        error: event.data.error,
-                    });
                 }
                 window.removeEventListener('message', receiveResponse);
             }
@@ -105,12 +98,6 @@ function sandboxPostResponse(
     requestId: string,
     response: SandboxResponse['response'],
 ) {
-    console.debug(sandboxPostResponse.name, {
-        source,
-        requestId,
-        response,
-        sandboxRepository,
-    });
     (source as Window).postMessage(
         { requestId, response } as SandboxResponse,
         '*',

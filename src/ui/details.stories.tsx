@@ -14,7 +14,6 @@ export default {
 
 const Template: ComponentStory<typeof DetailsPane> = () => {
     const message = randomMessage();
-    console.log(message);
     return <DetailsPane clear={() => null} message={message} />;
 };
 
