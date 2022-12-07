@@ -42,7 +42,7 @@ export function stripIdl(idl: string) {
     return (
         idl
             // Remove extraneous export from interface file
-            .replace(/export const init = \(\{ IDL \}\) => \{.+\}/, '')
+            .replace(/export const init = \(\{ IDL \}\) => \{.+\}/s, '')
             // Coerce export into a simple return statement for us to eval
             .replace(
                 'export const idlFactory = ({ IDL }) =>',
