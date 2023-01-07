@@ -24,5 +24,10 @@
     },
     "content_security_policy": {
         "sandbox": "sandbox allow-scripts; script-src-elem 'unsafe-eval' 'unsafe-inline' 'self' https://* http://*; object-src 'self'"
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "icinspector@buildnode.io"
+        }
     }
 }
