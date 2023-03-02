@@ -230,7 +230,7 @@ function getMessageStatus(response: DecodedResponse): MessageStatus {
 export function getMessageRequest(message: MessageEntry): DecodedReadRequest {
     const request: DecodedReadRequest = (function () {
         const request =
-            message.requests[message.meta.originalRequestId].request;
+            message.requests[message.meta.originalRequestId]?.request;
         if (!('args' in request))
             throw new Error(
                 'Unexpected: args should always be defined in initial request.',
