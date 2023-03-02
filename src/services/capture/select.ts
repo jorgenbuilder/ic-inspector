@@ -1,5 +1,5 @@
 const boundaryNodeRegex =
-    /https?:\/\/(?:.+)?((?:ic0\.app|dfinity.network)|localhost:[0-9]+)\/api\/v2\/canister\/(.+)\/(query|call|read_state)/;
+    /https?:\/\/(?:.+)?((?:ic0\.app|dfinity.network|icp-api.io)|localhost:[0-9]+)\/api\/v2\/canister\/(.+)\/(query|call|read_state)/;
 
 /**
  * Determines whether a URL represents a request to an internet computer boundary node.
