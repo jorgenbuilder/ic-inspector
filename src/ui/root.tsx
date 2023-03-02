@@ -154,10 +154,16 @@ export function Root(props: {
                 <div className="table-container">
                     <table {...getTableProps()}>
                         <thead>
-                            {headerGroups.map((headerGroup) => (
-                                <tr {...headerGroup.getHeaderGroupProps()}>
-                                    {headerGroup.headers.map((column) => (
-                                        <th {...column.getHeaderProps()}>
+                            {headerGroups.map((headerGroup, i) => (
+                                <tr
+                                    {...headerGroup.getHeaderGroupProps()}
+                                    key={`group${i}`}
+                                >
+                                    {headerGroup.headers.map((column, j) => (
+                                        <th
+                                            {...column.getHeaderProps()}
+                                            key={`header${i}${j}`}
+                                        >
                                             {column.render('Header')}
                                         </th>
                                     ))}
@@ -165,11 +171,25 @@ export function Root(props: {
                             ))}
                         </thead>
                         <tbody {...getTableBodyProps()}>
-                            {rows.map((row, j) => {
+                            {rows.map((row, i) => {
                                 prepareRow(row);
                                 return (
-                                    <tr {...row.getRowProps()} style={focusedMessage?.meta.originalRequestId === row.original.message ? { backgroundColor: 'rgb(46 99 153)', color: 'white' } : {}}>
-                                        {row.cells.map((cell, i) => {
+                                    <tr
+                                        {...row.getRowProps()}
+                                        style={
+                                            focusedMessage?.meta
+                                                .originalRequestId ===
+                                            row.original.message
+                                                ? {
+                                                      backgroundColor:
+                                                          'rgb(46 99 153)',
+                                                      color: 'white',
+                                                  }
+                                                : {}
+                                        }
+                                        key={`row${i}`}
+                                    >
+                                        {row.cells.map((cell, j) => {
                                             return (
                                                 <td
                                                     onClick={() =>
@@ -179,6 +199,7 @@ export function Root(props: {
                                                         )
                                                     }
                                                     {...cell.getCellProps()}
+                                                    key={`cell${i}${j}`}
                                                 >
                                                     {cell.render('Cell')}
                                                 </td>
@@ -192,7 +213,22 @@ export function Root(props: {
                             <tr>
                                 <td colSpan={6}>
                                     {Object.values(messages).length || 0}{' '}
-                                    Messages {Object.values(messages).length >= LOG_MAX ? <>(max, trimming old messages <a style={{ cursor: 'pointer' }} onClick={increaseLogMax}>increase</a>)</> : ''}
+                                    Messages{' '}
+                                    {Object.values(messages).length >=
+                                    LOG_MAX ? (
+                                        <>
+                                            (max, trimming old messages{' '}
+                                            <a
+                                                style={{ cursor: 'pointer' }}
+                                                onClick={increaseLogMax}
+                                            >
+                                                increase
+                                            </a>
+                                            )
+                                        </>
+                                    ) : (
+                                        ''
+                                    )}
                                 </td>
                             </tr>
                         </tfoot>
