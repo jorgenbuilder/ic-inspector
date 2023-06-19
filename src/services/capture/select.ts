@@ -17,13 +17,20 @@ export function hasICHeaders(event: chrome.devtools.network.Request): boolean {
 }
 
 /**
+ * Determines whether the request uses a cbor content type.
+ */
+export function isCBOR(event: chrome.devtools.network.Request): boolean {
+    return event.request.headers.some(
+        (h) => h.name === 'content-type' && h.value.includes('cbor'),
+    );
+}
+
+/**
  * Determines whether a network event is an internet computer request/response that we want to record.
  * We rely solely on matching the url against a regex representing known boundary nodes. x-ic- headers
  * proved less reliable.
  */
 export function shouldCapture(event: chrome.devtools.network.Request): boolean {
-    return (
-        (isBoundaryNodeURL(event.request.url) || hasICHeaders(event)) &&
-        event.request.method === 'POST'
-    );
+    // Let's try out a CBOR-only approach for now.
+    return isCBOR(event);
 }
