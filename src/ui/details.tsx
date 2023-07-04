@@ -1,6 +1,6 @@
 import React from 'react';
-import ReactJson from 'react-json-view';
-import sizeof from 'object-sizeof';
+import { JsonView } from 'react-json-view-lite';
+import 'react-json-view-lite/dist/index.css';
 import {
     getMessageReply,
     getMessageRequest,
@@ -8,6 +8,7 @@ import {
 } from '../services/logging';
 import { serialize } from '../services/common';
 import Styles from './details.module.css';
+import { StyleProps } from 'react-json-view-lite/dist/DataRenderer';
 
 export function DetailsPane(props: {
     message: MessageEntry;
@@ -206,7 +207,22 @@ function Payload(props: { message: MessageEntry }) {
     );
 
     return (
-        <PrettyJson value={payload} candidWarning={withInterface === false} />
+        <div className={Styles.codeContainer}>
+            <div
+                className={Styles.copyIcon}
+                onClick={() =>
+                    navigator.clipboard.writeText(
+                        JSON.stringify(serialize(payload), null, 2),
+                    )
+                }
+            >
+                📋
+            </div>
+            <PrettyJson
+                value={payload}
+                candidWarning={withInterface === false}
+            />
+        </div>
     );
 }
 
@@ -230,10 +246,22 @@ function Response(props: { message: MessageEntry }) {
         }
     }, [message]);
     return (
-        <PrettyJson
-            value={reply.result}
-            candidWarning={reply.withInterface === false}
-        />
+        <div className={Styles.codeContainer}>
+            <div
+                className={Styles.copyIcon}
+                onClick={() =>
+                    navigator.clipboard.writeText(
+                        JSON.stringify(serialize(reply.result), null, 2),
+                    )
+                }
+            >
+                📋
+            </div>
+            <PrettyJson
+                value={reply.result}
+                candidWarning={reply.withInterface === false}
+            />
+        </div>
     );
 }
 
@@ -250,9 +278,23 @@ function Section(props: { children: React.ReactNode; title: string }) {
     );
 }
 
+const JsonStyles: StyleProps = {
+    container: Styles.JsonContainer,
+    basicChildStyle: Styles.JsonChild,
+    expander: Styles.JsonExpander,
+    label: Styles.JsonLabel,
+    nullValue: Styles.JsonNullValue,
+    undefinedValue: Styles.JsonUndefinedValue,
+    numberValue: Styles.JsonNumberValue,
+    stringValue: Styles.JsonStringValue,
+    booleanValue: Styles.JsonBooleanValue,
+    otherValue: Styles.JsonOtherValue,
+    punctuation: Styles.JsonPunctuation,
+    pointer: Styles.JsonPointer,
+};
+
 function PrettyJson(props: { value: any; candidWarning: boolean }) {
     const { value, candidWarning } = props;
-    const size = sizeof(value);
     return (
         <div>
             {candidWarning && (
@@ -265,25 +307,11 @@ function PrettyJson(props: { value: any; candidWarning: boolean }) {
                 </>
             )}
             {value && typeof value === 'object' ? (
-                size > 50_000 ? (
-                    <>
-                        <div>
-                            ⚠️ This is a large object, rendering basic JSON (~
-                            {(size / 1000).toFixed(1)}kb)
-                        </div>
-                        <pre>{JSON.stringify(serialize(value), null, 2)}</pre>
-                    </>
-                ) : (
-                    <ReactJson
-                        style={{ backgroundColor: 'transparent' }}
-                        theme={
-                            matchMedia('(prefers-color-scheme: light)').matches
-                                ? 'shapeshifter:inverted'
-                                : 'shapeshifter'
-                        }
-                        src={serialize(value)}
-                    />
-                )
+                <JsonView
+                    style={JsonStyles}
+                    shouldInitiallyExpand={(level) => true}
+                    data={value}
+                />
             ) : (
                 <pre>{value || 'null'}</pre>
             )}

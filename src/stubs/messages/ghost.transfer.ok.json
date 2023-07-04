@@ -1,0 +1,368 @@
+{
+    "canister": {
+        "identifier": "fjbi2-fyaaa-aaaan-qanjq-cai",
+        "subnet": "cv73p-6v7zi-u67oy-7jc3h-qspsz-g5lrj-4fn7k-xrax3-thek2-sl46v-jae",
+        "moduleHash": "6fcf55ac1056480fe05154bd38c76e3295283ea4a5e84a755827cd8346989fc5",
+        "controllers": [
+            "5huf2-uqaaa-aaaam-qasnq-cai",
+            "zd4yz-6wvai-n64ie-faola-ojuf4-sitqe-73qw6-6ixpf-lwdzq-fmzve-dae"
+        ]
+    },
+    "caller": {
+        "identifier": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae",
+        "isAnonymous": false
+    },
+    "method": {
+        "name": "transfer",
+        "query": false
+    },
+    "timing": {
+        "timestamp": {
+            "_stub": true,
+            "_date": true,
+            "value": "2023-07-04T19:22:56.798Z"
+        },
+        "requestCount": 3,
+        "durationMs": 2995
+    },
+    "meta": {
+        "originalRequestId": "daa96f24f8620862181b511a87933ab764a37479fa62a6bc2f39d558a00d0d64",
+        "type": "update",
+        "status": "replied",
+        "consensus": true,
+        "verified": null,
+        "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://icp0.io/api/v2/canister/fjbi2-fyaaa-aaaan-qanjq-cai/read_state"
+        }
+    },
+    "requests": {
+        "daa96f24f8620862181b511a87933ab764a37479fa62a6bc2f39d558a00d0d64": {
+            "caller": {
+                "identifier": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae",
+                "isAnonymous": false
+            },
+            "method": {
+                "name": "transfer",
+                "query": false
+            },
+            "canister": {
+                "identifier": "fjbi2-fyaaa-aaaan-qanjq-cai",
+                "subnet": "cv73p-6v7zi-u67oy-7jc3h-qspsz-g5lrj-4fn7k-xrax3-thek2-sl46v-jae",
+                "moduleHash": "6fcf55ac1056480fe05154bd38c76e3295283ea4a5e84a755827cd8346989fc5",
+                "controllers": [
+                    "5huf2-uqaaa-aaaam-qasnq-cai",
+                    "zd4yz-6wvai-n64ie-faola-ojuf4-sitqe-73qw6-6ixpf-lwdzq-fmzve-dae"
+                ]
+            },
+            "meta": {
+                "originalRequestId": "daa96f24f8620862181b511a87933ab764a37479fa62a6bc2f39d558a00d0d64",
+                "requestId": "daa96f24f8620862181b511a87933ab764a37479fa62a6bc2f39d558a00d0d64",
+                "type": "call",
+                "boundary": {
+                    "_stub": true,
+                    "_url": true,
+                    "val": "https://icp0.io/api/v2/canister/fjbi2-fyaaa-aaaan-qanjq-cai/call"
+                }
+            },
+            "timing": {
+                "timestamp": {
+                    "_stub": true,
+                    "_date": true,
+                    "value": "2023-07-04T19:22:56.798Z"
+                }
+            },
+            "request": {
+                "boundary": {
+                    "_stub": true,
+                    "_url": true,
+                    "val": "https://icp0.io/api/v2/canister/fjbi2-fyaaa-aaaan-qanjq-cai/call"
+                },
+                "message": "daa96f24f8620862181b511a87933ab764a37479fa62a6bc2f39d558a00d0d64",
+                "requestId": "daa96f24f8620862181b511a87933ab764a37479fa62a6bc2f39d558a00d0d64",
+                "sender": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae"
+                },
+                "requestType": "call",
+                "ingressExpiry": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "1688498816354000000"
+                },
+                "canisterId": "fjbi2-fyaaa-aaaan-qanjq-cai",
+                "method": "transfer",
+                "args": {
+                    "result": {
+                        "to": {
+                            "address": "c95e2fbad6b845d856d47034002f226fb45f927619d43e423276b541d895b2bc"
+                        },
+                        "token": "",
+                        "notify": false,
+                        "from": {
+                            "address": "54198216f5e1a7310fbc5d82894f1eb4601c8b565a3c6f5ce5ba24c79f6f0f6a"
+                        },
+                        "memo": {
+                            "_stub": true,
+                            "_bigint": true,
+                            "val": "12070089694624444626"
+                        },
+                        "subaccount": [],
+                        "nonce": [],
+                        "amount": {
+                            "_stub": true,
+                            "_bigint": true,
+                            "val": "10000000000"
+                        }
+                    },
+                    "withInterface": true
+                }
+            },
+            "response": {
+                "status": "unknown"
+            }
+        },
+        "bef6180b419d2c242d1eb50e587c9ef4f0045770faecdac3de7d4c57462f70cb": {
+            "caller": {
+                "identifier": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae",
+                "isAnonymous": false
+            },
+            "method": {
+                "name": "transfer",
+                "query": false
+            },
+            "canister": {
+                "identifier": "fjbi2-fyaaa-aaaan-qanjq-cai",
+                "subnet": "cv73p-6v7zi-u67oy-7jc3h-qspsz-g5lrj-4fn7k-xrax3-thek2-sl46v-jae",
+                "moduleHash": "6fcf55ac1056480fe05154bd38c76e3295283ea4a5e84a755827cd8346989fc5",
+                "controllers": [
+                    "5huf2-uqaaa-aaaam-qasnq-cai",
+                    "zd4yz-6wvai-n64ie-faola-ojuf4-sitqe-73qw6-6ixpf-lwdzq-fmzve-dae"
+                ]
+            },
+            "meta": {
+                "originalRequestId": "daa96f24f8620862181b511a87933ab764a37479fa62a6bc2f39d558a00d0d64",
+                "requestId": "bef6180b419d2c242d1eb50e587c9ef4f0045770faecdac3de7d4c57462f70cb",
+                "type": "read_state",
+                "boundary": {
+                    "_stub": true,
+                    "_url": true,
+                    "val": "https://icp0.io/api/v2/canister/fjbi2-fyaaa-aaaan-qanjq-cai/read_state"
+                }
+            },
+            "timing": {
+                "timestamp": {
+                    "_stub": true,
+                    "_date": true,
+                    "value": "2023-07-04T19:22:57.245Z"
+                }
+            },
+            "request": {
+                "boundary": {
+                    "_stub": true,
+                    "_url": true,
+                    "val": "https://icp0.io/api/v2/canister/fjbi2-fyaaa-aaaan-qanjq-cai/read_state"
+                },
+                "message": "daa96f24f8620862181b511a87933ab764a37479fa62a6bc2f39d558a00d0d64",
+                "requestId": "bef6180b419d2c242d1eb50e587c9ef4f0045770faecdac3de7d4c57462f70cb",
+                "canisterId": "fjbi2-fyaaa-aaaan-qanjq-cai",
+                "method": "transfer",
+                "sender": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae"
+                },
+                "requestType": "read_state",
+                "ingressExpiry": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "1688498816489000000"
+                },
+                "paths": [
+                    [
+                        {
+                            "0": 114,
+                            "1": 101,
+                            "2": 113,
+                            "3": 117,
+                            "4": 101,
+                            "5": 115,
+                            "6": 116,
+                            "7": 95,
+                            "8": 115,
+                            "9": 116,
+                            "10": 97,
+                            "11": 116,
+                            "12": 117,
+                            "13": 115
+                        },
+                        {
+                            "0": 218,
+                            "1": 169,
+                            "2": 111,
+                            "3": 36,
+                            "4": 248,
+                            "5": 98,
+                            "6": 8,
+                            "7": 98,
+                            "8": 24,
+                            "9": 27,
+                            "10": 81,
+                            "11": 26,
+                            "12": 135,
+                            "13": 147,
+                            "14": 58,
+                            "15": 183,
+                            "16": 100,
+                            "17": 163,
+                            "18": 116,
+                            "19": 121,
+                            "20": 250,
+                            "21": 98,
+                            "22": 166,
+                            "23": 188,
+                            "24": 47,
+                            "25": 57,
+                            "26": 213,
+                            "27": 88,
+                            "28": 160,
+                            "29": 13,
+                            "30": 13,
+                            "31": 100
+                        }
+                    ]
+                ]
+            },
+            "response": {
+                "status": "unknown"
+            }
+        },
+        "1b5d55ffd7e99d6c0fb569844a313fefda1a983cfab4f0c65795a0ccf012a7dc": {
+            "caller": {
+                "identifier": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae",
+                "isAnonymous": false
+            },
+            "method": {
+                "name": "transfer",
+                "query": false
+            },
+            "canister": {
+                "identifier": "fjbi2-fyaaa-aaaan-qanjq-cai",
+                "subnet": "cv73p-6v7zi-u67oy-7jc3h-qspsz-g5lrj-4fn7k-xrax3-thek2-sl46v-jae",
+                "moduleHash": "6fcf55ac1056480fe05154bd38c76e3295283ea4a5e84a755827cd8346989fc5",
+                "controllers": [
+                    "5huf2-uqaaa-aaaam-qasnq-cai",
+                    "zd4yz-6wvai-n64ie-faola-ojuf4-sitqe-73qw6-6ixpf-lwdzq-fmzve-dae"
+                ]
+            },
+            "meta": {
+                "originalRequestId": "daa96f24f8620862181b511a87933ab764a37479fa62a6bc2f39d558a00d0d64",
+                "requestId": "1b5d55ffd7e99d6c0fb569844a313fefda1a983cfab4f0c65795a0ccf012a7dc",
+                "type": "read_state",
+                "boundary": {
+                    "_stub": true,
+                    "_url": true,
+                    "val": "https://icp0.io/api/v2/canister/fjbi2-fyaaa-aaaan-qanjq-cai/read_state"
+                }
+            },
+            "timing": {
+                "timestamp": {
+                    "_stub": true,
+                    "_date": true,
+                    "value": "2023-07-04T19:22:59.793Z"
+                }
+            },
+            "request": {
+                "boundary": {
+                    "_stub": true,
+                    "_url": true,
+                    "val": "https://icp0.io/api/v2/canister/fjbi2-fyaaa-aaaan-qanjq-cai/read_state"
+                },
+                "message": "daa96f24f8620862181b511a87933ab764a37479fa62a6bc2f39d558a00d0d64",
+                "requestId": "1b5d55ffd7e99d6c0fb569844a313fefda1a983cfab4f0c65795a0ccf012a7dc",
+                "canisterId": "fjbi2-fyaaa-aaaan-qanjq-cai",
+                "method": "transfer",
+                "sender": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae"
+                },
+                "requestType": "read_state",
+                "ingressExpiry": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "1688498818897000000"
+                },
+                "paths": [
+                    [
+                        {
+                            "0": 114,
+                            "1": 101,
+                            "2": 113,
+                            "3": 117,
+                            "4": 101,
+                            "5": 115,
+                            "6": 116,
+                            "7": 95,
+                            "8": 115,
+                            "9": 116,
+                            "10": 97,
+                            "11": 116,
+                            "12": 117,
+                            "13": 115
+                        },
+                        {
+                            "0": 218,
+                            "1": 169,
+                            "2": 111,
+                            "3": 36,
+                            "4": 248,
+                            "5": 98,
+                            "6": 8,
+                            "7": 98,
+                            "8": 24,
+                            "9": 27,
+                            "10": 81,
+                            "11": 26,
+                            "12": 135,
+                            "13": 147,
+                            "14": 58,
+                            "15": 183,
+                            "16": 100,
+                            "17": 163,
+                            "18": 116,
+                            "19": 121,
+                            "20": 250,
+                            "21": 98,
+                            "22": 166,
+                            "23": 188,
+                            "24": 47,
+                            "25": 57,
+                            "26": 213,
+                            "27": 88,
+                            "28": 160,
+                            "29": 13,
+                            "30": 13,
+                            "31": 100
+                        }
+                    ]
+                ]
+            },
+            "response": {
+                "status": "replied",
+                "reply": {
+                    "result": {
+                        "ok": {
+                            "_stub": true,
+                            "_bigint": true,
+                            "val": "10100000000"
+                        }
+                    },
+                    "withInterface": true
+                }
+            }
+        }
+    }
+}

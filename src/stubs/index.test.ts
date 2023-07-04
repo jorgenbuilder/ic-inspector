@@ -23,6 +23,13 @@ test('stub utils handle bigints', () => {
     expect(processed.value === value).toBeTruthy();
 });
 
+test('stub utils handle large bigints', () => {
+    const value = 12070089694624444626n;
+    const object = { value };
+    const processed = readStub(dumpStub(object));
+    expect(processed.value === value).toBeTruthy();
+});
+
 test('stub utils handle URLs', () => {
     const value = new URL('https://google.ca');
     const object = { value };

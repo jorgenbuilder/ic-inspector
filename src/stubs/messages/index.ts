@@ -13,7 +13,8 @@ import { default as dscvr_getNotification } from './dscvr.get_notifications.json
 import { default as dscvr_getSelf } from './dscvr.get_self.json';
 import { default as dscvr_listContent } from './dscvr.list_content.json';
 import { default as dscvr_listHighlightedPortals } from './dscvr.list_highlighted_portals.json';
-import { default as ghost_transfer } from './ghost.transfer.json';
+import { default as ghost_transfer_err } from './ghost.transfer.err.json';
+import { default as ghost_transfer_ok } from './ghost.transfer.ok.json';
 import { default as legends_listings } from './legends.listings.json';
 import { readStub } from '..';
 
@@ -31,14 +32,19 @@ export const Stubs = {
     distrikt_getSelfUserId,
     distrikt_isFollowing,
     distrikt_isUserTrusted,
-    ghost_transfer,
+    ghost_transfer_err,
+    ghost_transfer_ok,
     legends_listings,
 };
 
 export function randomMessage(): MessageEntry {
     const all = Object.values(Stubs);
     const log = all[Math.floor(all.length * Math.random())];
-    return replaceRequestIds(readStub(JSON.stringify(log)));
+    return parseStub(log);
+}
+
+export function parseStub(stub: any) {
+    return replaceRequestIds(readStub(JSON.stringify(stub)));
 }
 
 function replaceRequestIds(stub: any) {

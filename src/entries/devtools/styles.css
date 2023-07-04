@@ -6,6 +6,12 @@
     --chrome-4: rgb(145 145 145);
     --chrome-5: rgb(154, 160, 166);
     --chrome-6: white;
+
+    --syntax-null: #ff5874;
+    --syntax-number: #f78c6c;
+    --syntax-string: #ecc48d;
+    --syntax-boolean: #ff5874;
+    --syntax-other: #78ccf0;
 }
 
 @media (prefers-color-scheme: light) {
@@ -17,10 +23,18 @@
         --chrome-4: rgb(110, 110, 110);
         /* --chrome-5: rgb(81, 85, 89); */
         --chrome-6: black;
+
+        --syntax-null: #bc5454;
+        --syntax-number: #aa0982;
+        --syntax-string: #4876d6;
+        --syntax-boolean: #bc5454;
+        --syntax-other: #78ccf0;
     }
 }
 
-a, a:link, a:visited {
+a,
+a:link,
+a:visited {
     color: var(--chrome-6);
 }
 
@@ -152,7 +166,7 @@ html,
 body {
     padding: 0;
     margin: 0;
-    font-family: "Segoe UI", Tahoma, sans-serif;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
 }
 
 * {

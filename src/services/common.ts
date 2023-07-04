@@ -35,7 +35,7 @@ export function serialize(obj: { [key: string]: any }): any {
     return JSON.parse(
         JSON.stringify(obj, (key, value) => {
             if (typeof value === 'bigint') {
-                return Number(value);
+                return `${value.toString()}n`;
             } else if (value?._isPrincipal) {
                 return Principal.fromUint8Array(value._arr).toString();
             }

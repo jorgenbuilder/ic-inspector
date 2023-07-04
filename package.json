@@ -35,7 +35,7 @@
         "prettier": "^2.2.1",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
-        "react-json-view": "^1.21.3",
+        "react-json-view-lite": "github:jorgenbuilder/react-json-view-lite#release",
         "react-table": "^7.7.0",
         "uuid": "^8.3.2",
         "webextension-polyfill": "^0.7.0",

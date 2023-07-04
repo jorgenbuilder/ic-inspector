@@ -99,3 +99,60 @@
     color: var(--chrome-3);
     font-style: italic;
 }
+
+.JsonContainer {
+}
+.JsonChild {
+    padding-left: 10px;
+}
+.JsonExpander {
+    margin-right: 5px;
+    cursor: pointer;
+}
+.JsonLabel {
+    margin-right: 5px;
+}
+.JsonNullValue {
+    color: var(--syntax-null);
+}
+.JsonUndefinedValue {
+    color: var(--syntax-null);
+}
+.JsonNumberValue {
+    color: var(--syntax-number);
+}
+.JsonStringValue {
+    color: var(--syntax-string);
+}
+.JsonBooleanValue {
+    color: var(--syntax-boolean);
+}
+.JsonOtherValue {
+    color: var(--syntax-other);
+}
+.JsonPunctuation {
+}
+.JsonPointer {
+}
+
+.codeContainer {
+    position: relative;
+}
+
+.copyIcon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: transform 120ms ease-out, opacity 120ms ease-out;
+}
+
+.copyIcon:hover {
+    opacity: 1;
+}
+
+.copyIcon:active {
+    transform: scale(1.25);
+}
