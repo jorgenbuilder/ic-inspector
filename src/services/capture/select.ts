@@ -20,7 +20,7 @@ export function hasICHeaders(event: chrome.devtools.network.Request): boolean {
  * Determines whether the request uses a cbor content type.
  */
 export function isCBOR(event: chrome.devtools.network.Request): boolean {
-    return event.request.headers.some(
+    return event.response.headers.some(
         (h) => h.name === 'content-type' && h.value.includes('cbor'),
     );
 }
