@@ -1,0 +1,317 @@
+{
+    "caller": {
+        "identifier": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae",
+        "isAnonymous": false
+    },
+    "canister": {
+        "identifier": "ykaf2-xqaaa-aaaaj-qayaa-cai",
+        "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
+        "moduleHash": "d848a81ef2adaae3d419b6873ecb5d202694d6d967691dd0ff8a4da8ecde6aa3",
+        "controllers": [
+            "tmsgb-iyaaa-aaaaj-qabfq-cai",
+            "bhvmm-kkp5p-pzycc-apxyy-26mff-zazxc-gyotq-dlvtq-ilprx-g47sw-zae",
+            "k2syn-nenrg-67lse-cn2pm-srhsr-c3rsj-tfatg-63ga5-pz25g-x56ob-2ae"
+        ]
+    },
+    "meta": {
+        "originalRequestId": "b211ed7cebeb0ae928e749fbdfc17b8bcb4855cfb68d0b16d6e70ab1cc025eed",
+        "type": "query",
+        "status": "replied",
+        "consensus": false,
+        "verified": null,
+        "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://icp0.io/api/v2/canister/ykaf2-xqaaa-aaaaj-qayaa-cai/query"
+        }
+    },
+    "method": {
+        "name": "tipsOfContentIDs",
+        "query": true
+    },
+    "timing": {
+        "timestamp": {
+            "_stub": true,
+            "_date": true,
+            "value": "2023-07-04T22:01:07.946Z"
+        },
+        "requestCount": 1
+    },
+    "requests": {
+        "b211ed7cebeb0ae928e749fbdfc17b8bcb4855cfb68d0b16d6e70ab1cc025eed": {
+            "caller": {
+                "identifier": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae",
+                "isAnonymous": false
+            },
+            "method": {
+                "name": "tipsOfContentIDs",
+                "query": true
+            },
+            "canister": {
+                "identifier": "ykaf2-xqaaa-aaaaj-qayaa-cai",
+                "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
+                "moduleHash": "d848a81ef2adaae3d419b6873ecb5d202694d6d967691dd0ff8a4da8ecde6aa3",
+                "controllers": [
+                    "tmsgb-iyaaa-aaaaj-qabfq-cai",
+                    "bhvmm-kkp5p-pzycc-apxyy-26mff-zazxc-gyotq-dlvtq-ilprx-g47sw-zae",
+                    "k2syn-nenrg-67lse-cn2pm-srhsr-c3rsj-tfatg-63ga5-pz25g-x56ob-2ae"
+                ]
+            },
+            "meta": {
+                "originalRequestId": "b211ed7cebeb0ae928e749fbdfc17b8bcb4855cfb68d0b16d6e70ab1cc025eed",
+                "requestId": "b211ed7cebeb0ae928e749fbdfc17b8bcb4855cfb68d0b16d6e70ab1cc025eed",
+                "type": "query",
+                "boundary": {
+                    "_stub": true,
+                    "_url": true,
+                    "val": "https://icp0.io/api/v2/canister/ykaf2-xqaaa-aaaaj-qayaa-cai/query"
+                }
+            },
+            "timing": {
+                "timestamp": {
+                    "_stub": true,
+                    "_date": true,
+                    "value": "2023-07-04T22:01:07.946Z"
+                }
+            },
+            "request": {
+                "boundary": {
+                    "_stub": true,
+                    "_url": true,
+                    "val": "https://icp0.io/api/v2/canister/ykaf2-xqaaa-aaaaj-qayaa-cai/query"
+                },
+                "message": "b211ed7cebeb0ae928e749fbdfc17b8bcb4855cfb68d0b16d6e70ab1cc025eed",
+                "requestId": "b211ed7cebeb0ae928e749fbdfc17b8bcb4855cfb68d0b16d6e70ab1cc025eed",
+                "sender": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae"
+                },
+                "requestType": "query",
+                "ingressExpiry": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "1688508307433000000"
+                },
+                "canisterId": "ykaf2-xqaaa-aaaaj-qayaa-cai",
+                "method": "tipsOfContentIDs",
+                "args": {
+                    "result": {
+                        "0": {
+                            "_stub": true,
+                            "_bigint": true,
+                            "val": "1152921508913012803"
+                        },
+                        "1": {
+                            "_stub": true,
+                            "_bigint": true,
+                            "val": "1152921508913012798"
+                        },
+                        "2": {
+                            "_stub": true,
+                            "_bigint": true,
+                            "val": "1152921508913012811"
+                        },
+                        "3": {
+                            "_stub": true,
+                            "_bigint": true,
+                            "val": "1172432106524482000"
+                        },
+                        "4": {
+                            "_stub": true,
+                            "_bigint": true,
+                            "val": "1159486649892720663"
+                        },
+                        "5": {
+                            "_stub": true,
+                            "_bigint": true,
+                            "val": "1200881475960963348"
+                        },
+                        "6": {
+                            "_stub": true,
+                            "_bigint": true,
+                            "val": "1152921508913012735"
+                        },
+                        "7": {
+                            "_stub": true,
+                            "_bigint": true,
+                            "val": "1152921508913012728"
+                        },
+                        "8": {
+                            "_stub": true,
+                            "_bigint": true,
+                            "val": "1152921508913012733"
+                        },
+                        "9": {
+                            "_stub": true,
+                            "_bigint": true,
+                            "val": "1155059874345372192"
+                        }
+                    },
+                    "withInterface": true
+                }
+            },
+            "response": {
+                "status": "replied",
+                "reply": {
+                    "result": [
+                        [
+                            {
+                                "to": {
+                                    "_stub": true,
+                                    "_principal": true,
+                                    "val": "liypr-3d3p5-wye2h-bpjns-ar4ud-zptjf-7exfb-tuqla-ndg34-y7vo7-gqe"
+                                },
+                                "contentID": [
+                                    {
+                                        "_stub": true,
+                                        "_bigint": true,
+                                        "val": "1152921508913012798"
+                                    }
+                                ],
+                                "token": "qnzol-wakor-uwiaa-aaaaa-dmadk-maqca-aaaaa-a",
+                                "from": {
+                                    "_stub": true,
+                                    "_principal": true,
+                                    "val": "fgkxo-klvdw-vb3ft-2oslc-jwn5a-nyqvo-rtwwi-6rg4h-m4qu7-kffpf-tae"
+                                },
+                                "transaction": {
+                                    "to": "c95e2fbad6b845d856d47034002f226fb45f927619d43e423276b541d895b2bc",
+                                    "fee": {
+                                        "_stub": true,
+                                        "_bigint": true,
+                                        "val": "100000000"
+                                    },
+                                    "status": "Completed",
+                                    "transType": {
+                                        "transfer": null
+                                    },
+                                    "from": "54198216f5e1a7310fbc5d82894f1eb4601c8b565a3c6f5ce5ba24c79f6f0f6a",
+                                    "hash": "42ee2a7c8302a44cda3bb1c7278c0db8aed7aeae45734fbcea99e571204fdb3b",
+                                    "memo": [
+                                        {
+                                            "0": 68,
+                                            "1": 73,
+                                            "2": 68,
+                                            "3": 76,
+                                            "4": 2,
+                                            "5": 110,
+                                            "6": 120,
+                                            "7": 108,
+                                            "8": 3,
+                                            "9": 251,
+                                            "10": 202,
+                                            "11": 1,
+                                            "12": 104,
+                                            "13": 212,
+                                            "14": 154,
+                                            "15": 129,
+                                            "16": 131,
+                                            "17": 1,
+                                            "18": 0,
+                                            "19": 234,
+                                            "20": 202,
+                                            "21": 138,
+                                            "22": 158,
+                                            "23": 4,
+                                            "24": 104,
+                                            "25": 1,
+                                            "26": 1,
+                                            "27": 1,
+                                            "28": 29,
+                                            "29": 123,
+                                            "30": 127,
+                                            "31": 109,
+                                            "32": 130,
+                                            "33": 104,
+                                            "34": 225,
+                                            "35": 122,
+                                            "36": 91,
+                                            "37": 32,
+                                            "38": 71,
+                                            "39": 148,
+                                            "40": 30,
+                                            "41": 95,
+                                            "42": 52,
+                                            "43": 151,
+                                            "44": 228,
+                                            "45": 185,
+                                            "46": 67,
+                                            "47": 58,
+                                            "48": 65,
+                                            "49": 96,
+                                            "50": 104,
+                                            "51": 205,
+                                            "52": 190,
+                                            "53": 99,
+                                            "54": 245,
+                                            "55": 119,
+                                            "56": 205,
+                                            "57": 2,
+                                            "58": 1,
+                                            "59": 62,
+                                            "60": 224,
+                                            "61": 170,
+                                            "62": 0,
+                                            "63": 1,
+                                            "64": 0,
+                                            "65": 0,
+                                            "66": 16,
+                                            "67": 1,
+                                            "68": 29,
+                                            "69": 117,
+                                            "70": 29,
+                                            "71": 170,
+                                            "72": 29,
+                                            "73": 150,
+                                            "74": 122,
+                                            "75": 116,
+                                            "76": 150,
+                                            "77": 36,
+                                            "78": 217,
+                                            "79": 189,
+                                            "80": 3,
+                                            "81": 113,
+                                            "82": 10,
+                                            "83": 186,
+                                            "84": 51,
+                                            "85": 181,
+                                            "86": 145,
+                                            "87": 232,
+                                            "88": 155,
+                                            "89": 135,
+                                            "90": 103,
+                                            "91": 33,
+                                            "92": 79,
+                                            "93": 168,
+                                            "94": 165,
+                                            "95": 121,
+                                            "96": 102,
+                                            "97": 2
+                                        }
+                                    ],
+                                    "timestamp": {
+                                        "_stub": true,
+                                        "_bigint": true,
+                                        "val": "1688498577165130496"
+                                    },
+                                    "index": {
+                                        "_stub": true,
+                                        "_bigint": true,
+                                        "val": "589382"
+                                    },
+                                    "amount": {
+                                        "_stub": true,
+                                        "_bigint": true,
+                                        "val": "10000000000"
+                                    }
+                                }
+                            }
+                        ]
+                    ],
+                    "withInterface": true
+                }
+            }
+        }
+    }
+}

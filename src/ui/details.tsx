@@ -6,7 +6,7 @@ import {
     getMessageRequest,
     MessageEntry,
 } from '../services/logging';
-import { serialize } from '../services/common';
+import { serialize, pretty, transform } from '../services/common';
 import Styles from './details.module.css';
 import { StyleProps } from 'react-json-view-lite/dist/DataRenderer';
 
@@ -219,7 +219,7 @@ function Payload(props: { message: MessageEntry }) {
                 📋
             </div>
             <PrettyJson
-                value={payload}
+                value={transform(payload, pretty)}
                 candidWarning={withInterface === false}
             />
         </div>
@@ -258,7 +258,7 @@ function Response(props: { message: MessageEntry }) {
                 📋
             </div>
             <PrettyJson
-                value={reply.result}
+                value={transform(reply.result, pretty)}
                 candidWarning={reply.withInterface === false}
             />
         </div>

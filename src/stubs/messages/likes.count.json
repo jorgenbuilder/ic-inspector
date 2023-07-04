@@ -1,0 +1,125 @@
+{
+    "caller": {
+        "identifier": "cuva7-2dtjr-krvwu-aobqx-phano-mnojk-xfm64-7qupq-k7uvl-snooh-jae",
+        "isAnonymous": false
+    },
+    "canister": {
+        "identifier": "xnx6l-pyaaa-aaaaj-qasxa-cai",
+        "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
+        "moduleHash": "31b6962295c11d5f7eb16598ca0554eec05c78f5b1b8ace0686f10345c02a24a",
+        "controllers": [
+            "e3mmv-5qaaa-aaaah-aadma-cai",
+            "k2syn-nenrg-67lse-cn2pm-srhsr-c3rsj-tfatg-63ga5-pz25g-x56ob-2ae"
+        ]
+    },
+    "meta": {
+        "originalRequestId": "c969cb268b5593178e81c51edfc1001ad3a16b43d69c59fbe9844ed0d929d325",
+        "type": "query",
+        "status": "replied",
+        "consensus": false,
+        "verified": null,
+        "boundary": {
+            "_stub": true,
+            "_url": true,
+            "val": "https://ic0.app/api/v2/canister/xnx6l-pyaaa-aaaaj-qasxa-cai/query"
+        }
+    },
+    "method": {
+        "name": "count",
+        "query": true
+    },
+    "timing": {
+        "timestamp": {
+            "_stub": true,
+            "_date": true,
+            "value": "2023-07-04T21:42:11.911Z"
+        },
+        "requestCount": 1
+    },
+    "requests": {
+        "c969cb268b5593178e81c51edfc1001ad3a16b43d69c59fbe9844ed0d929d325": {
+            "caller": {
+                "identifier": "cuva7-2dtjr-krvwu-aobqx-phano-mnojk-xfm64-7qupq-k7uvl-snooh-jae",
+                "isAnonymous": false
+            },
+            "method": {
+                "name": "count",
+                "query": true
+            },
+            "canister": {
+                "identifier": "xnx6l-pyaaa-aaaaj-qasxa-cai",
+                "subnet": "jtdsg-3h6gi-hs7o5-z2soi-43w3z-soyl3-ajnp3-ekni5-sw553-5kw67-nqe",
+                "moduleHash": "31b6962295c11d5f7eb16598ca0554eec05c78f5b1b8ace0686f10345c02a24a",
+                "controllers": [
+                    "e3mmv-5qaaa-aaaah-aadma-cai",
+                    "k2syn-nenrg-67lse-cn2pm-srhsr-c3rsj-tfatg-63ga5-pz25g-x56ob-2ae"
+                ]
+            },
+            "meta": {
+                "originalRequestId": "c969cb268b5593178e81c51edfc1001ad3a16b43d69c59fbe9844ed0d929d325",
+                "requestId": "c969cb268b5593178e81c51edfc1001ad3a16b43d69c59fbe9844ed0d929d325",
+                "type": "query",
+                "boundary": {
+                    "_stub": true,
+                    "_url": true,
+                    "val": "https://ic0.app/api/v2/canister/xnx6l-pyaaa-aaaaj-qasxa-cai/query"
+                }
+            },
+            "timing": {
+                "timestamp": {
+                    "_stub": true,
+                    "_date": true,
+                    "value": "2023-07-04T21:42:11.911Z"
+                }
+            },
+            "request": {
+                "boundary": {
+                    "_stub": true,
+                    "_url": true,
+                    "val": "https://ic0.app/api/v2/canister/xnx6l-pyaaa-aaaaj-qasxa-cai/query"
+                },
+                "message": "c969cb268b5593178e81c51edfc1001ad3a16b43d69c59fbe9844ed0d929d325",
+                "requestId": "c969cb268b5593178e81c51edfc1001ad3a16b43d69c59fbe9844ed0d929d325",
+                "sender": {
+                    "_stub": true,
+                    "_principal": true,
+                    "val": "cuva7-2dtjr-krvwu-aobqx-phano-mnojk-xfm64-7qupq-k7uvl-snooh-jae"
+                },
+                "requestType": "query",
+                "ingressExpiry": {
+                    "_stub": true,
+                    "_bigint": true,
+                    "val": "1688507160525000000"
+                },
+                "canisterId": "xnx6l-pyaaa-aaaaj-qasxa-cai",
+                "method": "count",
+                "args": {
+                    "result": [
+                        {
+                            "_stub": true,
+                            "_principal": true,
+                            "val": "cwu5z-wyaaa-aaaaj-qaoaq-cai"
+                        },
+                        {
+                            "_stub": true,
+                            "_bigint": true,
+                            "val": "4"
+                        }
+                    ],
+                    "withInterface": true
+                }
+            },
+            "response": {
+                "status": "replied",
+                "reply": {
+                    "result": {
+                        "_stub": true,
+                        "_bigint": true,
+                        "val": "0"
+                    },
+                    "withInterface": true
+                }
+            }
+        }
+    }
+}
