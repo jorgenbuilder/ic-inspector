@@ -17,6 +17,8 @@ interface AbstractDecodedRequest {
     requestType: RequestType;
     ingressExpiry: Expiry;
     boundary: URL;
+    size?: number;
+    stack?: SimplifiedStack[];
 }
 
 export interface DecodedCallRequest extends AbstractDecodedRequest {
@@ -86,6 +88,9 @@ export async function decodeRequest(
     const ingressExpiry = request.ingress_expiry;
     const requestId = toHexString([...new Uint8Array(requestIdOf(request))]);
     const boundary = new URL(event.request.url);
+    const size =
+        event.request.bodySize > -1 ? event.request.bodySize : undefined;
+    const stack = extractTrace(event);
 
     if (requestType === 'query' || requestType === 'call') {
         // These parameters common to "call" and "query" requests.
@@ -111,6 +116,8 @@ export async function decodeRequest(
             canisterId,
             method,
             args,
+            size,
+            stack,
         };
     } else {
         // These parameters only on "read_state" requests
@@ -130,6 +137,59 @@ export async function decodeRequest(
             requestType,
             ingressExpiry,
             paths,
+            size,
+            stack,
         };
     }
+}
+
+interface CallFrame {
+    functionName: string;
+    url: string;
+    lineNumber: number;
+    columnNumber: number;
+}
+
+interface StackObject {
+    callFrames: CallFrame[];
+    parent?: StackObject;
+    description?: string;
+}
+
+interface SimplifiedStack {
+    functionName: string;
+    fullPath: string;
+    lineNumber: number;
+    fileName: string;
+    columnNumber: number;
+}
+
+// This signature is based on a data stub extracted from Chrome version 114.0.5735.198
+function extractTrace(
+    request: chrome.devtools.network.Request,
+): SimplifiedStack[] {
+    const simplified: SimplifiedStack[] = [];
+
+    if (!request._initiator) return simplified;
+    const initiator = request._initiator as unknown as any;
+
+    if (!('stack' in initiator)) return simplified;
+    let stack: StackObject | undefined = initiator.stack;
+
+    while (stack) {
+        for (const frame of stack.callFrames) {
+            const simplifiedFrame = {
+                functionName: frame.functionName,
+                fullPath: frame.url,
+                lineNumber: frame.lineNumber,
+                fileName: new URL(frame.url).pathname,
+                columnNumber: frame.columnNumber,
+            };
+            simplified.push(simplifiedFrame);
+        }
+
+        stack = stack.parent;
+    }
+
+    return simplified;
 }

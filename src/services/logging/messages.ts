@@ -1,4 +1,3 @@
-import sizeof from 'object-sizeof';
 import { dumpStub } from '../../stubs';
 import { CandidDecodeResult } from '../candid';
 import {
@@ -49,6 +48,7 @@ interface MessageMetaData {
     verified: null; // I need to implement certificate verification for this. Will be boolean on completion.
     boundary: URL;
     responseSize?: number;
+    requestSize?: number;
 }
 
 export function getMessageRepositoryUpdate(
@@ -119,8 +119,6 @@ function newMessageMetaData(
     const consensus = request.requestType !== 'query';
     const verified = null;
     const boundary = request.boundary;
-    const responseSize =
-        'reply' in response ? sizeof(response.reply.result) : undefined;
     return {
         originalRequestId,
         type,
@@ -128,7 +126,8 @@ function newMessageMetaData(
         consensus,
         verified,
         boundary,
-        responseSize,
+        responseSize: response.size,
+        requestSize: request.size,
     };
 }
 

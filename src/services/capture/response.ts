@@ -14,7 +14,11 @@ import {
     DecodedCallRequest,
 } from './request';
 
-interface DecodedQueryResponse {
+interface AbstractDecodedResponse {
+    size?: number;
+}
+
+interface DecodedQueryResponse extends AbstractDecodedResponse {
     status: QueryResponseStatus;
 }
 
@@ -27,7 +31,7 @@ export interface RejectedResponse extends DecodedQueryResponse {
     code: number;
 }
 
-interface DecodedReadStateResponse {
+interface DecodedReadStateResponse extends AbstractDecodedResponse {
     status: RequestStatusResponseStatus;
 }
 
@@ -57,6 +61,11 @@ export async function decodeResponse(
         );
         return { status: RequestStatusResponseStatus.Unknown };
     }
+
+    const size =
+        event.response.content.size > -1
+            ? event.response.content.size
+            : undefined;
 
     // The resulting content is a B64 encoded string. We decode to byes.
     const bytes = base64ToBytes(content);
@@ -95,12 +104,12 @@ export async function decodeResponse(
                 method,
                 response.reply.arg,
             );
-            return { status, reply };
+            return { status, reply, size };
         } else {
             // These parameters exist on failed query response
             const message = response.reject_message;
             const code = response.reject_code;
-            return { status, message, code };
+            return { status, message, code, size };
         }
     } else if ('certificate' in response) {
         // Validate we have corresponding read_state request
@@ -158,13 +167,13 @@ export async function decodeResponse(
                     method,
                     buffer,
                 );
-                return { status, reply } as RepliedReadStateResponse;
+                return { status, reply, size } as RepliedReadStateResponse;
             }
 
             case RequestStatusResponseStatus.Received:
             case RequestStatusResponseStatus.Unknown:
             case RequestStatusResponseStatus.Processing:
-                return { status };
+                return { status, size };
 
             case RequestStatusResponseStatus.Rejected: {
                 const code = new Uint8Array(
@@ -173,7 +182,7 @@ export async function decodeResponse(
                 const message = new TextDecoder().decode(
                     cert.lookup([...paths.flat(), 'reject_message'])!,
                 );
-                return { status, message, code };
+                return { status, message, code, size };
             }
 
             case RequestStatusResponseStatus.Done:

@@ -9,6 +9,7 @@ import {
 import { serialize, pretty, transform } from '../services/common';
 import Styles from './details.module.css';
 import { StyleProps } from 'react-json-view-lite/dist/DataRenderer';
+import { formatBytes } from './common';
 
 export function DetailsPane(props: {
     message: MessageEntry;
@@ -58,7 +59,6 @@ export function DetailsPane(props: {
 
 function Overview(props: { message: MessageEntry }) {
     const { message } = props;
-
     return (
         <div>
             <Section title="Method">
@@ -162,10 +162,14 @@ function Overview(props: { message: MessageEntry }) {
                     <dt>Response Size</dt>
                     <dd>
                         {message.meta.responseSize
-                            ? `${(message.meta.responseSize / 1000).toFixed(
-                                  1,
-                              )} kb`
-                            : '??'}
+                            ? formatBytes(message.meta.responseSize)
+                            : '-'}
+                    </dd>
+                    <dt>Request Size</dt>
+                    <dd>
+                        {message.meta.requestSize
+                            ? formatBytes(message.meta.requestSize)
+                            : '-'}
                     </dd>
                 </dl>
             </Section>
@@ -183,17 +187,64 @@ function Overview(props: { message: MessageEntry }) {
                                     {request.timing.timestamp.toLocaleTimeString()}
                                 </dt>
                                 <dd key={`${request.meta.requestId}d`}>
-                                    <pre>{request.request.requestId}</pre>{' '}
-                                    {request.meta.type}
+                                    {request.meta.type}{' '}
+                                    {request.request.size && (
+                                        <>
+                                            ⬆️{' '}
+                                            {formatBytes(request.request.size)}{' '}
+                                        </>
+                                    )}
+                                    {request.response.size && (
+                                        <>
+                                            ⬇️{' '}
+                                            {formatBytes(request.response.size)}{' '}
+                                        </>
+                                    )}
+                                    <pre>{request.request.requestId}</pre>
                                 </dd>
                             </>
                         ))}
-                    <dt>{(message.timing.durationMs || '?') + 'ms'}</dt>
+                    <dt>totals</dt>
                     <dd>
-                        <em>total time</em>
+                        ⏱️ {(message.timing.durationMs || '?') + 'ms'}, ⬆️{' '}
+                        {formatBytes(
+                            Object.values(message.requests).reduce(
+                                (a, b) => a + (b.request.size || 0),
+                                0,
+                            ),
+                        )}
+                        , ⬇️{' '}
+                        {formatBytes(
+                            Object.values(message.requests).reduce(
+                                (a, b) => a + (b.response.size || 0),
+                                0,
+                            ),
+                        )}
                     </dd>
                 </dl>
             </Section>
+            {Object.values(message.requests)[0]?.request.stack && (
+                <Section title="Stack Trace">
+                    <dl>
+                        {Object.values(
+                            message.requests,
+                        )[0]?.request?.stack?.map((frame, i) => (
+                            <>
+                                <dt
+                                    key={`stack-${message.requests[0]?.request?.requestId}-${i}t`}
+                                >
+                                    {frame.functionName || '-'}
+                                </dt>
+                                <dd
+                                    key={`stack-${message.requests[0]?.request?.requestId}-${i}t`}
+                                >
+                                    @ {frame.fileName}:{frame.lineNumber}
+                                </dd>
+                            </>
+                        ))}
+                    </dl>
+                </Section>
+            )}
         </div>
     );
 }
