@@ -1,16 +1,16 @@
 ![IC Inspector: browser devtools for the internet computer blockchain](assets/hero.png)
 
-<div style="display: flex; align-items: center; gap: 1em;">
-  <a href="https://chromewebstore.google.com/detail/ic-inspector/meaadkenfkhjakkkdapaallimhbdofck" target="_blank">
+<div style="text-align: center">
+  <a style="display: inline-block" href="https://chromewebstore.google.com/detail/ic-inspector/meaadkenfkhjakkkdapaallimhbdofck" target="_blank">
   <img alt="download on chrome webstore" src="assets/chrome.png" width="50" height="50" />
   </a>
-  <a href="https://addons.mozilla.org/en-CA/firefox/addon/ic-inspector" target="_blank">
+  <a style="display: inline-block" href="https://addons.mozilla.org/en-CA/firefox/addon/ic-inspector" target="_blank">
   <img alt="download on firefox webstore" src="assets/firefox.png" width="50" height="50" />
   </a>
-  <a href="https://chromewebstore.google.com/detail/ic-inspector/meaadkenfkhjakkkdapaallimhbdofck" target="_blank">
+  <a style="display: inline-block" href="https://chromewebstore.google.com/detail/ic-inspector/meaadkenfkhjakkkdapaallimhbdofck" target="_blank">
   <img alt="download for edge on chrome webstore" src="assets/edge.png" width="50" height="50" />
   </a>
-  <a href="https://chromewebstore.google.com/detail/ic-inspector/meaadkenfkhjakkkdapaallimhbdofck" target="_blank">
+  <a style="display: inline-block" href="https://chromewebstore.google.com/detail/ic-inspector/meaadkenfkhjakkkdapaallimhbdofck" target="_blank">
   <img alt="download for brave on chrome webstore" src="assets/brave.png" width="50" height="50" />
   </a>
 </div>
