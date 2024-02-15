@@ -1,4 +1,4 @@
-![IC Inspector: browser devtools for the internet computer blockchain](assets/hero)
+![IC Inspector: browser devtools for the internet computer blockchain](assets/hero.png)
 
 <div style="display: flex; align-items: center; gap: 1em;">
   <a href="https://chromewebstore.google.com/detail/ic-inspector/meaadkenfkhjakkkdapaallimhbdofck" target="_blank">
@@ -14,6 +14,7 @@
   <img alt="download for brave on chrome webstore" src="assets/brave.png" width="50" height="50" />
   </a>
 </div>
+<br />
 
 [The Internet Computer](https://internetcomputer.org/) is a uniquely powerful
 blockchain. With this browser extension, you can inspect messages exchanged
