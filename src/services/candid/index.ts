@@ -4,8 +4,7 @@ export {
     CandidDecodeResult,
 } from './decode';
 export {
-    fetchCandidInterface,
     CandidInterfaceError,
     InterfaceMismatchError,
     CanisterExposesNoInterfaceError,
-} from './interfaces';
+} from './errors';

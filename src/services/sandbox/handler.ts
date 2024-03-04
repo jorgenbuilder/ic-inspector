@@ -29,10 +29,10 @@ export const sandboxRepository = {
 
 interface SandboxRequest {
     request:
-        | SandboxRequestEvalInterface
-        | SandboxRequestDecodeCandidArgs
-        | SandboxRequestDecodeCandidVals
-        | SandboxRequestDabLookup;
+    | SandboxRequestEvalInterface
+    | SandboxRequestDecodeCandidArgs
+    | SandboxRequestDecodeCandidVals
+    | SandboxRequestDabLookup;
     requestId: string;
 }
 
@@ -52,10 +52,10 @@ export async function sandboxRequest<T>(request: SandboxRequest['request']) {
 
 interface SandboxResponse {
     response:
-        | SandboxResponseEvalInterface
-        | SandboxResponseDecodeCandidArgs
-        | SandboxResponsedecodeCandidVals
-        | SandboxResponseDabLookup;
+    | SandboxResponseEvalInterface
+    | SandboxResponseDecodeCandidArgs
+    | SandboxResponsedecodeCandidVals
+    | SandboxResponseDabLookup;
     requestId: string;
 }
 

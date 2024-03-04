@@ -96,7 +96,7 @@ function Overview(props: { message: MessageEntry }) {
                     <dd>
                         {message.canister.hasCandid ? (
                             <a
-                                href={`https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.ic0.app/?id=${message.canister.identifier}`}
+                                href={`${message.canister.canisterUIUrl}`}
                                 target="_blank"
                                 rel="noreferrer"
                             >
@@ -108,14 +108,18 @@ function Overview(props: { message: MessageEntry }) {
                     </dd>
                     <dt>Subnet</dt>
                     <dd>
-                        <a
-                            href={`https://dashboard.internetcomputer.org/subnet/${message.canister.subnet}`}
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            https://dashboard.internetcomputer.org/subnet/
-                            {message.canister.subnet}
-                        </a>
+                        {message.canister.subnet ? (
+                            <a
+                                href={`https://dashboard.internetcomputer.org/subnet/${message.canister.subnet}`}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                https://dashboard.internetcomputer.org/subnet/
+                                {message.canister.subnet}
+                            </a>
+                        ) : (
+                            `Could not determine`
+                        )}
                     </dd>
                     <dt>Description</dt>
                     <dd>

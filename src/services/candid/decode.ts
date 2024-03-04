@@ -1,6 +1,7 @@
+import { ActorHelper } from '../../api/actors';
 import { sandboxDecodeCandidArgs, sandboxDecodeCandidVals } from '../sandbox';
 import { decodeNoInterface } from './decode-no-interface';
-import { CandidInterfaceError, getCanisterIDL } from './interfaces';
+import { CandidInterfaceError } from './errors';
 
 export interface CandidDecodeResult {
     result: any;
@@ -14,9 +15,10 @@ export async function decodeCandidArgs(
     canisterId: string,
     method: string,
     data: ArrayBuffer,
+    actorHelper: ActorHelper
 ): Promise<CandidDecodeResult> {
     try {
-        await getCanisterIDL(canisterId);
+        await actorHelper.getCanisterIDL(canisterId);
         return {
             result: await sandboxDecodeCandidArgs(canisterId, method, data),
             withInterface: true,
@@ -39,9 +41,10 @@ export async function decodeCandidVals(
     canisterId: string,
     method: string,
     data: ArrayBuffer,
+    actorHelper: ActorHelper
 ): Promise<CandidDecodeResult> {
     try {
-        await getCanisterIDL(canisterId);
+        await actorHelper.getCanisterIDL(canisterId);
         return {
             result: await sandboxDecodeCandidVals(canisterId, method, data),
             withInterface: true,

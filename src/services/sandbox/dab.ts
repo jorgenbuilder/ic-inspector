@@ -1,7 +1,9 @@
 import { Principal } from '@dfinity/principal';
 import { DabLookupResponse } from '../dab/canister-details';
 import { sandboxRequest } from './handler';
-import { dabCanisters, dabNFTs } from '../../api/actors';
+import { ActorHelper } from '../../api/actors';
+import { CanisterMetadata } from '../../api/idl/dab-canisters.did.d';
+import { DABCollection } from '../../api/idl/dab-nfts.did.d';
 
 // Copy pasted a bunch of dab-js code because their deps mess with my build
 export type DetailType =
@@ -54,9 +56,9 @@ export const parseDetailValue = (detailValue: DetailValue): DetailType => {
             typeof value === 'number'
                 ? v
                 : parseDetailValue(
-                      // @ts-ignore: psychedelic code
-                      v,
-                  ),
+                    // @ts-ignore: psychedelic code
+                    v,
+                ),
         );
     }
     return value;
@@ -71,20 +73,24 @@ export interface SandboxRequestDabLookup {
     type: 'dabLookup';
     data: {
         canisterId: string;
+        boundryUrl: string;
     };
 }
 
 export async function sandboxDabLookup(
     canisterId: string,
+    boundryUrl: URL
 ): Promise<DabLookupResponse> {
     if ((window as any)?.DISABLE_SANDBOX)
-        return sandboxHandleDabLookup({
-            type: 'dabLookup',
-            data: { canisterId },
-        });
+        return sandboxHandleDabLookup(
+            {
+                type: 'dabLookup',
+                data: { canisterId, boundryUrl: boundryUrl.toString() },
+            }
+        );
     return sandboxRequest<SandboxResponseDabLookup>({
         type: 'dabLookup',
-        data: { canisterId },
+        data: { canisterId, boundryUrl: boundryUrl.toString() },
     }).then((r) => r.data);
 }
 
@@ -101,10 +107,10 @@ const formatRegistryDetails = (details: Metadata['details']): Details => {
     return formattedDetails;
 };
 
-const canisterDirectory = dabCanisters.get_all();
+let canisterDirectoryCache: CanisterMetadata[] | undefined;
 // DAB token directory isn't working at the moment
 // let tokenDirectory = dabTokens.get_all();
-const nftDirectory = dabNFTs.get_all();
+let nftDirectoryCache: DABCollection[] | undefined;
 
 /**
  * Handle an evaluate interface message. Stores the generated javascript interface in sandbox memory for future reference.
@@ -112,16 +118,30 @@ const nftDirectory = dabNFTs.get_all();
 export async function sandboxHandleDabLookup(
     request: SandboxRequestDabLookup,
 ): Promise<SandboxResponseDabLookup['data']> {
+    const actorHelper = new ActorHelper(new URL(request.data.boundryUrl));
     const {
         data: { canisterId },
     } = request;
-    const canister = (await canisterDirectory).find(
+    if (canisterDirectoryCache == null) {
+        let canisterDirectoryActor = actorHelper.createDABCansitersActor();
+        if (canisterDirectoryActor != null) {
+            canisterDirectoryCache = await canisterDirectoryActor.get_all();
+        }
+    }
+
+    if (nftDirectoryCache == null) {
+        let nftsActor = actorHelper.createDABNFTsActor();
+        if (nftsActor != null) {
+            nftDirectoryCache = await nftsActor.get_all();
+        }
+    }
+    const canister = canisterDirectoryCache?.find(
         (canister) => canister.principal_id.toText() === canisterId,
     );
     if (canister) return formatMetadata(canister);
     // const token = (await tokenDirectory).find((token) => token.principal_id.toText() === canisterId);
     // if (token) return formatMetadata(token);
-    const nft = (await nftDirectory).find(
+    const nft = nftDirectoryCache?.find(
         (nft) => nft.principal_id.toText() === canisterId,
     );
     if (nft)

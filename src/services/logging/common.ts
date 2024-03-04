@@ -1,7 +1,7 @@
 import { Principal } from '@dfinity/principal';
-import { fetchCandidInterface } from '../candid';
 import { DecodedRequest, DecodedResponse } from '../capture';
 import { getDabCanisterData } from '../dab';
+import { ActorHelper } from '../../api/actors';
 
 export let LOG_MAX = 100;
 export const increaseLogMax = () => (LOG_MAX += 50);
@@ -23,6 +23,7 @@ export interface CanisterData {
     moduleHash?: string;
     controllers?: string[];
     hasCandid: boolean;
+    canisterUIUrl?: string;
 }
 
 export interface MethodData {
@@ -32,12 +33,13 @@ export interface MethodData {
 
 export async function getCanisterData(
     canisterId: string,
+    actorHelper: ActorHelper
 ): Promise<CanisterData> {
-    const dab = await getDabCanisterData(canisterId);
+    const dab = await getDabCanisterData(canisterId, actorHelper.boundryUrl);
     const { subnet, moduleHash, controllers } = await getIcApiCanisterData(
         canisterId,
     );
-    const hasCandid = Boolean(await fetchCandidInterface(canisterId));
+    const hasCandid = Boolean(await actorHelper.fetchCandidInterface(canisterId));
     return {
         identifier: canisterId,
         subnet,
@@ -48,6 +50,9 @@ export async function getCanisterData(
         description: dab?.description,
         logoUrl: dab?.thumbnail,
         hasCandid,
+        canisterUIUrl: actorHelper.isLocal
+            ? `${actorHelper.boundryUrl}?canisterId=b77ix-eeaaa-aaaaa-qaada-cai&id=${canisterId}`
+            : `https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.ic0.app/?id=${canisterId}`,
     };
 }
 
