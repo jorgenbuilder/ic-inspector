@@ -1,6 +1,7 @@
 import { ActorHelper } from '../../api/actors';
 import { DecodedRequest, decodeRequest } from './request';
 import { DecodedResponse, decodeResponse } from './response';
+import { shouldCapture } from './select';
 
 /**
  * Filter and decode internet computer message from a chrome network event.
@@ -14,7 +15,7 @@ export async function captureInternetComputerMessageFromNetworkEvent(
     }
     | undefined
 > {
-    // if (!shouldCapture(event)) return;
+    if (!shouldCapture(event)) return;
 
     console.debug('Full network event stub', event);
 
