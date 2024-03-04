@@ -1,5 +1,5 @@
 const boundaryNodeRegex =
-    /https?:\/\/(?:.+)?((?:ic0\.app|dfinity.network|icp-api.io|icp0.io|mainnet.plugwallet.ooo)|localhost:[0-9]+)\/api\/v2\/canister\/(.+)\/(query|call|read_state)/;
+    /https?:\/\/(?:.+)?((?:ic0\.app|dfinity.network|icp-api.io|icp0.io|mainnet.plugwallet.ooo)|(localhost|127.0.0.1):[0-9]+)\/api\/v2\/canister\/(.+)\/(query|call|read_state)/;
 
 /**
  * Determines whether a URL represents a request to an internet computer boundary node.
@@ -31,6 +31,5 @@ export function isCBOR(event: chrome.devtools.network.Request): boolean {
  * proved less reliable.
  */
 export function shouldCapture(event: chrome.devtools.network.Request): boolean {
-    // Let's try out a CBOR-only approach for now.
-    return isCBOR(event);
+    return isBoundaryNodeURL(event.request.url);
 }

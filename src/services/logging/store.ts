@@ -7,6 +7,7 @@ import {
     MessageId,
     getMessageRepositoryUpdate,
 } from './messages';
+import { ActorHelper } from '../../api/actors';
 
 export default create<{
     messages: MessageRepository;
@@ -21,8 +22,10 @@ export default create<{
     },
     async log(request, response) {
         // We don't want async in out update logic because it could cause stale state in parallel updates, so we put it up here.
+
+        const actorHelper = new ActorHelper(request.boundary);
         const asyncData = {
-            canister: await getCanisterData(request.canisterId),
+            canister: await getCanisterData(request.canisterId, actorHelper),
         };
         const { messages } = get();
         const update = getMessageRepositoryUpdate(

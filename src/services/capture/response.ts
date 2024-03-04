@@ -13,6 +13,7 @@ import {
     messageDetails,
     DecodedCallRequest,
 } from './request';
+import { ActorHelper } from '../../api/actors';
 
 interface AbstractDecodedResponse {
     size?: number;
@@ -49,6 +50,7 @@ export type DecodedResponse =
 export async function decodeResponse(
     event: chrome.devtools.network.Request,
     request: DecodedRequest,
+    actorHelper: ActorHelper
 ): Promise<DecodedResponse> {
     // We retrieve the response text through chrome's async api
     const content = (await new Promise<string>((res) =>
@@ -103,6 +105,7 @@ export async function decodeResponse(
                 canisterId,
                 method,
                 response.reply.arg,
+                actorHelper
             );
             return { status, reply, size };
         } else {
@@ -137,6 +140,7 @@ export async function decodeResponse(
 
         const { canisterId, method } = details;
 
+
         const cert = new Certificate(response, new HttpAgent());
         // manipulating the private `verified` property to bypass BLS verification. This is fine for debugging purposes, but it breaks the security model of the IC, so logs in the extension will not be trustable. There's a pure js BLS lib, but it will take 8 seconds to verify each certificate. There's a much faster WASM lib, but chrome extensions make that a pain (could be something worth implementing in the sandbox.)
         (cert as any).verified = true;
@@ -166,6 +170,7 @@ export async function decodeResponse(
                     canisterId,
                     method,
                     buffer,
+                    actorHelper
                 );
                 return { status, reply, size } as RepliedReadStateResponse;
             }
@@ -182,7 +187,7 @@ export async function decodeResponse(
                 const message = new TextDecoder().decode(
                     cert.lookup([...paths.flat(), 'reject_message'])!,
                 );
-                return { status, message, code, size };
+                return { status: "rejected", message, code, size } as RejectedResponse;
             }
 
             case RequestStatusResponseStatus.Done:

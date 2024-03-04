@@ -4,6 +4,7 @@ import { ReadRequest, CallRequest, Expiry, requestIdOf } from '@dfinity/agent';
 import { Principal } from '@dfinity/principal';
 import { decodeCandidArgs } from '../candid';
 import { base64ToBytes, asPrincipal } from '../common';
+import { ActorHelper } from '../../api/actors';
 
 export type RequestType = 'query' | 'call' | 'read_state';
 type InternetComputerRequest = ReadRequest | CallRequest;
@@ -19,6 +20,7 @@ interface AbstractDecodedRequest {
     boundary: URL;
     size?: number;
     stack?: SimplifiedStack[];
+    actorHelper: ActorHelper;
 }
 
 export interface DecodedCallRequest extends AbstractDecodedRequest {
@@ -74,6 +76,7 @@ export async function decodeRequest(
 
     // Validate the request.
     const request = result.content;
+    console.log(request);
     if (
         !('request_type' in request) ||
         !['query', 'call', 'read_state'].includes(request.request_type)
@@ -88,6 +91,7 @@ export async function decodeRequest(
     const ingressExpiry = request.ingress_expiry;
     const requestId = toHexString([...new Uint8Array(requestIdOf(request))]);
     const boundary = new URL(event.request.url);
+    const actorHelper = new ActorHelper(boundary);
     const size =
         event.request.bodySize > -1 ? event.request.bodySize : undefined;
     const stack = extractTrace(event);
@@ -104,7 +108,7 @@ export async function decodeRequest(
             canisterId: canisterId,
             method,
         };
-        const args = await decodeCandidArgs(canisterId, method, request.arg);
+        const args = await decodeCandidArgs(canisterId, method, request.arg, actorHelper);
 
         return {
             boundary,
@@ -118,15 +122,25 @@ export async function decodeRequest(
             args,
             size,
             stack,
+            actorHelper
         };
     } else {
         // These parameters only on "read_state" requests
         const paths = request.paths;
+        let method;
+        let canisterId;
+        let message;
+        if (request.paths[0].length <= 1) {
+            throw new Error('Unexpected empty paths in read_state request');
+        } else {
 
-        // The lookup path provided in "read_state" request is the requestId of the original "call" request
-        const message = toHexString([...new Uint8Array(request.paths[0][1])]);
+            // The lookup path provided in "read_state" request is the requestId of the original "call" request
+            message = toHexString([...new Uint8Array(request.paths[0][1])]);
 
-        const { method, canisterId } = messageDetails[message];
+            let info = messageDetails[message];
+            method = info.method;
+            canisterId = info.canisterId;
+        }
         return {
             boundary,
             message,
@@ -139,6 +153,7 @@ export async function decodeRequest(
             paths,
             size,
             stack,
+            actorHelper
         };
     }
 }

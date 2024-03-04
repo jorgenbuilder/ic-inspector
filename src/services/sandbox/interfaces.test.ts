@@ -12,6 +12,7 @@ test('Candid javascript interface evaluation', () => {
                 type: 'evalInterface',
                 data: {
                     canisterId: name,
+                    boundryUrl: "https://ic0.app/",
                     javascriptAsString: stub,
                 },
             };

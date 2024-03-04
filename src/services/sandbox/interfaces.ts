@@ -10,17 +10,19 @@ export interface SandboxRequestEvalInterface {
     type: 'evalInterface';
     data: {
         canisterId: string;
+        boundryUrl: string;
         javascriptAsString: string;
     };
 }
 
 export async function sandboxEvalInterface(
     canisterId: string,
+    boundryUrl: URL,
     javascriptAsString: string,
 ): Promise<'ok'> {
     return sandboxRequest<SandboxResponseEvalInterface>({
         type: 'evalInterface',
-        data: { canisterId, javascriptAsString },
+        data: { canisterId, boundryUrl: boundryUrl.toString(), javascriptAsString },
     }).then((r) => r.data);
 }
 
