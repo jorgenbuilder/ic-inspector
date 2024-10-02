@@ -3,6 +3,7 @@ import {
     RequestStatusResponseStatus,
     Certificate,
     HttpAgent,
+    fromHex,
 } from '@dfinity/agent';
 import { decode as cborDecode } from 'cbor-x';
 import { CandidDecodeResult, decodeCandidVals } from '../candid';
@@ -84,6 +85,63 @@ export async function decodeResponse(
         throw new Error(
             `Unreachable: unexpected result decoded from response.`,
         );
+    }
+
+    // V3 update calls
+    // NOTE: I didn't implement the fallback to polling.
+    // This might mean that we will miss some responses.
+    // Reference: https://github.com/dfinity/agent-js/pull/906/files#diff-8e88073ceeb119a7b39f3e6616db4c23f5d3c0e923c194f1f0e5a1a6d54f5835R559
+    if ('status' in response && 'certificate' in response) {
+        const { message } = request as DecodedCallRequest;
+
+        const requestId = fromHex(request.requestId);
+
+        const details = messageDetails[message];
+
+        if (!details) {
+            console.log(messageDetails);
+            throw new Error(
+                `Unreachable: could not retrieve canister and method: ${message}`,
+            );
+        }
+
+        const { canisterId, method } = details;
+
+        const cert = new Certificate(response, new HttpAgent());
+        // manipulating the private `verified` property to bypass BLS verification. This is fine for debugging purposes, but it breaks the security model of the IC, so logs in the extension will not be trustable. There's a pure js BLS lib, but it will take 8 seconds to verify each certificate. There's a much faster WASM lib, but chrome extensions make that a pain (could be something worth implementing in the sandbox.)
+        (cert as any).verified = true;
+
+        const path = [new TextEncoder().encode('request_status'), requestId];
+        const status = new TextDecoder().decode(
+            cert.lookup([...path, 'status']),
+        );
+
+        switch (status) {
+            case RequestStatusResponseStatus.Replied: {
+                const buffer = cert.lookup([...path.flat(), 'reply']);
+                if (!buffer) {
+                    throw new Error(
+                        'Unreachable: successful read_state must have reply',
+                    );
+                }
+                const reply = await decodeCandidVals(
+                    canisterId,
+                    method,
+                    buffer,
+                );
+                return { status, reply, size } as RepliedReadStateResponse;
+            }
+
+            case RequestStatusResponseStatus.Rejected: {
+                const code = new Uint8Array(
+                    cert.lookup([...path.flat(), 'reject_code'])!,
+                )[0];
+                const message = new TextDecoder().decode(
+                    cert.lookup([...path.flat(), 'reject_message'])!,
+                );
+                return { status, message, code, size };
+            }
+        }
     }
 
     if ('status' in response) {
